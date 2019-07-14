@@ -1,13 +1,17 @@
 @charset "UTF-8";
+
 body {
 	font-size: 14px;
 	margin: 0px;
+	background-image: url(../img/login_bg.png);
+    background-repeat: no-repeat;
+    background-position: 0px 60px;
 }
 
-.page-container {
-		float: left;
-	width: 100%;
+.layui-container {
+  
 }
+
 .content-header {
 	float: left;
 	width: 100%;
@@ -17,4 +21,5 @@ body {
 .content-center {
 	float: left;
 	width: 100%;
+	min-height: 60%;
 }

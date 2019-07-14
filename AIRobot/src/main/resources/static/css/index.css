@@ -1,0 +1,164 @@
+@charset "UTF-8";
+
+.layui-layout-admin .layui-logo {
+	font-size: 22px;
+	color: #fff;
+	text-align: left;
+	/* padding-left: 30px; */
+	background-color: #002140;
+	width: 260px;
+}
+.layui-logo img {
+	margin-left: 14px;
+}
+
+.layui-layout-admin .layui-header {
+	background-color: #fff;
+}
+
+.layui-bg-black {
+	background-color: #001529 !important;
+}
+
+.layui-head-title {
+	position: absolute;
+	left: 260px;
+	right: 0;
+	height: 60px;
+	color: #333;
+	box-shadow: 20px 20px 30px #eaeaea;
+}
+
+.layui-layout-admin .layui-side {
+	width: 260px;
+}
+
+.layui-nav .layui-nav-item {
+	color: #333;
+}
+
+.layui-head-title .layui-nav .layui-nav-item a {
+	color: #333;
+}
+
+.layui-side-scroll {
+	width: 260px;
+}
+
+.layui-nav-tree {
+	width: 260px;
+}
+
+.a-item-next {
+	
+}
+/**左侧菜单开始*/
+.define-nav .layui-nav-item {
+	background-color: #001529;
+}
+
+.define-nav .layui-nav-itemed>.layui-nav-child {
+	display: block;
+	padding: 0;
+	background-color: rgba(0, 0, 0, .3) !important;
+	background-color: #000C17;
+}
+
+.define-nav .layui-nav-tree .layui-nav-item a {
+	height: 50px;
+	line-height: 50px;
+	padding-left: 50px;
+}
+
+.define-nav .layui-nav-tree .layui-nav-bar {
+	background-color: #000;
+	width: 0;
+}
+
+.define-nav .layui-nav-tree .layui-nav-item a:hover {
+	background-color: #1890FF;
+}
+
+.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a,
+	.layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a,
+	.layui-nav-tree .layui-this>a:hover {
+	background-color: #1890FF;
+}
+
+.layui-nav-tree .layui-nav-child a {
+	padding-left: 50px;
+}
+
+.nai-item:before {
+    content: "";
+    left: 18px;
+    top: 11px;
+    width: 24px;
+    background: url(../img/back_01.png) no-repeat;
+    height: 24px;
+    position: absolute;
+}
+
+.nai-item.icon-view:before {
+    background-position: 0 -127px;
+}
+
+.nai-item.icon-auth:before {
+	background-position: 0 -56px;
+}
+
+.nai-item.icon-address:before {
+    background-position: 0 -101px;
+}
+
+.nai-item.icon-warn:before {
+    background-position: 0 -1px;
+}
+
+.item-icon-search {
+    display: inline-block;
+    width: 24px;
+    height: 30px;
+    background: url(../img/back_01.png) no-repeat;
+    background-position: 0 0;
+    vertical-align: middle;
+
+}
+.layui-nav .layui-this:after, .layui-nav-bar, .layui-nav-tree .layui-nav-itemed:after {
+    height: 2px;
+}
+/**左侧菜单结束*/
+/**页面内容开始*/
+.layui-layout-admin .layui-body {
+    left: 260px;
+    background: #F0F2F5;
+    bottom: 0;
+    padding: 30px 40px;
+}
+/*小导航开始*/
+.define-nav {
+    float: left;
+    width: 100%;
+    line-height: 30px;
+}
+.layui-breadcrumb>* {
+    font-size: 16px;
+    position: relative;
+}
+
+.define-nav .layui-breadcrumb a:first-child:before {
+    content: "";
+    left: -15px;
+    width: 4px;
+    height: 20px;
+    background: #1890FF;
+    top: 0;
+    position: absolute;
+    border-radius: 10px;
+}
+.define-nav .layui-breadcrumb a {
+    color: #666 !important;
+}
+/*小导航结束*/
+/**页面内容结束*/
+
