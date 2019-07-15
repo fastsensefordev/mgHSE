@@ -160,5 +160,30 @@
     color: #666 !important;
 }
 /*小导航结束*/
+
+/*页面主题内容开始*/
+.content-body {
+    float: left;
+    width: 100%;
+    min-height: calc(100% - 35px);
+    background: #fff;
+    padding: 20px;
+}
+.content-body-header {
+    float: left;
+    width: 100%;
+}
+
+.content-body-header span.title {
+	font-size: 15px;
+    color: #333;
+}
+
+.content-body-detail {
+	float: left;
+    width: 100%;	
+}
+/*页面主题内容结束*/
+
 /**页面内容结束*/
 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body th:fragment="header">
+	<head>
+	<meta charset="UTF-8">
+	<title>Head</title>
+	<link rel="stylesheet" th:href="@{/static/assets/layui/css/layui.css}">
+	<link rel="stylesheet" th:href="@{/static/css/index.css}">
+	</head>
+	<div class="layui-header">
+		<div class="layui-logo">
+			<img alt="" th:src="@{/static/img/logo.png}">
+		</div>
+		<div class="layui-head-title">
+			<ul class="layui-nav layui-layout-right">
+				<li class="layui-nav-item"><i class="item-icon-search"></i></li>
+				<li class="layui-nav-item"><a href="javascript:;"> <img
+						src="http://t.cn/RCzsdCq" class="layui-nav-img" /> <span>admin</span>
+				</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a href="">退出登录</a>
+						</dd>
+					</dl></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="layui-side layui-bg-black define-nav">
+		<div class="layui-side-scroll">
+			<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+			<ul class="layui-nav layui-nav-tree" lay-filter="test" id="myMenu">
+				<li class="layui-nav-item layui-nav-itemed">
+					<a class="nai-item icon-view" href="javascript:;">我的可视化</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a href="index">可视化</a>
+						</dd>
+						<dd>
+							<a href="javascript:;">可视化矩阵</a>
+						</dd>
+						<dd>
+							<a href="templateManage">模板管理</a>
+						</dd>
+					</dl>
+				</li>
+				<li class="layui-nav-item">
+					<a class="nai-item icon-auth" href="authManage">权限管理</a>
+				</li>
+				<li class="layui-nav-item">
+					<a class="nai-item icon-address" href="addressManage">地址管理</a>
+				</li>
+				<li class="layui-nav-item">
+					<a class="nai-item icon-warn" href="warnManage">报警管理</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
