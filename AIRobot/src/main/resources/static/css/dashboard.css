@@ -20,35 +20,106 @@ body {
 }
 
 .container .con-left {
-    float: left;
-    width: 24%;
-    height: 100%;
-    border-right: 1px solid #0695EB;
-    padding: 1.5%;
-    box-sizing: border-box;
-    text-align: center;
+	float: left;
+	width: 28%;
+	height: 100%;
+	border-right: 1px solid #0695EB;
+	padding: 1.5%;
+	box-sizing: border-box;
+	text-align: center;
 }
 
 .container .con-center {
 	float: left;
-	width: calc(52% - 2px);
+	width: calc(44% - 2px);
 	height: 100%;
+	padding: 1.5%;
 }
 
 .container .con-right {
 	float: left;
-	width: 24%;
+	width: 28%;
 	height: 100%;
 	border-left: 1px solid #0695EB;
+	padding: 1.5%;
 }
 
+.logo-item {
+	float: left;
+	width: 100%;
+	height: 54px;
+	position: relative;
+}
+
+.logo-item::before {
+	position: absolute;
+	content: "";
+	left: 0;
+	border-top: 2px solid #0695eb;
+	width: calc(50% - 211px);
+}
+
+.logo-item::after {
+	position: absolute;
+	content: "";
+	right: 0;
+	border-top: 2px solid #0695eb;
+	width: calc(50% - 211px);
+}
+
+.logo-title::before {
+	position: absolute;
+	content: "";
+	width: 51px;
+	height: 54px;
+	left: -51px;
+	background: url("../img/bg_left_01.png") no-repeat;
+	background-position: 0 0;
+}
+
+.logo-title::after {
+	position: absolute;
+	content: "";
+	width: 51px;
+	height: 54px;
+	right: -51px;
+	background: url(../img/bg_right_01.png) no-repeat;
+	background-position: 0 0;
+}
+
+.logo-title {
+	float: left;
+	width: 320px;
+	text-align: center;
+	color: #fff;
+	font-size: 1.8rem;
+	line-height: 54px;
+	height: 54px;
+	position: absolute;
+	top: 50%;
+	margin-top: -27px;
+	left: 50%;
+	margin-left: -160px;
+	border-bottom: 2px solid #0679C4;
+}
+
+.img-center {
+	border: 1px solid #0679C4;
+	float: left;
+	margin-top: 30px;
+	padding: 10px
+}
+.img-center img {
+	width: 100%;
+	height: 100%;
+}
 .time-content {
-    float: left;
-    width: 100%;
-    height: 15%;
-    background: #071D46;
-    padding-top: 23px;
-    position: relative;
+	float: left;
+	width: 100%;
+	height: 20%;
+	background: #071D46;
+	padding-top: 23px;
+	position: relative;
 }
 
 .time-content span {
@@ -57,9 +128,9 @@ body {
 }
 
 .time-content span.s-time {
-    color: #fff;
-    font-size: 200%;
-    font-weight: 600;
+	color: #fff;
+	font-size: 2rem;
+	font-weight: 600;
 }
 
 .time-content span.s-date {
@@ -97,4 +168,112 @@ i.ibg.bg-rb {
 	bottom: -6px;
 	right: -6px;
 	background-position: 0 -93px;
+}
+
+.chart-item {
+	float: left;
+	width: 100%;
+	height: 35%;
+	margin-top: 10%;
+}
+
+.chart-01 {
+	float: left;
+	height: 35%;
+	width: 100%;
+}
+
+.chart-title {
+	background: #082A58;
+	float: left;
+	width: calc(100% - 30px);
+	height: 15%;
+	text-align: left;
+	color: #BEDAEA;
+	position: relative;
+	border: 1px solid #093A6E;
+}
+
+.chart-title div.topical {
+	position: absolute;
+	left: 0;
+	width: calc(100% - 80px);
+	top: 50%;
+	font-size: 0.9rem;
+	height: 30px;
+	line-height: 30px;
+	margin-top: -15px;
+	padding-left: 30px;
+}
+
+.chart-title div.typeof {
+	position: absolute;
+	right: 0;
+	width: 80px;
+	top: 0;
+	height: 100%;
+	padding-left: 15px;
+}
+
+.chart-title div.typeof::before {
+	content: "";
+	position: absolute;
+	background: #067AC6;
+	width: 1px;
+	top: 25%;
+	bottom: 25%;
+	left: 0;
+}
+
+.chart-title:before {
+	position: absolute;
+	right: -36px;
+	content: "";
+	top: 0;
+	width: 30px;
+	height: 100%;
+	background: #0695EB;
+}
+
+.chart-title:after {
+	position: absolute;
+	right: -36px;
+	content: "";
+	bottom: 0;
+	border-left: 15px solid transparent;
+	border-right: 0px solid transparent;
+	border-bottom: 15px solid #061033;
+}
+
+span.icon-tubiao {
+	position: absolute;
+	height: 30px;
+	line-height: 30px;
+	top: 50%;
+	margin-top: -15px;
+	font-size: 0.9rem;
+}
+
+.chart-01 .chart-body {
+	float: left;
+	width: 100%;
+	height: 85%;
+}
+
+.chart-02 {
+	float: left;
+	height: 35%;
+	width: 100%;
+	background: #071D46;
+	padding-top: 23px;
+	position: relative;
+}
+
+.chart-03 {
+	float: left;
+	height: 35%;
+	width: 100%;
+	background: #071D46;
+	position: relative;
+	margin-top: 0;
 }
