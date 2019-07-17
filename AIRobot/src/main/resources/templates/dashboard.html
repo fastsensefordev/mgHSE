@@ -18,20 +18,25 @@
 				<i class="ibg bg-lb"></i>
 				<i class="ibg bg-rb"></i>
 			</div>
-			<div class="chart-item chart-01">
-				<div class="chart-title">
-					<div class="topical">未佩戴安全帽次数</div>
-					<div class="typeof">
-						<span class="icon-tubiao">图表</span>
+			<div class="chart-container">
+				<div class="chart-item chart-01">
+					<div class="chart-title">
+						<div class="topical">未佩戴安全帽次数</div>
+						<div class="typeof">
+							<span class="icon-tubiao">图表</span>
+						</div>
+					</div>
+					<div class="chart-body">
+						<div class="chart-content" id="safeChart"></div>
 					</div>
 				</div>
-				<div class="chart-body"></div>
-			</div>
-			<div class="chart-item chart-02">
-				<i class="ibg bg-lt"></i>
-				<i class="ibg bg-rt"></i>
-				<i class="ibg bg-lb"></i>
-				<i class="ibg bg-rb"></i>
+				<div class="chart-item chart-02">
+					<i class="ibg bg-lt"></i>
+					<i class="ibg bg-rt"></i>
+					<i class="ibg bg-lb"></i>
+					<i class="ibg bg-rb"></i>
+					<div class="chart-content" id="illegalChart"></div>
+				</div>
 			</div>
 		</div>
 		<div class="con-center">
@@ -40,6 +45,12 @@
 			</div>
 			<div class="img-center">
 				<img th:src="@{/static/img/center_img.png}"/>
+			</div>
+			<div class="total-bottom">
+				<i class="ibg bg-lt"></i>
+				<i class="ibg bg-rt"></i>
+				<i class="ibg bg-lb"></i>
+				<i class="ibg bg-rb"></i>
 			</div>
 		</div>
 		<div class="con-right">
@@ -60,5 +71,8 @@
 			</div>
 		</div>
 	</div>
+	<script th:src="@{/static/assets/jquery/jquery-3.3.1.min.js}"></script>
+	<script th:src="@{/static/assets/echarts/echarts.min.js}"></script>
+	<script th:src="@{/static/js/dashboard.js}"></script>
 </body>
 </html>
