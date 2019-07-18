@@ -11,8 +11,10 @@
 	<div class="container">
 		<div class="con-left">
 			<div class="time-content">
-				<span class="s-time">20:30:21</span>
-				<span class="s-date">2019/07/15 pm 周一</span>
+				<div class="time-body">
+					<span class="s-time">20:30:21</span>
+					<span class="s-date">2019/07/15 pm 周一</span>
+				</div>
 				<i class="ibg bg-lt"></i>
 				<i class="ibg bg-rt"></i>
 				<i class="ibg bg-lb"></i>
@@ -51,6 +53,32 @@
 				<i class="ibg bg-rt"></i>
 				<i class="ibg bg-lb"></i>
 				<i class="ibg bg-rb"></i>
+				<ul class="total-ul">
+					<li>
+						<div>
+							<span class="total-num-span">3080</span>
+							<span>总次数</span>
+						</div>
+					</li>
+					<li>
+						<div>
+							<span class="total-num-span">1052</span>
+							<span>安全帽总数</span>
+						</div>
+					</li>
+					<li>
+						<div>
+							<span class="total-num-span">258</span>
+							<span>明火总数</span>
+						</div>
+					</li>
+					<li>
+						<div>
+							<span class="total-num-span">1847</span>
+							<span>行人闯入总数</span>
+						</div>
+					</li>
+				</ul>
 			</div>
 		</div>
 		<div class="con-right">
@@ -59,6 +87,7 @@
 				<i class="ibg bg-rt"></i>
 				<i class="ibg bg-lb"></i>
 				<i class="ibg bg-rb"></i>
+				<div class="chart-content" id="dangerChart"></div>
 			</div>
 			<div class="chart-item chart-04">
 				<div class="chart-title">
@@ -67,7 +96,10 @@
 						<span class="icon-tubiao">图表</span>
 					</div>
 				</div>
-				<div class="chart-body"></div>
+				<div class="chart-body">
+					<div class="chart-content"  id="complexChart01"></div>
+					<div class="chart-content"  id="complexChart02"></div>
+				</div>
 			</div>
 		</div>
 	</div>

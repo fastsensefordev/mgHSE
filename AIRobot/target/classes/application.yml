@@ -10,6 +10,7 @@ spring:
             enabled: true
     mvc:
        static-path-pattern: /static/**
+       
     datasource:
         name: masterDataSource
         type: com.alibaba.druid.pool.DruidDataSource
@@ -46,6 +47,7 @@ spring:
         encoding: UTF-8
         content-type: text/html
         cache: false
+        
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.hs.mapper
