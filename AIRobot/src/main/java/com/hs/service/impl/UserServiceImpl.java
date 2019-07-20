@@ -36,13 +36,13 @@ public class UserServiceImpl implements UserService {
 		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 		List<User> userList = new ArrayList<>();
 		try {
-			PageHelper.startPage(request.getStart(), request.getPageSize());
+			PageHelper.startPage(request.getPage(), request.getLimit());
 			userList = userMapper.getUserList();
-			resultMap.put("userList", userList);
+			resultMap.put("data", userList);
 			return ResultUtil.success(resultMap);
 		} catch (Exception e) {
 			e.printStackTrace();
-			resultMap.put("userList", userList);
+			resultMap.put("data", userList);
 			return ResultUtil.error("查询失败", resultMap);
 		}
 	}

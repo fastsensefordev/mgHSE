@@ -38,18 +38,18 @@
 							<a href="dashboard" target="_blank">可视化定制</a>
 						</dd>
 						<dd>
-							<a href="templateManage">可视化管理</a>
+							<a href="templateManage" th:classappend="${currMenu eq 'templateManage'} ? 'active' : ''">可视化管理</a>
 						</dd>
 					</dl>
 				</li>
 				<li class="layui-nav-item">
-					<a class="nai-item icon-auth" href="authManage">权限管理</a>
+					<a class="nai-item icon-auth" href="authManage" th:classappend="${currMenu eq 'authManage'} ? 'active' : ''">权限管理</a>
 				</li>
 				<li class="layui-nav-item">
-					<a class="nai-item icon-address" href="addressManage">服务器管理</a>
+					<a class="nai-item icon-address" href="addressManage" th:classappend="${currMenu eq 'addressManage'} ? 'active' : ''">服务器管理</a>
 				</li>
 				<li class="layui-nav-item">
-					<a class="nai-item icon-warn" href="warnManage">报警管理</a>
+					<a class="nai-item icon-warn" href="warnManage" th:classappend="${currMenu eq 'warnManage'} ? 'active' : ''">报警管理</a>
 				</li>
 			</ul>
 		</div>

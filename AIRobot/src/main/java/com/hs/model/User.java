@@ -13,6 +13,7 @@ public class User {
 	private String userName;//用户名
 	private String password;//密码
 	private Integer userType;//类型
+	private String userTypeStr;//类型字符串
 	private String createTime;//创建时间
 	private String lastLoginTime;//最后更新时间
 
@@ -64,10 +65,20 @@ public class User {
 		this.lastLoginTime = lastLoginTime;
 	}
 
+	public String getUserTypeStr() {
+		return userTypeStr;
+	}
+
+	public void setUserTypeStr(String userTypeStr) {
+		this.userTypeStr = userTypeStr;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", userType=" + userType
-				+ ", createTime=" + createTime + ", lastLoginTime=" + lastLoginTime + "]";
+				+ ", userTypeStr=" + userTypeStr + ", createTime=" + createTime + ", lastLoginTime=" + lastLoginTime
+				+ "]";
 	}
 
+	
 }

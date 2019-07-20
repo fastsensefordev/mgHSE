@@ -30,7 +30,10 @@ public class HomeController {
      */
     @RequestMapping({"/templateManage"})
     public ModelAndView templateManage() {
-        return new ModelAndView("templateManage");
+    	ModelAndView modelAndView = new ModelAndView();
+    	modelAndView.setViewName("templateManage");
+    	modelAndView.addObject("currMenu", "templateManage");
+        return modelAndView;
     }
     
     /**
@@ -42,7 +45,10 @@ public class HomeController {
      */
     @RequestMapping({"/authManage"})
     public ModelAndView authManage() {
-        return new ModelAndView("authManage");
+    	ModelAndView modelAndView = new ModelAndView();
+    	modelAndView.setViewName("authManage");
+    	modelAndView.addObject("currMenu", "authManage");
+        return modelAndView;
     }
     /**
     * @Title: addressManage
@@ -53,7 +59,10 @@ public class HomeController {
      */
     @RequestMapping({"/addressManage"})
     public ModelAndView addressManage() {
-        return new ModelAndView("addressManage");
+    	ModelAndView modelAndView = new ModelAndView();
+    	modelAndView.setViewName("addressManage");
+    	modelAndView.addObject("currMenu", "addressManage");
+        return modelAndView;
     }
     /**
     * @Title: warnManage
@@ -64,7 +73,10 @@ public class HomeController {
      */
     @RequestMapping({"/warnManage"})
     public ModelAndView warnManage() {
-        return new ModelAndView("warnManage");
+    	ModelAndView modelAndView = new ModelAndView();
+    	modelAndView.setViewName("warnManage");
+    	modelAndView.addObject("currMenu", "warnManage");
+        return modelAndView;
     }
     
     @RequestMapping({"/dashboard"})
