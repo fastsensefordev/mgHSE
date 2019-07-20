@@ -1,34 +1,73 @@
 package com.hs.model;
 
 /**
- * Created by zl on 2015/8/27.
+ * @desc: 用户实体
+ * @author: kpchen
+ * @createTime: 2019年7月20日 下午3:01:53
+ * @history:
+ * @version: v1.0
  */
 public class User {
-    private String name;
-    private Integer age;
-    private String password;
+	
+	private Integer id;//主键
+	private String userName;//用户名
+	private String password;//密码
+	private Integer userType;//类型
+	private String createTime;//创建时间
+	private String lastLoginTime;//最后更新时间
 
-    public String getName() {
-        return name;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public Integer getAge() {
-        return age;
-    }
+	public String getUserName() {
+		return userName;
+	}
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Integer getUserType() {
+		return userType;
+	}
+
+	public void setUserType(Integer userType) {
+		this.userType = userType;
+	}
+
+	public String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getLastLoginTime() {
+		return lastLoginTime;
+	}
+
+	public void setLastLoginTime(String lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", userType=" + userType
+				+ ", createTime=" + createTime + ", lastLoginTime=" + lastLoginTime + "]";
+	}
+
 }

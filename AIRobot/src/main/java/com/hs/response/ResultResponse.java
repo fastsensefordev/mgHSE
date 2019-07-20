@@ -2,17 +2,19 @@ package com.hs.response;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 结果集
  */
-public class ResultResponse<T> implements Serializable {
+public class ResultResponse implements Serializable {
 	
 	private static final long serialVersionUID = -2419546928310043339L;
 	
 	private Integer code;
 	private String msg;
-	private T data;
+	private Map<String, Object> data = new LinkedHashMap<String, Object>();
 	private Date timestamp = new Date();
 
 	public ResultResponse(ResultEnum resultEnum) {
@@ -20,13 +22,13 @@ public class ResultResponse<T> implements Serializable {
 		this.msg = resultEnum.msg();
 	}
 
-	public ResultResponse(ResultEnum resultEnum, T data) {
+	public ResultResponse(ResultEnum resultEnum, Map<String, Object> data) {
 		this.code = resultEnum.code();
 		this.msg = resultEnum.msg();
 		this.data = data;
 	}
 
-	public ResultResponse(Integer code, String msg, T data) {
+	public ResultResponse(Integer code, String msg, Map<String, Object> data) {
 		this.code = code;
 		this.msg = msg;
 		this.data = data;
@@ -48,11 +50,11 @@ public class ResultResponse<T> implements Serializable {
 		this.msg = msg;
 	}
 
-	public T getData() {
+	public Map<String, Object> getData() {
 		return data;
 	}
 
-	public void setData(T data) {
+	public void setData(Map<String, Object> data) {
 		this.data = data;
 	}
 

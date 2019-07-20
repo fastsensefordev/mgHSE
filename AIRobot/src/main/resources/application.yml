@@ -2,15 +2,12 @@ server:
     port: 8088
     servlet:
        context-path: /robot
-
-
 spring:
     devtools: 
         restart: 
             enabled: true
     mvc:
        static-path-pattern: /static/**
-       
     datasource:
         name: masterDataSource
         type: com.alibaba.druid.pool.DruidDataSource
@@ -18,28 +15,28 @@ spring:
         druid:
           #监控统计拦截的filters
           filters: stat
-          driver-class-name: com.mysql.jdbc.Driver
+          driverClassName: com.mysql.jdbc.Driver
           #基本属性
-          url: jdbc:mysql://127.0.0.1:3306/rebot?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+          url: jdbc:mysql://127.0.0.1:3306/robot?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
           username: root
           password: 123456
           #配置初始化大小/最小/最大
-          initial-size: 1
-          min-idle: 1
-          max-active: 20
+          initialSize: 1
+          minIdle: 1
+          maxActive: 20
           #获取连接等待超时时间
-          max-wait: 60000
+          maxWait: 60000
           #间隔多久进行一次检测，检测需要关闭的空闲连接
-          time-between-eviction-runs-millis: 60000
+          timeBetweenEvictionRunsMillis: 60000
           #一个连接在池中最小生存的时间
-          min-evictable-idle-time-millis: 300000
-          validation-query: SELECT 'x'
-          test-while-idle: true
-          test-on-borrow: false
-          test-on-return: false
-          #打开PSCache，并指定每个连接上PSCache的大小。oracle设为true，mysql设为false。分库分表较多推荐设置为false
-          pool-prepared-statements: false
-          max-pool-prepared-statement-per-connection-size: 20
+          minEvictableIdleTimeMillis: 300000
+          validationQuery: SELECT 'x'
+          testWhileIdle: true
+          testOnBorrow: false
+          testOnReturn: false
+          poolPreparedStatements: false
+          maxPoolPreparedStatementPerConnectionSize: 20
+          connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000  
     thymeleaf:
         prefix: classpath:/templates/
         suffix: .html
@@ -49,9 +46,9 @@ spring:
         cache: false
         
 mybatis:
-  mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.hs.mapper
-
+    mapper-locations: classpath:mapper/*.xml
+    type-aliases-package: com.hs.mapper
+    config-location: classpath:mybatis-config.xml
 #pagehelper
 pagehelper:
     helperDialect: mysql
@@ -59,6 +56,7 @@ pagehelper:
     supportMethodsArguments: true
     params: count=countSql
     returnPageInfo: check
-    
+swagger:
+   enable: true
 
 

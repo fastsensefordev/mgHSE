@@ -19,19 +19,21 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("org.microservice.tcbj.yytsg.checkcentersys"))
+                .apis(RequestHandlerSelectors.basePackage("com.hs.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("营养探索馆-客服系统")
+                .title("华视威讯-可视化看板系统")
                 .description("powered by By-Health")
-                .termsOfServiceUrl("http://www.by-health.com/")
+                .termsOfServiceUrl("http://www.huaweishixun.com/")
                 //.contact(contact)
                 .version("1.0")
                 .build();
     }
+    
+   
 
 }
