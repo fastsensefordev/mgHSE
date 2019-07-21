@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.hs.mapper.UserMapper;
 import com.hs.model.User;
 import com.hs.request.AddUserRequest;
@@ -42,7 +43,9 @@ public class UserServiceImpl implements UserService {
 		try {
 			PageHelper.startPage(request.getPage(), request.getLimit());
 			userList = userMapper.getUserList();
-			resultMap.put("data", userList);
+			PageInfo<User> page = new PageInfo<User>(userList);
+			resultMap.put("data", page.getList());
+			resultMap.put("total", page.getTotal());
 			return ResultUtil.success(resultMap);
 		} catch (Exception e) {
 			e.printStackTrace();

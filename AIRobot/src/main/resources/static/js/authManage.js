@@ -1,8 +1,7 @@
 $(function(){
-	layui.use('table', function(){
-		var table = layui.table;
-		table.render({
+	let userTableOptions = {
 			toolbar: '#toolbarDemo',
+			defaultToolbar: ['filter', 'print'],
 			elem: '#userListTable',
 			url:'user/getUserList',
 			page: true,
@@ -13,7 +12,7 @@ $(function(){
 				return {
 					"code": res.code, //解析接口状态
 					"msg": res.msg, //解析提示文本
-					"count": 10, //解析数据长度
+					"count": res.data.total, //解析数据长度
 					"data": res.data.data //解析数据列表
 				};
 			},
@@ -27,11 +26,14 @@ $(function(){
 					{fixed: 'right', title:'操作', toolbar: '#operateButton',width: 150}
 			]],
 			
-		});
+	};
+	layui.use('table', function(){
+		var userListTable = layui.table;
+		userListTable.render(userTableOptions);
 
 		//头工具栏事件
-		table.on('toolbar(userListTable)', function(obj){
-			var checkStatus = table.checkStatus(obj.config.id);
+		userListTable.on('toolbar(userListTable)', function(obj){
+			let checkStatus = userListTable.checkStatus(obj.config.id);
 			switch(obj.event){
 			case 'getCheckData':
 				var data = checkStatus.data;
@@ -47,8 +49,8 @@ $(function(){
 			};
 		});
 		 //监听行工具事件
-		table.on('tool(userListTable)', function(obj){
-			var data = obj.data;
+		userListTable.on('tool(userListTable)', function(obj){
+			let data = obj.data;
 			//console.log(obj)
 			if(obj.event === 'del'){
 				layer.confirm('确认删除该用户吗?', function(index){
@@ -151,6 +153,7 @@ $(function(){
 						} else if (data.code == 200) {
 							layer.msg("添加成功"); 
 							layer.close(addUserIndex);
+							layui.table.reload("userListTable",userTableOptions);
 						}
 					}  
 				});  
