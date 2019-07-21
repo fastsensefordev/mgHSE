@@ -21,7 +21,8 @@ public enum ResultEnum {
     REQUESTURI_TOO_LARGE(414, "Request-URI Too Large", "请求的URI过长（URI通常为网址），服务器无法处理"),
     UNSUPPORTED_MEDIA_TYPE(415, "Unsupported Media Type", "服务器无法处理请求附带的媒体格式"),
     LOGIN_SUCCESS(101, "Login Success", "登录成功"),
-    NOT_LOGIN(102, "NOT Login", "未登录");
+    NOT_LOGIN(102, "NOT Login", "未登录"),
+	USER_EXIST(1002, " ", "用户已存在");
 	
 	
     private Integer code;

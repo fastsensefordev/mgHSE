@@ -2,7 +2,7 @@ $(function(){
 	layui.use('table', function(){
 		var table = layui.table;
 		table.render({
-			 toolbar: '#toolbarDemo',
+			toolbar: '#toolbarDemo',
 			elem: '#userListTable',
 			url:'user/getUserList',
 			page: true,
@@ -18,13 +18,13 @@ $(function(){
 				};
 			},
 			cols: [[
-					 {type: 'checkbox', width: 100, align: "left"}
-					,{field:'id', title:'ID', hide: true}
-					,{field:'userTypeStr', title:'用户类型'}
-					,{field:'userName', title:'用户名', edit: 'text'}
-					,{field:'createTime', title:'创建时间'}
-					,{field:'lastLoginTime', title:'最后更新时间',}
-					,{fixed: 'right', title:'操作', toolbar: '#operateButton',width: 150}
+					{field:'id', title:'ID', hide: true},
+					{field:'userTypeStr', title:'用户类型'},
+					{field:'phone', title:'手机号'},
+					{field:'userName', title:'账号'},
+					{field:'createTime', title:'创建时间'},
+					{field:'lastLoginTime', title:'最后更新时间',},
+					{fixed: 'right', title:'操作', toolbar: '#operateButton',width: 150}
 			]],
 			
 		});
@@ -51,9 +51,22 @@ $(function(){
 			var data = obj.data;
 			//console.log(obj)
 			if(obj.event === 'del'){
-				layer.confirm('真的删除行么', function(index){
-					obj.del();
-					layer.close(index);
+				layer.confirm('确认删除该用户吗?', function(index){
+					$.ajax({  
+						url:'user/deleteUser',  
+						type:'post',      
+						data: {
+							userId: obj.data.id
+						}, 
+						dataType:'json',  
+						success:function(data){  
+							if (data.code == 200) {
+								layer.msg("删除成功");
+								obj.del();
+								layer.close(index);
+							}
+						}  
+					}); 
 				});
 			} else if(obj.event === 'edit'){
 				layer.prompt({
@@ -72,16 +85,82 @@ $(function(){
 	 * 新增用户模态框
 	 */
 	function addUser() {
-		layer.open({
+		$("#addUserTemplate input.layui-input").val("");//清空数据
+		let addUserIndex = layer.open({
 			id: "addUserModal",
 			title:"新增用户",
 			type: 1,
-			area: ["500px","340px"],
+			area: ["520px","420px"],
 			resize: false,
 			move: false,
 			btn: ['确定', '取消'],
-			content: $('#addUserTemplate') //这里content是一个普通的String
+			content: $('#addUserTemplate'), //这里content是一个普通的String
+			btn1: function(){
+				let phone = $("#addUserTemplate input[name='phone']").val();
+				let userName = $("#addUserTemplate input[name='userName']").val();
+				let password = $("#addUserTemplate input[name='password']").val();
+				if (phone == undefined || phone == "" || phone.trim() == "") {
+					layer.msg('手机号不能为空');
+					return false;
+				} else {
+			        let reg = /^1[34578]\d{9}$/;
+			        if (!reg.test(phone)) {
+			        	layer.msg('手机号格式不正确');
+						return false;
+			        }
+				}
+				if (userName == undefined || userName == "" || userName.trim() == "") {
+					layer.msg('账号不能为空');
+					return false;
+				} else {
+					var nameReg = /^[a-zA-Z]{1}([a-zA-Z0-9]|[._]){3,19}$/;
+					if(!nameReg.test(userName)) { 
+						layer.msg('账号只支持输入4-20个以字母开头、数字、“_”、“.”的字串！'); 
+						return false; 
+					} 
+				}
+				if (password == undefined || password == "" || password.trim() == "") {
+					layer.msg('密码不能为空');
+					return false;
+				} else {
+					let patrn = /^[0-9a-zA-Z_\@\\#\$\%\&\\*\\+\-]{6,12}$/;
+					if(!patrn.test(password)) { 
+						layer.msg('密码不符合格式要求，字符限制6-12个<br/>【字母、数字、@#$%&*_+-】'); 
+						return false; 
+					} 
+				}
+				let userType = $("#addUserTemplate select[name='userType']").val();
+				let formParam = {
+					user: {
+						phone: phone,
+						userName : userName,
+						password: password,
+						userType: userType
+					}
+				};
+				$.ajax({  
+					url:'user/addUser',  
+					type:'post',      
+					data: JSON.stringify(formParam), 
+					contentType: "application/json; charset=utf-8",
+					dataType:'json',  
+					success:function(data){  
+						if (data.code == 1002) {
+							layer.msg(data.msg); 
+							return false;
+						} else if (data.code == 200) {
+							layer.msg("添加成功"); 
+							layer.close(addUserIndex);
+						}
+					}  
+				});  
+			},
+			success: function(layero, index){
+				$("#addUserTemplate select[name='userType']").val("1");
+				layui.form.render('select');
+			}
 		});
+		
 	}
 
 });

@@ -8,21 +8,30 @@ package com.hs.model;
  * @version: v1.0
  */
 public class User {
-	
-	private Integer id;//主键
-	private String userName;//用户名
-	private String password;//密码
-	private Integer userType;//类型
-	private String userTypeStr;//类型字符串
-	private String createTime;//创建时间
-	private String lastLoginTime;//最后更新时间
 
+	private Integer id;// 主键
+	private String phone;
+	private String userName;// 用户名
+	private String password;// 密码
+	private Integer userType;// 类型
+	private String userTypeStr;// 类型字符串
+	private String createTime;// 创建时间
+	private String lastLoginTime;// 最后更新时间
+	private Integer status;//是否删除（0 未删除 1已删除）
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getUserName() {
@@ -49,6 +58,14 @@ public class User {
 		this.userType = userType;
 	}
 
+	public String getUserTypeStr() {
+		return userTypeStr;
+	}
+
+	public void setUserTypeStr(String userTypeStr) {
+		this.userTypeStr = userTypeStr;
+	}
+
 	public String getCreateTime() {
 		return createTime;
 	}
@@ -65,19 +82,12 @@ public class User {
 		this.lastLoginTime = lastLoginTime;
 	}
 
-	public String getUserTypeStr() {
-		return userTypeStr;
+	public Integer getStatus() {
+		return status;
 	}
 
-	public void setUserTypeStr(String userTypeStr) {
-		this.userTypeStr = userTypeStr;
-	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", userType=" + userType
-				+ ", userTypeStr=" + userTypeStr + ", createTime=" + createTime + ", lastLoginTime=" + lastLoginTime
-				+ "]";
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	

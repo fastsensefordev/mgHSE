@@ -152,6 +152,11 @@ html, body {
 	padding: 30px 40px;
 }
 /*小导航开始*/
+.layui-body .define-nav {
+	padding-left: 15px;
+	padding-bottom: 10px;
+}
+
 .define-nav {
 	float: left;
 	width: 100%;
@@ -200,7 +205,7 @@ html, body {
 .content-body {
 	float: left;
 	width: 100%;
-	min-height: calc(100% - 35px);
+	min-height: calc(100% - 45px);
 	background: #fff;
 	padding: 20px;
 }
@@ -265,6 +270,7 @@ html, body {
 
 .layui-table-tool {
 	background: transparent;
+	padding: 5px 0 10px;
 }
 
 .layui-btn {
@@ -284,7 +290,7 @@ html, body {
 }
 
 .layui-layer-page .layui-layer-content {
-	padding: 30px 50px 0 0px;
+	padding: 30px 50px 0 10px;
 	display: flex;
 	align-items: center;
 }
@@ -307,4 +313,12 @@ html, body {
 .layui-form-item {
 	margin-bottom: 20px;
 }
+.layui-form-label {
+    width: 100px;
+}
 /***新增用户模态框end**/
+
+.layui-layer-msg {
+    background: rgba(0, 0, 0, 0.62);
+    color: #fff;
+}

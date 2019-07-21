@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hs.mapper.UserMapper">
+
+	<!-- 获取用户列表 -->
 	<select id="getUserList" resultType="com.hs.model.User">
 		select 	id,
+				phone,
 				userName,
 				case when userType=0 then "超级管理员"  else "管理员" end userTypeStr,
 				DATE_FORMAT(createTime,"%Y-%m-%d %H:%i:%s") createTime,
-			  DATE_FORMAT(lastLoginTime,"%Y-%m-%d %H:%i:%s") lastLoginTime
+			    DATE_FORMAT(lastLoginTime,"%Y-%m-%d %H:%i:%s") lastLoginTime
 		from tbl_user
+		where status = 0
 		order by userType,createTime desc
 	</select>
-
+	<!-- 查询用户根据条件 -->
+	<select id="getUserByNameOrPhone" resultType="com.hs.model.User">
+		select 	id,
+				phone,
+				userName,
+				case when userType=0 then "超级管理员"  else "管理员" end userTypeStr,
+				DATE_FORMAT(createTime,"%Y-%m-%d %H:%i:%s") createTime,
+			    DATE_FORMAT(lastLoginTime,"%Y-%m-%d %H:%i:%s") lastLoginTime
+		from tbl_user
+		where status = 0 and (userName = #{userName} or phone = #{phone}) limit 1
+	</select>
+	<!-- 新增用户 -->
+	<insert id="addUser" parameterType="com.hs.model.User" useGeneratedKeys="true" keyProperty="id">
+		insert into tbl_user(phone,userName,password,userType,createTime)
+		values (#{phone},#{userName},#{password}, #{userType}, now())   
+	</insert>
+	
+	<!-- 用户登录日志 -->
+	<insert id="tbl_login_log" parameterType="com.hs.model.LoginUserLog" useGeneratedKeys="true" keyProperty="id">
+		insert into tbl_user(uId,loginTime,ip)
+		values (#{uId}, now(), ip)   
+	</insert>
+	
+	<!-- 更新用户 -->
+	<update id="updateUser" parameterType="com.hs.model.User">
+        update tbl_user
+        <set>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="userName != null">userName = #{userName},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="status != null">status = #{status}</if>
+            <if test="lastLoginTime != null">lastLoginTime = now()</if>
+        </set>
+        where id = #{id}
+	</update>
+	
 </mapper>
