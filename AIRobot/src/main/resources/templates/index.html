@@ -10,23 +10,14 @@
 <body class="layui-layout-body">
 	<div class="layui-layout layui-layout-admin">
 		<div th:include="header :: header"></div> 
-		<div class="layui-body">
-			<!-- 内容主体区域 -->
-			<div class="define-nav">
-				<span class="layui-breadcrumb" lay-separator="|">
-				  <a href="">我的可视化</a>
-				  <a href="">可视化管理</a>
-				</span>
-			</div>
+		<div class="layui-body dashboard">
 			<!-- 内容主题开始 -->
 			<div class="content-body">
-				<div class="content-body-header">
-					<span class="title">可视化</span>
-				</div>
 				<div class="content-body-detail">
-					<div>
-						<table class="layui-hide" id="myTable"></table>
+					<div class="screen-full">
+						<i class="icon-fullscreen max-full" id="fullScreen"></i>
 					</div>
+					<iframe id="dashboardContent" src="dashboard"></iframe>
 				</div>
 			</div>
 			<!-- 内容主题结束 -->

@@ -37,7 +37,7 @@ html, body {
 	right: 0;
 	height: 60px;
 	color: #333;
-	box-shadow: 20px 20px 30px #eaeaea;
+	box-shadow: 0px 10px 5px #eaeaea;
 }
 
 .layui-layout-admin .layui-side {
@@ -205,7 +205,7 @@ html, body {
 .content-body {
 	float: left;
 	width: 100%;
-	min-height: calc(100% - 45px);
+	height: calc(100% - 45px);
 	background: #fff;
 	padding: 20px;
 }
@@ -221,8 +221,26 @@ html, body {
 }
 
 .content-body-detail {
+    float: left;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.layui-layout-admin .layui-body.dashboard {
+	padding: 20px;
+}
+
+.dashboard .content-body {
+	padding: 0;
+	height: 100%;
+}
+
+.content-body-detail iframe {
 	float: left;
 	width: 100%;
+	border: 0px;
+	height: 100%;
 }
 /*页面主题内容结束*/
 
@@ -313,12 +331,42 @@ html, body {
 .layui-form-item {
 	margin-bottom: 20px;
 }
+
 .layui-form-label {
-    width: 100px;
+	width: 100px;
 }
 /***新增用户模态框end**/
-
 .layui-layer-msg {
-    background: rgba(0, 0, 0, 0.62);
-    color: #fff;
+	background: rgba(0, 0, 0, 0.62);
+	color: #fff;
+}
+/**全屏**/
+.screen-full {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	width: 50px;
+	height: 50px;
+	background: rgba(255, 255, 255, 0.21);
+	align-items: center;
+	display: flex;
+	border-radius: 0px 0 0 50px;
+}
+
+.screen-full i.icon-fullscreen {
+    display: inline-block;
+    width: 21px;
+    height: 21px;
+    position: absolute;
+    background: url(../img/icon_fullscreen.png) no-repeat;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+.screen-full i.icon-fullscreen.max-full {
+	position: 0 0;
+}
+
+.screen-full i.icon-fullscreen.min-full {
+	background-position: 0 -21px;
 }

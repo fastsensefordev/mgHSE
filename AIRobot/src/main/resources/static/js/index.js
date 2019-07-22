@@ -1,23 +1,47 @@
 $(function(){
-	layui.use('element', function() {
-		var element = layui.element;
-		var table = layui.table;
-		table.render({
-			elem: '#myTable',
-			url:'/demo/table/user/',
-			cols: [[
-					{type:'checkbox'}
-					,{field:'id', width:80, title: 'ID', sort: true}
-					,{field:'username', width:80, title: '用户名'}
-					,{field:'sex', width:80, title: '性别', sort: true}
-					,{field:'city', width:80, title: '城市'}
-					,{field:'sign', title: '签名', minWidth: 100}
-					,{field:'experience', width:80, title: '积分', sort: true}
-					,{field:'score', width:80, title: '评分', sort: true}
-					,{field:'classify', width:80, title: '职业'}
-					,{field:'wealth', width:135, title: '财富', sort: true}
-					]]
-			,page: true
-		});
+	$("#fullScreen").on("click",function(){
+		if ($(this).hasClass("max-full")) {
+			fullScreen($(".dashboard .content-body-detail")[0]);
+			$(this).removeClass("max-full");
+			$(this).addClass("min-full");
+		} else {
+			$(this).removeClass("min-full");
+			$(this).addClass("max-full");
+			exitFullScreen($(".dashboard .content-body-detail")[0]);
+		}
 	});
+
+	function fullScreen(el) {
+		var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen,
+		wscript;
+		if(typeof rfs != "undefined" && rfs) {
+			rfs.call(el);
+			return;
+		}
+		if(typeof window.ActiveXObject != "undefined") {
+			wscript = new ActiveXObject("WScript.Shell");
+			if(wscript) {
+				wscript.SendKeys("{F11}");
+			}
+		}
+	}
+
+	//退出全屏
+	function exitFullScreen(el) {
+		var el= document,
+		cfs = el.cancelFullScreen || el.webkitCancelFullScreen || el.mozCancelFullScreen || el.exitFullScreen,
+		wscript;
+
+		if (typeof cfs != "undefined" && cfs) {
+			cfs.call(el);
+			return;
+		}
+
+		if (typeof window.ActiveXObject != "undefined") {
+			wscript = new ActiveXObject("WScript.Shell");
+			if (wscript != null) {
+				wscript.SendKeys("{F11}");
+			}
+		}
+	}
 });
