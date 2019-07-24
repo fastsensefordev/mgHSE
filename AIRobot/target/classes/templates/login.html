@@ -3,8 +3,8 @@
 <head>
 <title>Sign In</title>
 <link rel="stylesheet" th:href="@{/static/assets/layui/css/layui.css}">
-<link rel="stylesheet" type="text/css"
-	th:href="@{/static/css/login.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/static/css/common.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/static/css/login.css}" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
@@ -32,7 +32,7 @@
 		        </div>
 		        <div class="layui-form-item" style="margin-bottom: 20px;">
 		          <input type="checkbox" name="remember" title="记住账号"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>记住账号</span><i class="layui-icon layui-icon-ok"></i></div>
-		          <a href="forget.html" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>
+		          <a href="javascript:;" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;" id="forgetPassword">忘记密码？</a>
 		        </div>
 		        <div class="layui-form-item">
 		          <button class="layui-btn layui-btn-fluid">登 入</button>
@@ -48,6 +48,28 @@
 			Copyright © 2019 Huashi All Rights Reserved. 深圳华视威讯智能科技有限公司 版权所有
 		</div>
 	</div>
-	
+	<script th:src="@{/static/assets/jquery/jquery-3.3.1.min.js}"></script>
+	<script th:src="@{/static/assets/layui/layui.js}"></script>
+	<script th:src="@{/static/js/login.js}"></script>	
+	<script>
+		//JavaScript代码区域
+		layui.use('element', function() {
+			var element = layui.element;
+		});
+	</script>
 </body>
+<div class="modal-container layui-form" id="forgetPasswordTemplate">
+	<div class="layui-form-item">
+		<label class="layui-form-label">公钥</label>
+		<div class="layui-input-block">
+			<input type="password" name="userName" lay-verify="title" autocomplete="off" placeholder="请输入公钥" class="layui-input">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">密码</label>
+		<div class="layui-input-block">
+			<input type="password" name="password" lay-verify="required" lay-reqtext="密码不能为空" placeholder="请输入密码" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+</div>
 </html>

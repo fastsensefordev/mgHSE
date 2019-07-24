@@ -301,41 +301,7 @@ html, body {
 }
 /***layui table 分页样式复写end**/
 
-/***新增用户模态框start**/
-.modal-container {
-	float: left;
-	width: 100%;
-}
 
-.layui-layer-page .layui-layer-content {
-	padding: 30px 50px 0 10px;
-	display: flex;
-	align-items: center;
-}
-
-.modal-container .layui-layer-title {
-	border-bottom: 1px solid #F2F4FA;
-	background-color: #F2F4FA;
-}
-
-.layui-layer-btn {
-	text-align: center;
-}
-
-.layui-layer-btn a {
-	height: 34px;
-	line-height: 34px;
-	padding: 0 20px;
-}
-
-.layui-form-item {
-	margin-bottom: 20px;
-}
-
-.layui-form-label {
-	width: 100px;
-}
-/***新增用户模态框end**/
 .layui-layer-msg {
 	background: rgba(0, 0, 0, 0.62);
 	color: #fff;

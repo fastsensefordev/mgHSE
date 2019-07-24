@@ -1,5 +1,5 @@
 $(function(){
-
+	initClock();
 	initSafeChart();
 	initIllegalChart();
 	initDangerChart();
@@ -13,6 +13,83 @@ $(function(){
 		initComplexChart01();
 		initComplexChart02();
 	});
+	
+	function initClock() {
+		/*var clock = $('#clock'),
+			alarm = clock.find('.alarm'),
+			ampm = clock.find('.ampm');
+		var alarm_counter = -1;
+		var digit_to_name = 'zero one two three four five six seven eight nine'.split(' ');
+		var digits = {};
+		var positions = [
+			'h1', 'h2', ':', 'm1', 'm2', ':', 's1', 's2'
+		];
+		var digit_holder = clock.find('.digits');
+		$.each(positions, function(){
+			if(this == ':'){
+				digit_holder.append('<div class="dots">');
+			} else{
+				var pos = $('<div>');
+				for(var i=1; i<8; i++){
+					pos.append('<span class="d' + i + '">');
+				}
+				digits[this] = pos;
+				digit_holder.append(pos);
+			}
+
+		});
+		var weekday_names = 'MON TUE WED THU FRI SAT SUN'.split(' '),
+			weekday_holder = clock.find('.weekdays');
+		$.each(weekday_names, function(){
+			weekday_holder.append('<span>' + this + '</span>');
+		});
+		var weekdays = clock.find('.weekdays span');
+		(function update_time(){
+			var now = moment().format("HHmmssdA");
+			digits.h1.attr('class', digit_to_name[now[0]]);
+			digits.h2.attr('class', digit_to_name[now[1]]);
+			digits.m1.attr('class', digit_to_name[now[2]]);
+			digits.m2.attr('class', digit_to_name[now[3]]);
+			digits.s1.attr('class', digit_to_name[now[4]]);
+			digits.s2.attr('class', digit_to_name[now[5]]);
+			var dow = now[6];
+			dow--;
+			if(dow < 0){
+				dow = 6;
+			}
+			weekdays.removeClass('active').eq(dow).addClass('active');
+			ampm.text(now[7]+now[8]);
+			setTimeout(update_time, 1000);
+		})();*/
+		var newTime = '';
+	    getLangDate();
+	}
+	
+	function getLangDate(){
+        var dateObj = new Date(); //表示当前系统时间的Date对象
+        var year = dateObj.getFullYear(); //当前系统时间的完整年份值
+        var month = dateObj.getMonth()+1; //当前系统时间的月份值
+        var date = dateObj.getDate(); //当前系统时间的月份中的日
+        var day = dateObj.getDay(); //当前系统时间中的星期值
+        var weeks = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+        var week = weeks[day]; //根据星期值，从数组中获取对应的星期字符串
+        var hour = dateObj.getHours(); //当前系统时间的小时值
+        var minute = dateObj.getMinutes(); //当前系统时间的分钟值
+        var second = dateObj.getSeconds(); //当前系统时间的秒钟值
+        var timeValue = "" +((hour >= 12) ? "PM" : "AM" ); //当前时间属于上午、晚上还是下午
+        newTime = dateFilter(hour) + ":" + dateFilter(minute) + ":" + dateFilter(second);
+        newDate = dateFilter(year) + "-" +dateFilter(month) + "-" + dateFilter(date) + " ";
+        document.getElementById("nowTime").innerHTML = newTime;
+        document.getElementById("nowDate").innerHTML = newDate + " " + week + " " + timeValue;
+        setTimeout(getLangDate,1000);
+    }
+	
+	function dateFilter(date){ //值小于10时，在前面补0
+		if(date < 10){
+			return "0" + date;
+		}
+		return date;
+	}
 	/**
 	 * 安全帽
 	 */
