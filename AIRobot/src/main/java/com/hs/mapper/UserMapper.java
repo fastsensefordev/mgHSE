@@ -1,6 +1,7 @@
 package com.hs.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import com.hs.model.LoginUserLog;
 import com.hs.model.User;
@@ -51,6 +52,31 @@ public interface UserMapper {
 	 * @return int
 	 */
 	public User getUserByNameOrPhone(User user);
+	/**
+	 * @desc: 获取超级密码
+	 * @author: kpchen
+	 * @createTime: 2019年7月26日 下午8:58:45
+	 * @history:
+	 * @return String
+	 */
+	public String getAdminKey();
+	/**
+	 * @desc: 根据条件查询用户
+	 * @author: kpchen
+	 * @createTime: 2019年7月26日 下午9:09:56
+	 * @history:
+	 * @param paramMap
+	 * @return User
+	 */
+	public User getUserByFifter(Map<String, Object> paramMap);
+	/**
+	 * @desc: 修改密码
+	 * @author: kpchen
+	 * @createTime: 2019年7月26日 下午9:12:47
+	 * @history:
+	 * @param retrieveMap void
+	 */
+	public int retrievePassword(Map<String, Object> retrieveMap);
 	
 
 }

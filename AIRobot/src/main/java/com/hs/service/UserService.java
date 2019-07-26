@@ -2,6 +2,7 @@ package com.hs.service;
 
 import com.hs.request.AddUserRequest;
 import com.hs.request.GetUserListRequest;
+import com.hs.request.RetrievePasswordRequest;
 import com.hs.response.ResultResponse;
 
 /**
@@ -49,6 +50,15 @@ public interface UserService {
 	 * @return ResultResponse
 	 */
 	public ResultResponse deleteUser(Integer userId);
+	/**
+	 * @desc: 找回密码
+	 * @author: kpchen
+	 * @createTime: 2019年7月26日 下午8:56:59
+	 * @history:
+	 * @param request
+	 * @return ResultResponse
+	 */
+	public ResultResponse retrievePassword(RetrievePasswordRequest request);
 
 }
 

@@ -8,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hs.model.User;
 import com.hs.request.AddUserRequest;
 import com.hs.request.GetUserListRequest;
+import com.hs.request.RetrievePasswordRequest;
+import com.hs.response.ResultEnum;
 import com.hs.response.ResultResponse;
 import com.hs.response.ResultUtil;
 import com.hs.service.UserService;
@@ -136,6 +137,25 @@ public class UserController {
 		}
 		ResultResponse resopnse = userService.updateUser(request);
 		return resopnse;
+	}
+	
+	
+	@ApiOperation(value="用户管理", notes="找回密码")
+	@RequestMapping("retrievePassword")
+	public ResultResponse retrievePassword(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
+			@RequestBody RetrievePasswordRequest request) {
+		if (StringUtils.isEmpty(request.getUserName())) {
+			return ResultUtil.error(ResultEnum.VALUE_EMPTY, "账号不能为空");
+		}
+		if (StringUtils.isEmpty(request.getAdminKey())) {
+			return ResultUtil.error(ResultEnum.VALUE_EMPTY, "超级密码不能为空");
+		}
+		if (StringUtils.isEmpty(request.getPassword())) {
+			return ResultUtil.error(ResultEnum.VALUE_EMPTY, "新密码不能为空");
+		}
+		ResultResponse resopnse = userService.retrievePassword(request);
+		return resopnse;
+		
 	}
 }
 

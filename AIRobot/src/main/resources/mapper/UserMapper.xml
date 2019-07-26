@@ -49,5 +49,35 @@
         </set>
         where id = #{id}
 	</update>
+	<!-- 查询超级密码公钥 -->
+	<select id="getAdminKey" resultType="String">
+		select adminKey from tbl_admin_key limit 1
+	</select>
+	
+	<!-- 查询用户根据条件 -->
+	<select id="getUserByFifter" resultType="com.hs.model.User">
+		select 	id,
+				phone,
+				userName,
+				case when userType=0 then "超级管理员"  else "管理员" end userTypeStr,
+				DATE_FORMAT(createTime,"%Y-%m-%d %H:%i:%s") createTime,
+			    DATE_FORMAT(lastLoginTime,"%Y-%m-%d %H:%i:%s") lastLoginTime
+		from tbl_user
+		<where>
+			and status = 0
+			<if test="userName != ''">
+				and userName = #{userName}
+			</if>
+		</where>
+		limit 1
+	</select>
+	
+	<update id="retrievePassword" parameterType="map">
+        update tbl_user
+        <set>
+            <if test="password != null">password = #{password},</if>
+        </set>
+        where userName = #{userName}
+	</update>
 	
 </mapper>

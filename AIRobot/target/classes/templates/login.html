@@ -58,17 +58,23 @@
 		});
 	</script>
 </body>
-<div class="modal-container layui-form" id="forgetPasswordTemplate">
+<div class="modal-container layui-form" id="forgetPasswordTemplate" style="display: none;">
+	<div class="layui-form-item">
+		<label class="layui-form-label">账号</label>
+		<div class="layui-input-block">
+			<input type="text" name="userName"  placeholder="请输入账号" autocomplete="off" class="layui-input"/>
+		</div>
+	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">公钥</label>
 		<div class="layui-input-block">
-			<input type="password" name="userName" lay-verify="title" autocomplete="off" placeholder="请输入公钥" class="layui-input">
+			<input type="password" name="adminKey" autocomplete="off" placeholder="请输入公钥" class="layui-input"/>
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">密码</label>
 		<div class="layui-input-block">
-			<input type="password" name="password" lay-verify="required" lay-reqtext="密码不能为空" placeholder="请输入密码" autocomplete="off" class="layui-input">
+			<input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input"/>
 		</div>
 	</div>
 </div>

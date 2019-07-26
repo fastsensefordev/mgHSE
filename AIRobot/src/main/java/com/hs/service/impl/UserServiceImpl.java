@@ -1,6 +1,7 @@
 package com.hs.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import com.hs.mapper.UserMapper;
 import com.hs.model.User;
 import com.hs.request.AddUserRequest;
 import com.hs.request.GetUserListRequest;
+import com.hs.request.RetrievePasswordRequest;
 import com.hs.response.ResultEnum;
 import com.hs.response.ResultResponse;
 import com.hs.response.ResultUtil;
@@ -103,6 +105,37 @@ public class UserServiceImpl implements UserService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResultUtil.error("删除失败");
+		}
+	}
+	/**
+	 * 找回密码
+	 */
+	@Override
+	public ResultResponse retrievePassword(RetrievePasswordRequest request) {
+		try {
+			String adminKey = userMapper.getAdminKey(); //获取超级密码
+			if (!request.getAdminKey().equals(adminKey)) {
+				return ResultUtil.error(ResultEnum.UNAUTHORIZED,"超级密不正确");
+			} else {
+				Map<String, Object> paramMap = new HashMap<>();
+				paramMap.put("userName", request.getUserName());
+				User existUser = userMapper.getUserByFifter(paramMap);
+				if (null == existUser) {
+					return ResultUtil.error(ResultEnum.UNAUTHORIZED,"该用户不存在");
+				} else {
+					Map<String, Object> retrieveMap = new HashMap<>();
+					retrieveMap.put("userName", request.getUserName());
+					retrieveMap.put("password", PasswordUtils.AESEncode(request.getPassword()));
+					int affectRows = userMapper.retrievePassword(retrieveMap);
+					if (affectRows == 0) {
+						return ResultUtil.error(ResultEnum.UNAUTHORIZED,"操作失败，请稍后重试");
+					}
+				}
+			}
+			return ResultUtil.success();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResultUtil.error("操作失败");
 		}
 	}
 
