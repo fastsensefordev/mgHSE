@@ -12,6 +12,8 @@ public class Constants {
 	
 	public static final Integer USER_STATUS_DEFAULT = 0;//用户默认状态
 	public static final Integer USER_STATUS_DELETE = 1;//用户默认状态 已删除
+
+	public static final String DOMAIN_NAME = "domainName";
 }
 
 	

@@ -40,3 +40,19 @@
     width: calc(80% - 30px);
 }
 /***新增用户模态框end**/
+
+.layui-nav .layui-nav-item a.icon-logoff {
+    display: inline-block;
+    float: right;
+    width: 24px;
+    height: 24px;
+    background: url(../img/logoff.png) no-repeat;
+    margin-top: 20px;
+    background-position: 0 0;
+    padding: 0;
+    margin-left: 10px;
+    cursor: pointer
+}
+.layui-nav-bar {
+	display: none !important;
+}

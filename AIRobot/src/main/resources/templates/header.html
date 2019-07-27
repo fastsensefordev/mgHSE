@@ -15,15 +15,11 @@
 		</div>
 		<div class="layui-head-title">
 			<ul class="layui-nav layui-layout-right">
-				<li class="layui-nav-item"><i class="item-icon-search"></i></li>
-				<li class="layui-nav-item"><a href="javascript:;"> <img
-						src="http://t.cn/RCzsdCq" class="layui-nav-img" /> <span>admin</span>
-				</a>
-					<dl class="layui-nav-child">
-						<dd>
-							<a href="">退出登录</a>
-						</dd>
-					</dl></li>
+				<li class="layui-nav-item">
+						<img th:src="@{/static/img/boy.png}" class="layui-nav-img" /> 
+						<span th:text="${session.domainName}"></span>
+						<a class="icon-logoff" href="logoff" title="退出登录"></a>
+				</li>
 			</ul>
 		</div>
 	</div>

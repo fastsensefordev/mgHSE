@@ -1,5 +1,37 @@
 $(function(){
 	layui.use('layer',function () { 
+		$("#loginBtn").on("click",function(){
+			let userName = $("#LAY-user-login-username").val();
+			let password = $("#LAY-user-login-password").val();
+			if (userName == undefined || userName == "" || userName.trim() == "") {
+				layer.msg('账号不能为空');
+				return false;
+			}
+			if (password == undefined || password == "" || password.trim() == "") {
+				layer.msg('密码不能为空');
+				return false;
+			}
+			$.ajax({  
+				url:'loginBy',  
+				type:'post',      
+				data: {
+					"userName": userName,
+					"password": password
+				}, 
+				dataType:'json',  
+				success:function(data){  
+					if (data.code == 1005 || data.code == 401) {
+						layer.msg(data.msg); 
+						return false;
+					} else if (data.code == 200) {
+						window.location.href = "index";
+					}
+				}  
+			});  
+		});
+		/**
+		 * 找回密码
+		 */
 		$("#forgetPassword").on("click",function(){
 			$("#forgetPasswordTemplate input").val("");
 			let addUserIndex = layer.open({

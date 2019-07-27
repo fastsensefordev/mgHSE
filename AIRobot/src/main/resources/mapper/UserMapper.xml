@@ -19,6 +19,7 @@
 		select 	id,
 				phone,
 				userName,
+				password,
 				case when userType=0 then "超级管理员"  else "管理员" end userTypeStr,
 				DATE_FORMAT(createTime,"%Y-%m-%d %H:%i:%s") createTime,
 			    DATE_FORMAT(lastLoginTime,"%Y-%m-%d %H:%i:%s") lastLoginTime
@@ -71,7 +72,7 @@
 		</where>
 		limit 1
 	</select>
-	
+	<!-- 修改密码 -->
 	<update id="retrievePassword" parameterType="map">
         update tbl_user
         <set>
