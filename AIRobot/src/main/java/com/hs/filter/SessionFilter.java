@@ -30,7 +30,7 @@ public class SessionFilter implements Filter {
         HttpSession session = request.getSession();
         String uri = request.getRequestURI();
         String domainName = (String) session.getAttribute(Constants.DOMAIN_NAME);
-        if (uri.startsWith("/robot/static") || uri.startsWith("/static") || uri.contains("login") || uri.contains("retrievePassword")) {
+        if (uri.startsWith("/robot/static") || uri.startsWith("/static") || uri.contains("login") || uri.contains("retrievePassword") || uri.contains("dashboard")) {
         	filterChain.doFilter(request, response);
         	return;
         }
