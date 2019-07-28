@@ -22,6 +22,7 @@ import com.hs.response.ResultUtil;
 import com.hs.service.UserService;
 import com.hs.util.Constants;
 import com.hs.util.PasswordUtils;
+import com.hs.util.SessionUtils;
 
 /**
  * @desc: 用户管理service
@@ -137,6 +138,24 @@ public class UserServiceImpl implements UserService {
 			e.printStackTrace();
 			return ResultUtil.error("操作失败");
 		}
+	}
+	/**
+	 * @desc 获取当前登录用户
+	 */
+	@Override
+	public User getLoginUser() {
+		try {
+			String domainName = SessionUtils.getLoginUser();
+			User user = new User();
+			user.setUserName(domainName);
+			user.setPhone(domainName);
+			User existUser = userMapper.getUserByNameOrPhone(user);
+			return existUser;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 
 }

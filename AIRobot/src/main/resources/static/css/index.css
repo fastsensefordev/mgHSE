@@ -172,7 +172,6 @@ html, body {
 	float: left;
 	width: 100%;
 	height: 40px;
-	border: 1px solid red;
 }
 
 .content-container {
@@ -221,10 +220,10 @@ html, body {
 }
 
 .content-body-detail {
-    float: left;
-    width: 100%;
-    height: 100%;
-    position: relative;
+	float: left;
+	width: 100%;
+	height: 100%;
+	position: relative;
 }
 
 .layui-layout-admin .layui-body.dashboard {
@@ -300,8 +299,6 @@ html, body {
 	height: auto;
 }
 /***layui table 分页样式复写end**/
-
-
 .layui-layer-msg {
 	background: rgba(0, 0, 0, 0.62);
 	color: #fff;
@@ -311,24 +308,36 @@ html, body {
 	position: absolute;
 	right: 0px;
 	top: 0px;
-	width: 50px;
-	height: 50px;
-	background: rgba(255, 255, 255, 0.21);
+	width: 69px;
+	height: 40px;
+	/* background: rgba(255, 255, 255, 0.21); */
 	align-items: center;
 	display: flex;
-	border-radius: 0px 0 0 50px;
+	/* border-radius: 0px 0 0 50px; */
+}
+
+.screen-full i.icon-saveas {
+	display: inline-block;
+	width: 21px;
+	height: 21px;
+	position: absolute;
+	background: url(../img/icon_saveas.png) no-repeat;
+	right: 40px;
+	top: 8px;
+	cursor: pointer
 }
 
 .screen-full i.icon-fullscreen {
-    display: inline-block;
-    width: 21px;
-    height: 21px;
-    position: absolute;
-    background: url(../img/icon_fullscreen.png) no-repeat;
-    right: 10px;
-    top: 10px;
-    cursor: pointer;
+	display: inline-block;
+	width: 21px;
+	height: 21px;
+	position: absolute;
+	background: url(../img/icon_fullscreen.png) no-repeat;
+	right: 10px;
+	top: 10px;
+	cursor: pointer;
 }
+
 .screen-full i.icon-fullscreen.max-full {
 	position: 0 0;
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.mapper.TemplateMapper">
+
+	<!-- 新增模板 -->
+	<insert id="saveTemplate" parameterType="com.hs.model.TemplateModel" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO `tbl_template` (`templateName`, `href`, `createTime`, `createUser`,`userId`, `pid`, `status`) 
+		VALUES (#{templateName}, #{href}, now(), #{createUser}, #{userId}, 0, #{status})
+	</insert>
+	
+	<!-- 批量新增模板 -->
+	<insert id="saveTemplateList" parameterType="com.hs.model.TemplateModel" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO `tbl_template` (`templateName`, `href`, `createTime`, `createUser`,`userId` , `pid`, `status`) 
+		VALUES
+		<foreach collection="list" item="item" separator=",">
+      		(#{item.templateName}, #{item.href}, now(), #{item.createUser}, #{item.userId}, #{item.pid}, #{item.status})
+        </foreach>
+	</insert>
+	
+	<!-- 获取当前用户模板 -->
+	<select id="getTemplateList" resultType="com.hs.model.TemplateModel">
+		select `id`,`templateName`, `href`, `createTime`, `createUser`, `userId`,`pid`, `status`
+			from `tbl_template`
+			where `userId` = #{userId} and `status` = 0
+			
+	</select>
+	
+</mapper>

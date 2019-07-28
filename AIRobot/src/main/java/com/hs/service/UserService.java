@@ -1,5 +1,6 @@
 package com.hs.service;
 
+import com.hs.model.User;
 import com.hs.request.AddUserRequest;
 import com.hs.request.GetUserListRequest;
 import com.hs.request.RetrievePasswordRequest;
@@ -59,6 +60,7 @@ public interface UserService {
 	 * @return ResultResponse
 	 */
 	public ResultResponse retrievePassword(RetrievePasswordRequest request);
+	public User getLoginUser();
 
 }
 

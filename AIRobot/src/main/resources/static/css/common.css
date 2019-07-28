@@ -33,26 +33,65 @@
 .layui-form-label {
 	width: 20%;
 }
+
 .layui-input-block {
-    margin-left: 0;
-    min-height: 36px;
-    float: left;
-    width: calc(80% - 30px);
+	margin-left: 0;
+	min-height: 36px;
+	float: left;
+	width: calc(80% - 30px);
 }
 /***新增用户模态框end**/
-
 .layui-nav .layui-nav-item a.icon-logoff {
-    display: inline-block;
-    float: right;
-    width: 24px;
-    height: 24px;
-    background: url(../img/logoff.png) no-repeat;
-    margin-top: 20px;
-    background-position: 0 0;
-    padding: 0;
-    margin-left: 10px;
-    cursor: pointer
+	display: inline-block;
+	float: right;
+	width: 24px;
+	height: 24px;
+	background: url(../img/logoff.png) no-repeat;
+	margin-top: 20px;
+	background-position: 0 0;
+	padding: 0;
+	margin-left: 10px;
+	cursor: pointer
 }
+
 .layui-nav-bar {
 	display: none !important;
+}
+
+.tree-table-content .treeTable-icon .layui-icon-file:before {
+	content: "";
+}
+
+/** 未展开 */
+.tree-table-content .treeTable-icon .layui-icon-layer:before {
+	content: "";
+}
+
+/** 展开 */
+.tree-table-content .treeTable-icon.open .layui-icon-layer:before {
+	content: "";
+}
+
+.tree-table-content .layui-table-view .layui-table {
+	width: 100%;
+}
+
+.search-bar-body {
+	float: right;
+}
+
+.search-bar-body input {
+	height: 35px;
+	width: 220px;
+	padding: 0 0 0 10px;
+	border: 1px solid #ddd;
+}
+
+.search-bar-body .layui-btn {
+	margin-left: -5px;
+	padding: 0 20px;
+	height: 35px;
+	margin-top: -2px;
+	line-height: 35px;
+}
 }

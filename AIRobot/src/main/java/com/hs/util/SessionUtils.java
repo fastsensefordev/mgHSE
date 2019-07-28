@@ -38,6 +38,19 @@ public class SessionUtils {
 		HttpSession session = httpServletRequest.getSession();
 		session.setAttribute(key, value);
 	}
+	/**
+	 * @desc: 获取当前登录用户
+	 * @author: kpchen
+	 * @createTime: 2019年7月28日 上午10:14:13
+	 * @history:
+	 * @return String
+	 */
+	public static String getLoginUser() {
+		HttpServletRequest httpServletRequest = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+		HttpSession session = httpServletRequest.getSession();
+		String domainName = (String) session.getAttribute(Constants.DOMAIN_NAME);
+		return domainName;
+	}
 	
 	
 	
