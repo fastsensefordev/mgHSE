@@ -4,33 +4,66 @@ $(function(){
 	}).extend({
 		treetable: 'treetable-lay/treetable'
 	}).use(['treetable'], function () {
-		var treetable = layui.treetable;
-		 // 渲染表格
-	    treetable.render({
-	        treeColIndex: 1,          // treetable新增参数
-	        treeSpid: 0,             // treetable新增参数
-	        treeIdName: 'id',       // treetable新增参数
-	        treePidName: 'pid',     // treetable新增参数
-	        treeDefaultClose: true,   // treetable新增参数
-	        treeLinkage: true,        // treetable新增参数
-	        elem: '#table1',
-	        url: 'template/getTemplateList',
-	        cols: [[
-	            {type: 'numbers'},
-	            {field: 'templateName', title: '链接名称'},
-	            {field: 'href', title: '链接'},
-	            {field: 'createTime', title: '创建时间'},
-	            {title: '操作',
-	             templet: function(d){
-	            	if (d.isParent) {
-	            		return '<a class="layui-btn layui-btn-xs table-btn" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>'
-	      					  +'<a class="layui-btn layui-btn-danger layui-btn-xs table-btn" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>';
-	            	} else {
-	            		return '';
-	            	}
-				 }}
-	        ]]
+		initTable();
+		function initTable() {
+			var treetable = layui.treetable;// 渲染表格
+		    treetable.render({
+		        treeColIndex: 1,          // treetable新增参数
+		        treeSpid: 0,             // treetable新增参数
+		        treeIdName: 'id',       // treetable新增参数
+		        treePidName: 'pid',     // treetable新增参数
+		        treeDefaultClose: true,   // treetable新增参数
+		        treeLinkage: true,        // treetable新增参数
+		        elem: '#table1',
+		        url: 'template/getTemplateList',
+		        cols: [[
+		            {type: 'numbers'},
+		            {field: 'templateName', title: '链接名称'},
+		            {field: 'href', title: '链接',templet: function(d){
+		            	return "<a href='" + d.href + "' target='_blank'>" + d.href + "</a>";
+		            }},
+		            {field: 'createTime', title: '创建时间'},
+		            {title: '操作',
+		             templet: function(d){
+		            	if (d.isParent) {
+		            		return '<a class="layui-btn layui-btn-xs table-btn" lay-event="edit" mId="'+d.id+'"><i class="layui-icon">&#xe642;</i>编辑</a>'
+		      					  +'<a class="layui-btn layui-btn-danger layui-btn-xs table-btn" lay-event="del" mId="'+d.id+'"><i class="layui-icon">&#xe640;</i>删除</a>';
+		            	} else {
+		            		return '';
+		            	}
+					 }}
+		        ]]
+		    });
+		}
+	    /**
+	     * 
+	     */
+	    $(".tree-table-content").on("click",".table-btn",function(){
+	    	let mid = $(this).attr("mid");
+	    	layer.confirm('确认删除该模板吗?', function(index){
+				$.ajax({  
+					url:'template/deleteTemplate',  
+					type:'post',      
+					data: {
+						id: mid
+					}, 
+					dataType:'json',  
+					success:function(data){  
+						if (data.code == 200) {
+							layer.msg("删除成功");
+							layer.close(index);
+							initTable();
+						} else {
+							layer.msg(data.msg);
+							return false;
+						}
+					}  
+				}); 
+			});
 	    });
+	    /**
+	     * 搜索
+	     */
 	    $('#btn-search').click(function () {
 	    	var keyword = $('#edt-search').val();
 	    	var searchCount = 0;

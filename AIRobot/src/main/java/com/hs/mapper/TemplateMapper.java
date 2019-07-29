@@ -33,6 +33,15 @@ public interface TemplateMapper {
 	 * @return List<TemplateModel>
 	 */
 	public List<TemplateModel> getTemplateList(@Param("userId") Integer userId);
+	/**
+	 * @desc: 删除模板
+	 * @author: kpchen
+	 * @createTime: 2019年7月29日 下午9:44:20
+	 * @history:
+	 * @param id
+	 * @return List<TemplateModel>
+	 */
+	public int deteleTemplate(@Param("id") Integer id);
 
 }
 

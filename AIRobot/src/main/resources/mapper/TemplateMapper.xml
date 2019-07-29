@@ -22,7 +22,10 @@
 		select `id`,`templateName`, `href`, `createTime`, `createUser`, `userId`,`pid`, `status`
 			from `tbl_template`
 			where `userId` = #{userId} and `status` = 0
-			
 	</select>
+	
+	<update id="deteleTemplate" >
+		update `tbl_template` set `status` = 1 where id = #{id} or pid = #{id}
+	</update>
 	
 </mapper>

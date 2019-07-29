@@ -35,17 +35,17 @@ $(function(){
 		userListTable.on('toolbar(userListTable)', function(obj){
 			let checkStatus = userListTable.checkStatus(obj.config.id);
 			switch(obj.event){
-			case 'getCheckData':
-				var data = checkStatus.data;
-				layer.alert(JSON.stringify(data));
-				break;
-			case 'getCheckLength':
-				var data = checkStatus.data;
-				layer.msg('选中了：'+ data.length + ' 个');
-				break;
-			case 'addUser':
-				addUser();
-				break;
+				case 'getCheckData':
+					var data = checkStatus.data;
+					layer.alert(JSON.stringify(data));
+					break;
+				case 'getCheckLength':
+					var data = checkStatus.data;
+					layer.msg('选中了：'+ data.length + ' 个');
+					break;
+				case 'addUser':
+					addUser();
+					break;
 			};
 		});
 		 //监听行工具事件

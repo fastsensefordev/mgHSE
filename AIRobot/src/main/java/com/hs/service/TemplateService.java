@@ -27,6 +27,15 @@ public interface TemplateService {
 	 * @return ResultResponse
 	 */
 	public ResultResponse getTemplateList();
+	/**
+	 * @desc: 删除模板
+	 * @author: kpchen
+	 * @createTime: 2019年7月29日 下午9:43:10
+	 * @history:
+	 * @param id
+	 * @return ResultResponse
+	 */
+	public ResultResponse deleteTemplate(Integer id);
 
 }
 

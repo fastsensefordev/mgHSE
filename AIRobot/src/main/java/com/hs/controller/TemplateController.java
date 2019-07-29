@@ -55,6 +55,23 @@ public class TemplateController {
 		ResultResponse resopnse = templateService.getTemplateList();
 		return resopnse;
 	}
+	/**
+	 * @desc: 删除模板
+	 * @author: kpchen
+	 * @createTime: 2019年7月29日 下午9:42:52
+	 * @history:
+	 * @param httpServletRequest
+	 * @param httpServletResponse
+	 * @param id
+	 * @return ResultResponse
+	 */
+	@ApiOperation(value="删除模板", notes="删除模板")
+	@RequestMapping("deleteTemplate")
+	public ResultResponse deleteTemplate(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
+			Integer id) {
+		ResultResponse resopnse = templateService.deleteTemplate(id);
+		return resopnse;
+	}
 }
 
 	

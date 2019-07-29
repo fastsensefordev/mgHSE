@@ -73,6 +73,19 @@ public class TemplateServiceImpl implements TemplateService {
 			return ResultUtil.error("查询失败");
 		}
 	}
+	/**
+	 * @desc 删除模板
+	 */
+	@Override
+	public ResultResponse deleteTemplate(Integer id) {
+		try {
+			templateMapper.deteleTemplate(id);
+			return ResultUtil.success();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResultUtil.error("删除失败");
+		}
+	}
 
 }
 
