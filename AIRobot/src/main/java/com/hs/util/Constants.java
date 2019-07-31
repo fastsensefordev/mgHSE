@@ -15,8 +15,14 @@ public class Constants {
 	
 	public static final Integer TEMPLATE_STATUS_DEFAULT = 0;//模板默认状态
 	public static final Integer TEMPLATE_STATUS_DELETE = 1;//模板默认状态 已删除
+	
+	public static final Integer ADDRESS_STATUS_DEFAULT = 0;//模板默认状态
+	public static final Integer ADDRESS_STATUS_DELETE = 1;//模板默认状态 已删除
 
 	public static final String DOMAIN_NAME = "domainName";
+	
+	public static final Integer INT_0 = 0;
+	
 }
 
 	

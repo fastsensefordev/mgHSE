@@ -79,7 +79,7 @@ public class TemplateServiceImpl implements TemplateService {
 	@Override
 	public ResultResponse deleteTemplate(Integer id) {
 		try {
-			templateMapper.deteleTemplate(id);
+			templateMapper.deleteTemplate(id);
 			return ResultUtil.success();
 		} catch (Exception e) {
 			e.printStackTrace();

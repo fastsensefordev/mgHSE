@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.mapper.AddressMapper">
+
+	<!-- 新增服务器地址 -->
+	<insert id="saveAddress" parameterType="com.hs.model.AddressModel" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO `tbl_address` (`ipType`, `ip`,`cameraId`,`location`, `userId`, `createUser`,`createTime`,`pid`, `status`) 
+		VALUES (#{ipType}, #{ip}, #{cameraId}, #{location}, #{userId}, #{createUser},now(),#{pid}, #{status})
+	</insert>
+	
+	<!-- 获取当前服务器地址列表 -->
+	<select id="getAddressList" resultType="com.hs.model.AddressModel">
+		select 
+			id,
+			ipType,
+			case when ipType = 0 then "算法服务器"
+			     when ipType = 1 then "其他" 
+			     else "" end as ipTypeStr, 
+			case when ip is null then "-" else ip end as ip,
+			case when cameraId is null then "-" else cameraId end as cameraId,
+			case when location is null then "-" else location end as location,
+			`userId`, 
+			`createUser`,
+			DATE_FORMAT(`createTime`,"%Y-%m-%d %H:%i:%s") as createTime,
+			`pid`,
+			`status`
+			from `tbl_address`
+			where `status` = 0
+	</select>
+	
+	<update id="deleteAddress" >
+		update `tbl_address` set `status` = 1 where id = #{id}
+	</update>
+	
+</mapper>

@@ -17,11 +17,27 @@
 				  <a href="">服务器管理</a>
 				</span>
 			</div>
+			
+			<div class="content-body">
+				<div class="content-bar">
+					<div class="layui-btn-container add-address">
+    					<button type="button" class="layui-btn" id="addAddress"><i class="layui-icon">&#xe608;</i> 新增服务器</button>
+  					</div>
+			    	<div class="search-bar-body">
+			    		  <input id="edt-search" type="text" placeholder="输入关键字"/>
+    					  <button class="layui-btn" id="btn-search">搜索</button>
+			    	</div>
+				</div>
+				<div class="content-container tree-table-content">
+					<table id="table1" class="layui-table" lay-filter="table1"></table>
+				</div>
+			</div>
 		</div>
 	</div>
 	<script th:src="@{/static/assets/jquery/jquery-3.3.1.min.js}"></script>
 	<script th:src="@{/static/assets/layui/layui.js}"></script>
 	<script th:src="@{/static/js/header.js}"></script>
+	<script th:src="@{/static/js/addressManage.js}"></script>
 	<script>
 		//JavaScript代码区域
 		layui.use('element', function() {
@@ -29,4 +45,36 @@
 		});
 	</script>
 </body>
+<div class="modal-container layui-form" id="addAddressTemplate">
+	<div class="layui-form-item">
+		<label class="layui-form-label">类型</label>
+		<div class="layui-input-block">
+			<select name="addressType">
+				<option value="0" selected>算法服务器</option>
+				<option value="1">其他</option>
+			</select>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">地址</label>
+		<div class="layui-input-block">
+			<input type="text" name="address" placeholder="请输入服务器地址" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+</div>
+
+<div class="modal-container layui-form" id="addCameraTemplate">
+	<div class="layui-form-item">
+		<label class="layui-form-label">ID</label>
+		<div class="layui-input-block">
+			<input type="text" name="cameraId" placeholder="请输入摄像头ID" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">位置</label>
+		<div class="layui-input-block">
+			<input type="text" name="location" placeholder="请输入摄像头位置" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+</div>
 </html>

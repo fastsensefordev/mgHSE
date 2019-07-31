@@ -41,7 +41,7 @@ public interface TemplateMapper {
 	 * @param id
 	 * @return List<TemplateModel>
 	 */
-	public int deteleTemplate(@Param("id") Integer id);
+	public int deleteTemplate(@Param("id") Integer id);
 
 }
 
