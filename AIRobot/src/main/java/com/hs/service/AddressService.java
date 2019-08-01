@@ -1,6 +1,7 @@
 package com.hs.service;
 
 import com.hs.request.SaveAddressRequest;
+import com.hs.request.SaveAreaRequest;
 import com.hs.request.SaveCameraRequest;
 import com.hs.response.ResultResponse;
 
@@ -40,6 +41,15 @@ public interface AddressService {
 	 * @return ResultResponse
 	 */
 	public ResultResponse deleteAddress(Integer id);
+	/**
+	 * @desc: 保存区域
+	 * @author: kpchen
+	 * @createTime: 2019年8月1日 下午11:10:07
+	 * @history:
+	 * @param request
+	 * @return ResultResponse
+	 */
+	public ResultResponse saveArea(SaveAreaRequest request);
 
 }
 

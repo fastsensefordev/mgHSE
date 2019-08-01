@@ -4,8 +4,8 @@
 
 	<!-- 新增服务器地址 -->
 	<insert id="saveAddress" parameterType="com.hs.model.AddressModel" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO `tbl_address` (`ipType`, `ip`,`cameraId`,`location`, `userId`, `createUser`,`createTime`,`pid`, `status`) 
-		VALUES (#{ipType}, #{ip}, #{cameraId}, #{location}, #{userId}, #{createUser},now(),#{pid}, #{status})
+		INSERT INTO `tbl_address` (`ipType`, `ip`,`level`,`area`, `cameraId`,`location`, `userId`, `createUser`,`createTime`,`pid`, `status`) 
+		VALUES (#{ipType}, #{ip}, #{level}, #{area},#{cameraId}, #{location}, #{userId}, #{createUser},now(),#{pid}, #{status})
 	</insert>
 	
 	<!-- 获取当前服务器地址列表 -->
@@ -17,6 +17,11 @@
 			     when ipType = 1 then "其他" 
 			     else "" end as ipTypeStr, 
 			case when ip is null then "-" else ip end as ip,
+			level,
+			case when level = 1 then "服务器"
+				when level = 2 then "区域"
+				else "摄像头" end as levelStr,
+			area,
 			case when cameraId is null then "-" else cameraId end as cameraId,
 			case when location is null then "-" else location end as location,
 			`userId`, 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hs.request.GetUserListRequest;
 import com.hs.request.SaveAddressRequest;
+import com.hs.request.SaveAreaRequest;
 import com.hs.request.SaveCameraRequest;
 import com.hs.response.ResultResponse;
 import com.hs.service.AddressService;
@@ -77,6 +78,25 @@ public class AddressController {
 	public ResultResponse saveCamera(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
 			@RequestBody SaveCameraRequest request) {
 		ResultResponse resopnse = addressService.saveCamera(request);
+		return resopnse;
+	}
+	
+	/**
+	 * 
+	 * @desc: 保存区域
+	 * @author: kpchen
+	 * @createTime: 2019年7月31日 下午8:35:53
+	 * @history:
+	 * @param httpServletRequest
+	 * @param httpServletResponse
+	 * @param request
+	 * @return ResultResponse
+	 */
+	@ApiOperation(value="保存区域", notes="保存区域")
+	@RequestMapping("saveArea")
+	public ResultResponse saveArea(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
+			@RequestBody SaveAreaRequest request) {
+		ResultResponse resopnse = addressService.saveArea(request);
 		return resopnse;
 	}
 	

@@ -17,9 +17,16 @@ $(function(){
 		        elem: '#table1',
 		        url: 'address/getAddressList',
 		        cols: [[
-//		            {type: 'numbers'},
-		            {field: 'ipTypeStr', title: '服务器类型'},
+		        	{field: 'levelStr', title: '类别'},
+		            {field: 'ipTypeStr', title: '服务器类型', templet: function(d){
+		            	if (d.level == "1") {
+		            		return d.ipTypeStr;
+		            	} else {
+		            		return "";
+		            	}
+		            }},
 		            {field: 'ip', title: '服务器地址'},
+		            {field: 'area', title: '区域'},
 		            {field: 'cameraId', title: '摄像头ID'},
 		            {field: 'location', title: '摄像头位置'},
 		            {field: 'createUser', title: '创建者'},
@@ -28,8 +35,8 @@ $(function(){
 		             templet: function(d){
 		            	 let operateTemplate = "";
 		            	 //算法服务类型才允许添加摄像头
-		            	 if (d.ipType == 0) {
-		            		 operateTemplate += '<a class="layui-btn layui-btn-xs table-btn" lay-event="edit" mId="'+d.id+'"><i class="layui-icon">&#xe654;</i>新增</a>';
+		            	 if (d.ipType == 0 && (d.level == 1 || d.level ==2)) {
+		            		 operateTemplate += '<a class="layui-btn layui-btn-xs table-btn" lay-event="edit" mId="'+d.id+'" level="'+d.level+'"><i class="layui-icon">&#xe654;</i>新增</a>';
 		            	 }
 		            	 operateTemplate += '<a class="layui-btn layui-btn-danger layui-btn-xs table-btn" lay-event="del" mId="'+d.id+'"><i class="layui-icon">&#xe640;</i>删除</a>';
 		            	 return "<div class='operate-content'>"+ operateTemplate + "</div>";
@@ -44,7 +51,7 @@ $(function(){
 	    	let mid = $(this).attr("mid");
 	    	let layEvent = $(this).attr("lay-event");
 	    	if (layEvent == "del") {
-	    		layer.confirm('确认删除该模板吗?', function(index){
+	    		layer.confirm('确认删除该地址吗?', function(index){
 					$.ajax({  
 						url:'address/deleteAddress',  
 						type:'post',      
@@ -65,53 +72,99 @@ $(function(){
 					}); 
 				});
 	    	} else {
-	    		let addAddressIndex = layer.open({
-					id: "addUserModal",
-					title:"新增摄像头",
-					type: 1,
-					area: ["440px","320px"],
-					resize: false,
-					move: false,
-					btn: ['确定', '取消'],
-					content: $('#addCameraTemplate'), //这里content是一个普通的String
-					btn1: function(){
-						let cameraId =  $("#addCameraTemplate input[name='cameraId']").val();
-						let location = $("#addCameraTemplate input[name='location']").val();
-						if (cameraId == undefined || cameraId == "" || cameraId.trim() == "") {
-							layer.msg('摄像头ID不能为空');
-							return false;
+	    		let level = $(this).attr("level");
+	    		if (level == "1") {
+	    			let addAddressIndex = layer.open({
+						id: "addAreaModal",
+						title:"新增区域",
+						type: 1,
+						area: ["360px","240px"],
+						resize: false,
+						move: false,
+						btn: ['确定', '取消'],
+						content: $('#addAreaTemplate'), //这里content是一个普通的String
+						btn1: function(){
+							let areaText =  $("#addAreaTemplate input[name='areaText']").val();
+							if (areaText == undefined || areaText == "" || areaText.trim() == "") {
+								layer.msg('摄像头ID不能为空');
+								return false;
+							}
+							let formParam = {
+								pid: mid,
+								area: areaText
+							};
+							$.ajax({  
+								url:'address/saveArea',  
+								type:'post',      
+								data: JSON.stringify(formParam), 
+								contentType: "application/json; charset=utf-8",
+								dataType:'json',  
+								success:function(data){  
+									if (data.code == 1002) {
+										layer.msg(data.msg); 
+										return false;
+									} else if (data.code == 200) {
+										layer.msg("添加成功"); 
+										layer.close(addAddressIndex);
+										initTable();
+									}
+								}  
+							});  
+						},
+						success: function(layero, index){
+							
 						}
-						if (location == undefined || location == "" || location.trim() == "") {
-							layer.msg('摄像头位置不能为空');
-							return false;
+					});
+	    		} else if (level=="2") {
+	    			let addAddressIndex = layer.open({
+						id: "addUserModal",
+						title:"新增摄像头",
+						type: 1,
+						area: ["440px","320px"],
+						resize: false,
+						move: false,
+						btn: ['确定', '取消'],
+						content: $('#addCameraTemplate'), //这里content是一个普通的String
+						btn1: function(){
+							let cameraId =  $("#addCameraTemplate input[name='cameraId']").val();
+							let location = $("#addCameraTemplate input[name='location']").val();
+							if (cameraId == undefined || cameraId == "" || cameraId.trim() == "") {
+								layer.msg('摄像头ID不能为空');
+								return false;
+							}
+							if (location == undefined || location == "" || location.trim() == "") {
+								layer.msg('摄像头位置不能为空');
+								return false;
+							}
+							let formParam = {
+								pid: mid,
+								cameraId: cameraId,
+								location : location
+							};
+							$.ajax({  
+								url:'address/saveCamera',  
+								type:'post',      
+								data: JSON.stringify(formParam), 
+								contentType: "application/json; charset=utf-8",
+								dataType:'json',  
+								success:function(data){  
+									if (data.code == 1002) {
+										layer.msg(data.msg); 
+										return false;
+									} else if (data.code == 200) {
+										layer.msg("添加成功"); 
+										layer.close(addAddressIndex);
+										initTable();
+									}
+								}  
+							});  
+						},
+						success: function(layero, index){
+							
 						}
-						let formParam = {
-							pid: mid,
-							cameraId: cameraId,
-							location : location
-						};
-						$.ajax({  
-							url:'address/saveCamera',  
-							type:'post',      
-							data: JSON.stringify(formParam), 
-							contentType: "application/json; charset=utf-8",
-							dataType:'json',  
-							success:function(data){  
-								if (data.code == 1002) {
-									layer.msg(data.msg); 
-									return false;
-								} else if (data.code == 200) {
-									layer.msg("添加成功"); 
-									layer.close(addAddressIndex);
-									initTable();
-								}
-							}  
-						});  
-					},
-					success: function(layero, index){
-						
-					}
-				});
+					});
+	    		}
+ 	    		
 	    	}
 	    	
 	    });
