@@ -29,6 +29,9 @@ public class SessionFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
         String uri = request.getRequestURI();
+        
+        session.setMaxInactiveInterval(7200);//失效时间2小时
+        
         String domainName = (String) session.getAttribute(Constants.DOMAIN_NAME);
         if (uri.startsWith("/robot/static") || uri.startsWith("/static") || uri.contains("login") || uri.contains("retrievePassword") || uri.contains("dashboard")) {
         	filterChain.doFilter(request, response);
