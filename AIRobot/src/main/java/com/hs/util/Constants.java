@@ -20,7 +20,7 @@ public class Constants {
 	public static final Integer ADDRESS_STATUS_DELETE = 1;//模板默认状态 已删除
 
 	public static final String DOMAIN_NAME = "domainName";
-	
+	public static final String LOGIN_ROLE = "loginRole";
 	public static final Integer INT_0 = 0;
 	public static final Integer INT_1 = 1;
 	public static final Integer INT_2 = 2;

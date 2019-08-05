@@ -20,7 +20,7 @@
 			<div class="content-body">
 				<script type="text/html" id="toolbarDemo">
   					<div class="layui-btn-container">
-    					<button type="button" class="layui-btn" lay-event="addUser"><i class="layui-icon">&#xe608;</i> 新增</button>
+    					<button type="button" class="layui-btn" lay-event="addUser" th:if="${session.loginRole} eq 0"><i class="layui-icon">&#xe608;</i> 新增</button>
   					</div>
 				</script>
 				<div class="content-container">
@@ -85,6 +85,12 @@
 		<label class="layui-form-label">账号</label>
 		<div class="layui-input-block">
 			<input type="text" name="userName" lay-verify="title" autocomplete="off" placeholder="请输入账号" class="layui-input">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">旧密码</label>
+		<div class="layui-input-block">
+			<input type="password" name="password"  placeholder="请输入密码" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 </div>

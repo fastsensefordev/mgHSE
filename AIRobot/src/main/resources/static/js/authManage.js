@@ -1,4 +1,6 @@
 $(function(){
+	let loginUserRole = $("#loginUserInfo").attr("role");
+	let loginUser = $("#loginUserInfo").text().trim();
 	let userTableOptions = {
 			toolbar: '#toolbarDemo',
 			defaultToolbar: ['filter', 'print'],
@@ -23,7 +25,19 @@ $(function(){
 					{field:'userName', title:'账号'},
 					{field:'createTime', title:'创建时间'},
 					{field:'lastLoginTime', title:'最后更新时间',},
-					{fixed: 'right', title:'操作', toolbar: '#operateButton',width: 150}
+					{fixed: 'right', title:'操作',width: 150,templet:function(d){
+						let editTemp = '<a class="layui-btn layui-btn-xs table-btn" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>';
+						let delTemp = '<a class="layui-btn layui-btn-danger layui-btn-xs table-btn" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>';
+						let operateTemp = "";
+						if (loginUserRole == 0) { //超级管理员 可以管理所有人的权限
+							operateTemp = editTemp + delTemp;
+						} else { //普通用户，管理自己
+							if (d.userName == loginUser || d.phone == loginUser) {
+								operateTemp = editTemp + delTemp;
+							}
+						}
+						return operateTemp;
+					}}
 			]],
 			
 	};
@@ -87,6 +101,7 @@ $(function(){
 					btn1: function(){
 						let phone = $("#updateUserTemplate input[name='phone']").val();
 						let userName = $("#updateUserTemplate input[name='userName']").val();
+						let password = $("#updateUserTemplate input[name='password']").val();
 						if (phone == undefined || phone == "" || phone.trim() == "") {
 							layer.msg('手机号不能为空');
 							return false;
@@ -107,11 +122,22 @@ $(function(){
 								return false; 
 							} 
 						}
+						
+						if (!(password == undefined || password == "" || password.trim() == "")) {
+							let patrn = /^[0-9a-zA-Z_\@\\#\$\%\&\\*\\+\-]{6,12}$/;
+							if(!patrn.test(password)) { 
+								layer.msg('密码不符合格式要求，字符限制6-12个<br/>【字母、数字、@#$%&*_+-】'); 
+								return false; 
+							} 
+						} else {
+							password = null;
+						}
 						let formParam = {
 							user: {
 								id:data.id,
 								phone: phone,
-								userName : userName
+								userName : userName,
+								password: password
 							}
 						};
 						$.ajax({  

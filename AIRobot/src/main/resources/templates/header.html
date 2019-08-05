@@ -17,7 +17,7 @@
 			<ul class="layui-nav layui-layout-right">
 				<li class="layui-nav-item">
 					<img th:src="@{/static/img/boy.png}" class="layui-nav-img" /> 
-					<span th:text="${session.domainName}"></span>
+					<span th:text="${session.domainName}" th:role="${session.loginRole}" id="loginUserInfo"></span>
 					<a class="icon-logoff" href="logoff" title="退出登录"></a>
 				</li>
 			</ul>
@@ -40,13 +40,13 @@
 					</dl>
 				</li>
 				<li class="layui-nav-item">
-					<a class="nai-item icon-auth" href="authManage" th:classappend="${currMenu eq 'authManage'} ? 'active' : ''">权限管理</a>
-				</li>
-				<li class="layui-nav-item">
 					<a class="nai-item icon-address" href="addressManage" th:classappend="${currMenu eq 'addressManage'} ? 'active' : ''">服务器管理</a>
 				</li>
 				<li class="layui-nav-item">
 					<a class="nai-item icon-warn" href="warnManage" th:classappend="${currMenu eq 'warnManage'} ? 'active' : ''">报警管理</a>
+				</li>
+				<li class="layui-nav-item">
+					<a class="nai-item icon-auth" href="authManage" th:classappend="${currMenu eq 'authManage'} ? 'active' : ''">权限管理</a>
 				</li>
 			</ul>
 		</div>

@@ -33,7 +33,7 @@ public class SessionUtils {
 	 * @param key
 	 * @param value void
 	 */
-	public static void setAttribute(String key,String value) {
+	public static void setAttribute(String key,Object value) {
 		HttpServletRequest httpServletRequest = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
 		HttpSession session = httpServletRequest.getSession();
 		session.setAttribute(key, value);

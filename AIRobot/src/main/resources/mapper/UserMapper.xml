@@ -7,6 +7,7 @@
 		select 	id,
 				phone,
 				userName,
+				userType,
 				case when userType=0 then "超级管理员"  else "管理员" end userTypeStr,
 				DATE_FORMAT(createTime,"%Y-%m-%d %H:%i:%s") createTime,
 			    DATE_FORMAT(lastLoginTime,"%Y-%m-%d %H:%i:%s") lastLoginTime
@@ -20,6 +21,7 @@
 				phone,
 				userName,
 				password,
+				userType,
 				case when userType=0 then "超级管理员"  else "管理员" end userTypeStr,
 				DATE_FORMAT(createTime,"%Y-%m-%d %H:%i:%s") createTime,
 			    DATE_FORMAT(lastLoginTime,"%Y-%m-%d %H:%i:%s") lastLoginTime

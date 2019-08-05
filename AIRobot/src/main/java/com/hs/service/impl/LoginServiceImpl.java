@@ -32,6 +32,7 @@ public class LoginServiceImpl implements LoginService {
 			User existUser = userMapper.getUserByNameOrPhone(user);
 			if (null != existUser && password.equals(existUser.getPassword())) {
 				SessionUtils.setAttribute(Constants.DOMAIN_NAME, existUser.getUserName());
+				SessionUtils.setAttribute(Constants.LOGIN_ROLE, existUser.getUserType());
 				return ResultUtil.error(ResultEnum.SUCCESS,"登录成功");
 			} else {
 				return ResultUtil.error(ResultEnum.UNAUTHORIZED,"用户名或密码错误");
