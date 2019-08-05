@@ -19,7 +19,10 @@ public class HomeController {
 	 */
     @RequestMapping({"/index","/"})
     public ModelAndView index() {
-        return new ModelAndView("index");
+        ModelAndView modelAndView = new ModelAndView();
+    	modelAndView.setViewName("index");
+    	modelAndView.addObject("currMenu", "index");
+        return modelAndView;
     }
     /**
     * @Title: templateManage

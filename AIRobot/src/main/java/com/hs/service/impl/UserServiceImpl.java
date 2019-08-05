@@ -83,8 +83,14 @@ public class UserServiceImpl implements UserService {
 	public ResultResponse updateUser(AddUserRequest request) {
 		try {
 			User user = request.getUser();
-			String pwd = user.getPassword();
-			user.setPassword(PasswordUtils.AESEncode(pwd));//加密
+			User existUserName = userMapper.getUserByName(user);
+			if (null != existUserName) {
+				return ResultUtil.success(ResultEnum.USER_EXIST);
+			}
+			User existUserPhone = userMapper.getUserByPhone(user);
+			if (null != existUserPhone) {
+				return ResultUtil.success(ResultEnum.USER_EXIST_1003);
+			}
 			userMapper.updateUser(user);
 			return ResultUtil.success();
 		} catch (Exception e) {
@@ -108,6 +114,7 @@ public class UserServiceImpl implements UserService {
 			return ResultUtil.error("删除失败");
 		}
 	}
+	
 	/**
 	 * 找回密码
 	 */

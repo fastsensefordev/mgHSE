@@ -16,12 +16,13 @@
 			case when ipType = 0 then "算法服务器"
 			     when ipType = 1 then "其他" 
 			     else "" end as ipTypeStr, 
-			case when ip is null then "-" else ip end as ip,
+			case when ip is null then "" else ip end as ip,
 			level,
 			case when level = 1 then "服务器"
 				when level = 2 then "区域"
 				else "摄像头" end as levelStr,
-			area,
+			case when area is null then "-"
+				else area end as area,
 			case when cameraId is null then "-" else cameraId end as cameraId,
 			case when location is null then "-" else location end as location,
 			`userId`, 

@@ -121,19 +121,15 @@ public class UserController {
 	@ApiOperation(value="更新用户")
 	@RequestMapping("updateUser")
 	public ResultResponse updateUser(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
-			AddUserRequest request) {
+			@RequestBody AddUserRequest request) {
 		User user = request.getUser();
 		String phone = user.getPhone();
 		String userName = user.getUserName();
-		String password = user.getPassword();
 		if (StringUtils.isBlank(phone)) {
 			return ResultUtil.error("手机号不能为空");
 		}
 		if (StringUtils.isBlank(userName)) {
 			return ResultUtil.error("账号不能为空");
-		}
-		if (StringUtils.isBlank(password)) {
-			return ResultUtil.error("密码不能为空");
 		}
 		ResultResponse resopnse = userService.updateUser(request);
 		return resopnse;

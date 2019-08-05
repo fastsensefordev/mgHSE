@@ -17,7 +17,7 @@ $(function(){
 		        elem: '#table1',
 		        url: 'address/getAddressList',
 		        cols: [[
-		        	{field: 'levelStr', title: '类别'},
+		        	{field: 'levelStr', title: '类别',align:"right",width:120},
 		            {field: 'ipTypeStr', title: '服务器类型', templet: function(d){
 		            	if (d.level == "1") {
 		            		return d.ipTypeStr;

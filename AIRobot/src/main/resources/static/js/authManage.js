@@ -71,14 +71,70 @@ $(function(){
 					}); 
 				});
 			} else if(obj.event === 'edit'){
-				layer.prompt({
-					formType: 2
-					,value: data.userName
-				}, function(value, index){
-					obj.update({
-						userName: value
-					});
-					layer.close(index);
+				let userName = data.userName;
+				let phone = data.phone;
+				$("#updateUserTemplate input[name='phone']").val(phone);
+				$("#updateUserTemplate input[name='userName']").val(userName);
+				let updateUserModalIndex = layer.open({
+					id: "updateUserModal",
+					title:"新增区域",
+					type: 1,
+					area: ["520px","420px"],
+					resize: false,
+					move: false,
+					btn: ['确定', '取消'],
+					content: $('#updateUserTemplate'), //这里content是一个普通的String
+					btn1: function(){
+						let phone = $("#updateUserTemplate input[name='phone']").val();
+						let userName = $("#updateUserTemplate input[name='userName']").val();
+						if (phone == undefined || phone == "" || phone.trim() == "") {
+							layer.msg('手机号不能为空');
+							return false;
+						} else {
+					        let reg = /^1[34578]\d{9}$/;
+					        if (!reg.test(phone)) {
+					        	layer.msg('手机号格式不正确');
+								return false;
+					        }
+						}
+						if (userName == undefined || userName == "" || userName.trim() == "") {
+							layer.msg('账号不能为空');
+							return false;
+						} else {
+							var nameReg = /^[a-zA-Z]{1}([a-zA-Z0-9]|[._]){3,19}$/;
+							if(!nameReg.test(userName)) { 
+								layer.msg('账号只支持输入4-20个以字母开头、数字、“_”、“.”的字串！'); 
+								return false; 
+							} 
+						}
+						let formParam = {
+							user: {
+								id:data.id,
+								phone: phone,
+								userName : userName
+							}
+						};
+						$.ajax({  
+							url:'user/updateUser',  
+							type:'post',      
+							data: JSON.stringify(formParam), 
+							contentType: "application/json; charset=utf-8",
+							dataType:'json',  
+							success:function(data){  
+								if (data.code == 200) {
+									layer.msg("更新成功"); 
+									layer.close(updateUserModalIndex);
+									layui.table.reload("userListTable",userTableOptions);
+								} else {
+									layer.msg(data.msg); 
+									return false;
+								}
+							}  
+						});  
+					},
+					success: function(layero, index){
+						
+					}
 				});
 			}
 		});

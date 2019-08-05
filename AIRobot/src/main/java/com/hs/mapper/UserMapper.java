@@ -77,6 +77,8 @@ public interface UserMapper {
 	 * @param retrieveMap void
 	 */
 	public int retrievePassword(Map<String, Object> retrieveMap);
+	public User getUserByName(User user);
+	public User getUserByPhone(User user);
 	
 
 }

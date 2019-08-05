@@ -26,6 +26,32 @@
 		from tbl_user
 		where status = 0 and (userName = #{userName} or phone = #{phone}) limit 1
 	</select>
+	
+	<!-- 查询用户根据条件 -->
+	<select id="getUserByName" resultType="com.hs.model.User">
+		select 	id,
+				phone,
+				userName,
+				password,
+				case when userType=0 then "超级管理员"  else "管理员" end userTypeStr,
+				DATE_FORMAT(createTime,"%Y-%m-%d %H:%i:%s") createTime,
+			    DATE_FORMAT(lastLoginTime,"%Y-%m-%d %H:%i:%s") lastLoginTime
+		from tbl_user
+		where status = 0 and userName = #{userName} and id != #{id} limit 1
+	</select>
+	
+		<!-- 查询用户根据条件 -->
+	<select id="getUserByPhone" resultType="com.hs.model.User">
+		select 	id,
+				phone,
+				userName,
+				password,
+				case when userType=0 then "超级管理员"  else "管理员" end userTypeStr,
+				DATE_FORMAT(createTime,"%Y-%m-%d %H:%i:%s") createTime,
+			    DATE_FORMAT(lastLoginTime,"%Y-%m-%d %H:%i:%s") lastLoginTime
+		from tbl_user
+		where status = 0 and phone = #{phone} and id != #{id} limit 1
+	</select>
 	<!-- 新增用户 -->
 	<insert id="addUser" parameterType="com.hs.model.User" useGeneratedKeys="true" keyProperty="id">
 		insert into tbl_user(phone,userName,password,userType,createTime)

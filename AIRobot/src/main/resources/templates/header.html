@@ -32,7 +32,7 @@
 					<a class="nai-item icon-view" href="javascript:;">我的可视化</a>
 					<dl class="layui-nav-child">
 						<dd>
-							<a href="index">可视化定制</a>
+							<a href="index" th:classappend="${currMenu eq 'index'} ? 'active' : ''">可视化定制</a>
 						</dd>
 						<dd>
 							<a href="templateManage" th:classappend="${currMenu eq 'templateManage'} ? 'active' : ''">可视化管理</a>
