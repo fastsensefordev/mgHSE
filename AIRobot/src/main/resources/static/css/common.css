@@ -102,3 +102,9 @@
 .add-address {
 	float: left;
 }
+
+.layui-table-tips-c:before {
+	position: absolute;
+	right: 2px;
+	top: -1px;
+}
