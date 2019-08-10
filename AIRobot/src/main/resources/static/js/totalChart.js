@@ -1,24 +1,10 @@
-$(function(){
-	
-	var axisLabelFontSize = 14;
-	let barWidth = "26px";
-	let bgBarWidth = "20px";
-	let windowWidth = $(window).width();
-	if (windowWidth >= 3840) {
-		axisLabelFontSize = 28;
-		barWidth = "50px";
-		bgBarWidth = "40px";
-	}
-	
-	initComplexChart01();
-	initComplexChart02();
-	
-	$(window).resize(function(){
-		initComplexChart01();
-		initComplexChart02();
-	});
+(function() {
+	var totalChartConfig = {};
 	
 	function initComplexChart01() {
+		let axisLabelFontSize = commonFuntion.getChartConfig().axisLabelFontSize;
+		let barWidth = commonFuntion.getChartConfig().barWidth;
+		let bgBarWidth = commonFuntion.getChartConfig().bgBarWidth;
 		let complexOption01 = {
 				title: {
 					show: true,
@@ -115,6 +101,9 @@ $(function(){
 	};
 	
 	function initComplexChart02() {
+		let axisLabelFontSize = commonFuntion.getChartConfig().axisLabelFontSize;
+		let barWidth = commonFuntion.getChartConfig().barWidth;
+		let bgBarWidth = commonFuntion.getChartConfig().bgBarWidth;
 		let complexOption02 = {
 				tooltip : {
 					trigger: 'item',
@@ -167,8 +156,24 @@ $(function(){
 		var complexChart02 = echarts.init(document.getElementById('complexChart02'));
 		complexChart02.setOption(complexOption02);
 		complexChart02.resize();
+	}
 
+	totalChartConfig.initComplexChart01 = function(){
+		return initComplexChart01();
 	}
 	
-
-});
+	totalChartConfig.initComplexChart02 = function(){
+		return initComplexChart02();
+	}
+	
+	initComplexChart01();
+	initComplexChart02();
+	
+	$(window).resize(function(){
+		initComplexChart01();
+		initComplexChart02();
+	});
+	
+	window.totalChartConfig = totalChartConfig;
+	
+}());

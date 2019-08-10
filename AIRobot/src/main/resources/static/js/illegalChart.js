@@ -1,22 +1,11 @@
-$(function(){
+(function() {
 	
-	var axisLabelFontSize = 14;
-	let barWidth = "26px";
-	let bgBarWidth = "20px";
-	let windowWidth = $(window).width();
-	if (windowWidth >= 3840) {
-		axisLabelFontSize = 28;
-		barWidth = "50px";
-		bgBarWidth = "40px";
-	}
-	
-	initIllegalChart();
-	
-	$(window).resize(function(){
-		initIllegalChart();
-	});
+	var illegalChartConfig = {};
 	
 	function initIllegalChart() {
+		let axisLabelFontSize = commonFuntion.getChartConfig().axisLabelFontSize;
+		let barWidth = commonFuntion.getChartConfig().barWidth;
+		let bgBarWidth = commonFuntion.getChartConfig().bgBarWidth;
 		let illegalOption = {
 				title: {
 					show: true,
@@ -121,4 +110,12 @@ $(function(){
 		illegalChart.resize();
 	}
 
-});
+	illegalChartConfig.initIllegalChart = function(){
+		return initIllegalChart();
+	}
+	initIllegalChart();
+	$(window).resize(function(){
+		initIllegalChart();
+	});
+	window.illegalChartConfig = illegalChartConfig;
+}());
