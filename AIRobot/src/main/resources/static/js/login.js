@@ -1,5 +1,8 @@
 $(function(){
 	layui.use('layer',function () { 
+		layui.use('form', function(){
+		});
+		initAccount();//记住账号
 		$("#loginBtn").on("click",function(){
 			let userName = $("#LAY-user-login-username").val();
 			let password = $("#LAY-user-login-password").val();
@@ -10,6 +13,11 @@ $(function(){
 			if (password == undefined || password == "" || password.trim() == "") {
 				layer.msg('密码不能为空');
 				return false;
+			}
+			let remeber = $("#LAY-user-remeber").prop("checked");
+			if (remeber) {
+				localStorage.setItem("userName", userName);
+				localStorage.setItem("password", password);
 			}
 			$.ajax({  
 				url:'loginBy',  
@@ -93,5 +101,18 @@ $(function(){
 				}
 			});
 		});
+		/**
+		 * 记住账号
+		 */
+		function initAccount() {
+			var userName = localStorage.getItem("userName");
+			var password = localStorage.getItem('password');
+			if (userName != null && userName != undefined) {
+				$("#LAY-user-login-username").val(userName);
+			}
+			if (password != null && password != undefined) {
+				$("#LAY-user-login-password").val(password);
+			}
+		}
 	});
 });
