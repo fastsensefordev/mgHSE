@@ -297,14 +297,31 @@ i.ibg.bg-rb {
 	float: left;
 	width: 100%;
 	height: calc(100% - 50px);
+	position: relative;
 }
 
-.chart-04 .chart-body .chart-content:nth-child(1) {
+.icon-switch {
+	position: absolute;
+	right: 0;
+	top: 15px;
+	width: 20px;
+	height: 20px;
+	background: url(../img/icon_switch.png) no-repeat;
+	cursor: pointer;
+	z-index: 9;
+}
+
+.chart-content-body .icon-switch {
+	right: 5px;
+	top: 10px;
+}
+
+.chart-04 .chart-body .chart-content:nth-child(2) {
 	height: 40%;
 	padding: 10px 0;
 }
 
-.chart-04 .chart-body .chart-content:nth-child(2) {
+.chart-04 .chart-body .chart-content:nth-child(3) {
 	height: 60%;
 	padding: 10px 0;
 }
@@ -397,6 +414,67 @@ span.icon-tubiao {
 	float: left;
 	color: #0795EB;
 	font-size: 22px;
+}
+
+.select-content {
+	position: fixed !important;
+	width: 180px;
+	min-height: 160px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	position: relative;
+}
+
+.select-content::before {
+	position: absolute;
+	top: -7px;
+	right: 4px;
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+	border-bottom: 7px solid #fff;
+	content: "";
+}
+
+.select-content .select-title {
+	float: left;
+	width: 100%;
+	padding: 0 10px;
+	height: 40px;
+	line-height: 40px;
+	background: #eaeaea;
+}
+
+.select-content ul {
+	float: left;
+	width: 100%;
+	margin: 0;
+	padding: 0 10px;
+	max-height: 279px;
+	overflow-y: scroll;
+}
+
+.select-content ul li {
+	float: left;
+	width: 100%;
+	color: #666;
+	line-height: 35px;
+	height: 35px;
+	font-size: 14px;
+	list-style: none;
+	padding: 0 10px;
+	border-bottom: 1px dashed #ddd;
+	cursor: pointer;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.select-content ul li:hover {
+	color: #333;
+}
+
+.select-content ul li:last-child {
+	border-bottom: 0px;
 }
 
 ::-webkit-scrollbar-track-piece {

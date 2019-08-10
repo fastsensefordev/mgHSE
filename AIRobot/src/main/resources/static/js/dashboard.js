@@ -1,5 +1,5 @@
 $(function(){
-	
+
 	var axisLabelFontSize = 14;
 	let barWidth = "26px";
 	let bgBarWidth = "20px";
@@ -9,46 +9,47 @@ $(function(){
 		barWidth = "50px";
 		bgBarWidth = "40px";
 	}
-	
+
 	initClock();
 	initSafeChart();
 	initIllegalChart();
 	initDangerChart();
 	initComplexChart01();
 	initComplexChart02();
-	
+
 	$(window).resize(function(){
+		$("body").find("div.select-content").hide();
 		initSafeChart();
 		initIllegalChart();
 		initDangerChart();
 		initComplexChart01();
 		initComplexChart02();
 	});
-	
+
 	function initClock() {
 		var newTime = '';
-	    getLangDate();
+		getLangDate();
 	}
-	
+
 	function getLangDate(){
-        var dateObj = new Date(); //表示当前系统时间的Date对象
-        var year = dateObj.getFullYear(); //当前系统时间的完整年份值
-        var month = dateObj.getMonth()+1; //当前系统时间的月份值
-        var date = dateObj.getDate(); //当前系统时间的月份中的日
-        var day = dateObj.getDay(); //当前系统时间中的星期值
-        var weeks = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
-        var week = weeks[day]; //根据星期值，从数组中获取对应的星期字符串
-        var hour = dateObj.getHours(); //当前系统时间的小时值
-        var minute = dateObj.getMinutes(); //当前系统时间的分钟值
-        var second = dateObj.getSeconds(); //当前系统时间的秒钟值
-        var timeValue = "" +((hour >= 12) ? "PM" : "AM" ); //当前时间属于上午、晚上还是下午
-        newTime = dateFilter(hour) + ":" + dateFilter(minute) + ":" + dateFilter(second);
-        newDate = dateFilter(year) + "-" +dateFilter(month) + "-" + dateFilter(date) + " ";
-        document.getElementById("nowTime").innerHTML = newTime;
-        document.getElementById("nowDate").innerHTML = newDate + " " + week + " " + timeValue;
-        setTimeout(getLangDate,1000);
-    }
-	
+		var dateObj = new Date(); //表示当前系统时间的Date对象
+		var year = dateObj.getFullYear(); //当前系统时间的完整年份值
+		var month = dateObj.getMonth()+1; //当前系统时间的月份值
+		var date = dateObj.getDate(); //当前系统时间的月份中的日
+		var day = dateObj.getDay(); //当前系统时间中的星期值
+		var weeks = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+		var week = weeks[day]; //根据星期值，从数组中获取对应的星期字符串
+		var hour = dateObj.getHours(); //当前系统时间的小时值
+		var minute = dateObj.getMinutes(); //当前系统时间的分钟值
+		var second = dateObj.getSeconds(); //当前系统时间的秒钟值
+		var timeValue = "" +((hour >= 12) ? "PM" : "AM" ); //当前时间属于上午、晚上还是下午
+		newTime = dateFilter(hour) + ":" + dateFilter(minute) + ":" + dateFilter(second);
+		newDate = dateFilter(year) + "-" +dateFilter(month) + "-" + dateFilter(date) + " ";
+		document.getElementById("nowTime").innerHTML = newTime;
+		document.getElementById("nowDate").innerHTML = newDate + " " + week + " " + timeValue;
+		setTimeout(getLangDate,1000);
+	}
+
 	function dateFilter(date){ //值小于10时，在前面补0
 		if(date < 10){
 			return "0" + date;
@@ -64,9 +65,10 @@ $(function(){
 					show: true,
 					text: "单位：次数",
 					x: "right",
+					padding:[7,20,0,0],
 					textStyle: {
-					    fontSize: axisLabelFontSize,
-					    color: '#ECECEE'
+						fontSize: axisLabelFontSize,
+						color: '#ECECEE'
 					}  
 				},
 				tooltip : {
@@ -82,186 +84,186 @@ $(function(){
 					containLabel: true
 				},
 				xAxis : [{
-							type : 'category',
-							data : ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-							axisTick: {
-								show: false
-							},
-							axisLine: {
-								show: false,
-							},
-							splitLine: {
-								show: false,
-							},
-							axisLabel: {
-								show: true,
-								textStyle: {
-									 color: "#BDD8E7",
-									 fontSize: axisLabelFontSize
-								}
-							}
-						},
-						{
-							type : 'category',
-							axisTick: {
-								show: false
-							},
-							axisLine: {
-								show: false,
-							},
-							splitLine: {
-								show: false,
-							}
+					type : 'category',
+					data : ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+					axisTick: {
+						show: false
+					},
+					axisLine: {
+						show: false,
+					},
+					splitLine: {
+						show: false,
+					},
+					axisLabel: {
+						show: true,
+						textStyle: {
+							color: "#BDD8E7",
+							fontSize: axisLabelFontSize
 						}
-					],
-					yAxis : [{
-								type : 'value',
-								axisTick: {
-									show: false
-								},
-								axisLine: {
-									show: false,
-								},
-								splitLine: {
-									show: false,
-								},
-								axisLabel: {
-									show: true,
-									textStyle: {
-										 color: "#BDD8E7",
-										 fontSize: axisLabelFontSize
-									}
-								}
-							}
-						],
-						series : [{
-									name:'数据',
-									type:'bar',
-									barWidth: barWidth,
-									xAxisIndex: 0,
-									zlevel: 1,
-									data:[{
-								        value : 150,
-								        itemStyle:{
-								        	color: "#0C6DB4"
-								        } 
-								    }, {
-								        value : 150,
-								        itemStyle:{
-								        	color: "#0C6DB4"
-								        }
-								    }, {
-								        value : 80,
-								        itemStyle:{
-								        	color: "#9B7A24"
-								        }
-								    }, {
-								        value : 34,
-								        itemStyle:{
-								        	color: "#732D9C"
-								        }
-								    }, {
-								        value : 39,
-								        itemStyle:{
-								        	color: "#7F222F"
-								        }
-								    }, {
-								        value : 21,
-								        itemStyle:{
-								        	color: "#B55B21"
-								        }
-								    }, {
-								        value : 20,
-								        itemStyle:{
-								        	color: "#B55B21"
-								        }
-								    }]
-								},
-								{
-									name:'数据',
-									type:'bar',
-									barWidth: bgBarWidth,
-									xAxisIndex: 1,
-									zlevel: 0,
-									data:[{
-								        value : 400,
-								        itemStyle:{
-								        	color: "#071D45"
-								        } 
-								    }, {
-								        value : 400,
-								        itemStyle:{
-								        	color: "#071D45"
-								        }
-								    }, {
-								        value : 400,
-								        itemStyle:{
-								        	color: "#071D45"
-								        }
-								    }, {
-								        value : 400,
-								        itemStyle:{
-								        	color: "#071D45"
-								        }
-								    }, {
-								        value : 400,
-								        itemStyle:{
-								        	color: "#071D45"
-								        }
-								    }, {
-								        value : 400,
-								        itemStyle:{
-								        	color: "#071D45"
-								        }
-								    }, {
-								        value : 400,
-								        itemStyle:{
-								        	color: "#071D45"
-								        }
-								    },{
-								        value : 400,
-								        itemStyle:{
-								        	color: "#071D45"
-								        } 
-								    }, {
-								        value : 400,
-								        itemStyle:{
-								        	color: "#071D45"
-								        }
-								    }, {
-								        value : 400,
-								        itemStyle:{
-								        	color: "#071D45"
-								        }
-								    }, {
-								        value : 400,
-								        itemStyle:{
-								        	color: "#071D45"
-								        }
-								    }, {
-								        value : 400,
-								        itemStyle:{
-								        	color: "#071D45"
-								        }
-								    }, {
-								        value : 400,
-								        itemStyle:{
-								        	color: "#071D45"
-								        }
-								    }, {
-								        value : 400,
-								        itemStyle:{
-								        	color: "#071D45"
-								        }
-								    }]
-								}
-							]
+					}
+				},
+				{
+					type : 'category',
+					axisTick: {
+						show: false
+					},
+					axisLine: {
+						show: false,
+					},
+					splitLine: {
+						show: false,
+					}
+				}
+				],
+				yAxis : [{
+					type : 'value',
+					axisTick: {
+						show: false
+					},
+					axisLine: {
+						show: false,
+					},
+					splitLine: {
+						show: false,
+					},
+					axisLabel: {
+						show: true,
+						textStyle: {
+							color: "#BDD8E7",
+							fontSize: axisLabelFontSize
+						}
+					}
+				}
+				],
+				series : [{
+					name:'数据',
+					type:'bar',
+					barWidth: barWidth,
+					xAxisIndex: 0,
+					zlevel: 1,
+					data:[{
+						value : 150,
+						itemStyle:{
+							color: "#0C6DB4"
+						} 
+					}, {
+						value : 150,
+						itemStyle:{
+							color: "#0C6DB4"
+						}
+					}, {
+						value : 80,
+						itemStyle:{
+							color: "#9B7A24"
+						}
+					}, {
+						value : 34,
+						itemStyle:{
+							color: "#732D9C"
+						}
+					}, {
+						value : 39,
+						itemStyle:{
+							color: "#7F222F"
+						}
+					}, {
+						value : 21,
+						itemStyle:{
+							color: "#B55B21"
+						}
+					}, {
+						value : 20,
+						itemStyle:{
+							color: "#B55B21"
+						}
+					}]
+				},
+				{
+					name:'数据',
+					type:'bar',
+					barWidth: bgBarWidth,
+					xAxisIndex: 1,
+					zlevel: 0,
+					data:[{
+						value : 400,
+						itemStyle:{
+							color: "#071D45"
+						} 
+					}, {
+						value : 400,
+						itemStyle:{
+							color: "#071D45"
+						}
+					}, {
+						value : 400,
+						itemStyle:{
+							color: "#071D45"
+						}
+					}, {
+						value : 400,
+						itemStyle:{
+							color: "#071D45"
+						}
+					}, {
+						value : 400,
+						itemStyle:{
+							color: "#071D45"
+						}
+					}, {
+						value : 400,
+						itemStyle:{
+							color: "#071D45"
+						}
+					}, {
+						value : 400,
+						itemStyle:{
+							color: "#071D45"
+						}
+					},{
+						value : 400,
+						itemStyle:{
+							color: "#071D45"
+						} 
+					}, {
+						value : 400,
+						itemStyle:{
+							color: "#071D45"
+						}
+					}, {
+						value : 400,
+						itemStyle:{
+							color: "#071D45"
+						}
+					}, {
+						value : 400,
+						itemStyle:{
+							color: "#071D45"
+						}
+					}, {
+						value : 400,
+						itemStyle:{
+							color: "#071D45"
+						}
+					}, {
+						value : 400,
+						itemStyle:{
+							color: "#071D45"
+						}
+					}, {
+						value : 400,
+						itemStyle:{
+							color: "#071D45"
+						}
+					}]
+				}
+				]
 		};
 		var safeChart = echarts.init(document.getElementById('safeChart'));
 		safeChart.setOption(safeOption);
 		safeChart.resize();
 	};
-	
+
 	function initIllegalChart() {
 		let illegalOption = {
 				title: {
@@ -271,14 +273,14 @@ $(function(){
 					padding: [25,0,20,0],
 					textStyle: {
 						fontSize: axisLabelFontSize,
-					    color: '#0795EB'
+						color: '#0795EB'
 					},
 					subtext: "单位：次数",
 					subtextStyle: {
-						 fontSize: 14,
-						 color: '#ECECEE',
-						 align: 'left',
-						 baseline: 'top'
+						fontSize: 14,
+						color: '#ECECEE',
+						align: 'left',
+						baseline: 'top'
 					}
 				},
 				xAxis: {
@@ -287,9 +289,9 @@ $(function(){
 					axisTick: {
 						show: true,
 						lineStyle: {
-							 color: ['#354868'],
-							 width: 1,
-							 type: 'solid'
+							color: ['#354868'],
+							width: 1,
+							type: 'solid'
 						}
 					},
 					axisLine: {
@@ -313,61 +315,61 @@ $(function(){
 						axisTick: {
 							show: true,
 							lineStyle: {
-								 color: ['#354868'],
-								 width: 1,
-								 type: 'solid'
+								color: ['#354868'],
+								width: 1,
+								type: 'solid'
 							}
 						},
 						axisLine: {
 							show: true,
 							lineStyle: {
-								 color: ['#354868'],
-								 width: 1,
-								 type: 'solid'
+								color: ['#354868'],
+								width: 1,
+								type: 'solid'
 							}
 						},
 						splitLine: {
 							show: true,
 							lineStyle: {
-								 color: ['#354868'],
-								 width: 1,
-								 type: 'solid'
+								color: ['#354868'],
+								width: 1,
+								type: 'solid'
 							}
 						},
 						axisLabel: {
 							show: true,
 							textStyle: {
-								 color: "#BDD8E7",
-								 fontSize: axisLabelFontSize,
+								color: "#BDD8E7",
+								fontSize: axisLabelFontSize,
 							}
 						}
 					}
-				],
-				series: [{
-					data: [120, 130, 100, 140, 90, 260, 220],
-					type: 'line',
-					symbolSize: 6,
-					areaStyle: {normal: {
-						color: new echarts.graphic.LinearGradient(0, 0, 0, 2, [{
-							offset: 0,
-							color: '#3B9B66'
-						}, {
-							offset: 1,
-							color: 'rgba(0,0,0,0)'
-						}]),
-					}},
-					itemStyle: {
-						color: "#5CED7B"
+					],
+					series: [{
+						data: [120, 130, 100, 140, 90, 260, 220],
+						type: 'line',
+						symbolSize: 6,
+						areaStyle: {normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 2, [{
+								offset: 0,
+								color: '#3B9B66'
+							}, {
+								offset: 1,
+								color: 'rgba(0,0,0,0)'
+							}]),
+						}},
+						itemStyle: {
+							color: "#5CED7B"
 
-					}
-				}]
+						}
+					}]
 		};
 		var illegalChart = echarts.init(document.getElementById('illegalChart'));
 		illegalChart.setOption(illegalOption);
 		illegalChart.resize();
 	}
-	
-	
+
+
 	function initDangerChart() {
 		let dangerOption = {
 				title: {
@@ -377,14 +379,14 @@ $(function(){
 					padding: [25,0,20,0],
 					textStyle: {
 						fontSize: axisLabelFontSize,
-					    color: '#0795EB'
+						color: '#0795EB'
 					},
 					subtext: "单位：次数",
 					subtextStyle: {
-						 fontSize: 14,
-						 color: '#ECECEE',
-						 align: 'left',
-						 baseline: 'top'
+						fontSize: 14,
+						color: '#ECECEE',
+						align: 'left',
+						baseline: 'top'
 					}
 				},
 				xAxis: {
@@ -393,9 +395,9 @@ $(function(){
 					axisTick: {
 						show: true,
 						lineStyle: {
-							 color: ['#354868'],
-							 width: 1,
-							 type: 'solid'
+							color: ['#354868'],
+							width: 1,
+							type: 'solid'
 						}
 					},
 					axisLine: {
@@ -419,68 +421,69 @@ $(function(){
 						axisTick: {
 							show: true,
 							lineStyle: {
-								 color: ['#354868'],
-								 width: 1,
-								 type: 'solid'
+								color: ['#354868'],
+								width: 1,
+								type: 'solid'
 							}
 						},
 						axisLine: {
 							show: true,
 							lineStyle: {
-								 color: ['#354868'],
-								 width: 1,
-								 type: 'solid'
+								color: ['#354868'],
+								width: 1,
+								type: 'solid'
 							}
 						},
 						splitLine: {
 							show: true,
 							lineStyle: {
-								 color: ['#354868'],
-								 width: 1,
-								 type: 'solid'
+								color: ['#354868'],
+								width: 1,
+								type: 'solid'
 							}
 						},
 						axisLabel: {
 							show: true,
 							textStyle: {
-								 color: "#BDD8E7",
-								 fontSize: axisLabelFontSize,
+								color: "#BDD8E7",
+								fontSize: axisLabelFontSize,
 							}
 						}
 					}
-				],
-				series: [{
-					data: [120, 130, 100, 140, 90, 260, 220],
-					type: 'line',
-					symbolSize: 6,
-					areaStyle: {normal: {
-						color: new echarts.graphic.LinearGradient(0, 0, 0, 2, [{
-							offset: 0,
-							color: '#FCB609'
-						}, {
-							offset: 1,
-							color: 'rgba(0,0,0,0)'
-						}]),
-					}},
-					itemStyle: {
-						color: "#FCB609"
-					}
-				}]
+					],
+					series: [{
+						data: [120, 130, 100, 140, 90, 260, 220],
+						type: 'line',
+						symbolSize: 6,
+						areaStyle: {normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 2, [{
+								offset: 0,
+								color: '#FCB609'
+							}, {
+								offset: 1,
+								color: 'rgba(0,0,0,0)'
+							}]),
+						}},
+						itemStyle: {
+							color: "#FCB609"
+						}
+					}]
 		};
 		var dangerChart = echarts.init(document.getElementById('dangerChart'));
 		dangerChart.setOption(dangerOption);
 		dangerChart.resize();
 	}
-	
+
 	function initComplexChart01() {
 		let complexOption01 = {
 				title: {
 					show: true,
 					text: "单位：次数",
 					x: "right",
+					padding:[7,30,0,0],
 					textStyle: {
 						fontSize: axisLabelFontSize,
-					    color: '#ECECEE'
+						color: '#ECECEE'
 					}  
 				},
 				tooltip : {
@@ -498,76 +501,76 @@ $(function(){
 				xAxis : {
 					type : 'category',
 					data : ["未佩戴安全帽", "行人非法闯入", "明火危险", "人员聚集"],
-						axisTick: {
-							show: false
-						},
-						axisLine: {
-							show: false,
-						},
-						splitLine: {
-							show: false,
-						},
-						axisLabel: {
-							show: true,
-							textStyle: {
-								color: "#BDD8E7",
-								fontSize: axisLabelFontSize,
-							}
+					axisTick: {
+						show: false
+					},
+					axisLine: {
+						show: false,
+					},
+					splitLine: {
+						show: false,
+					},
+					axisLabel: {
+						show: true,
+						textStyle: {
+							color: "#BDD8E7",
+							fontSize: axisLabelFontSize,
 						}
+					}
 				},
 				yAxis : [{
-							type : 'value',
-							axisTick: {
-								show: false
-							},
-							axisLine: {
-								show: false,
-							},
-							splitLine: {
-								show: false,
-							},
-							axisLabel: {
-								show: false,
-								textStyle: {
-									 color: "#BDD8E7",
-									 fontSize: axisLabelFontSize,
-								}
-							}
+					type : 'value',
+					axisTick: {
+						show: false
+					},
+					axisLine: {
+						show: false,
+					},
+					splitLine: {
+						show: false,
+					},
+					axisLabel: {
+						show: false,
+						textStyle: {
+							color: "#BDD8E7",
+							fontSize: axisLabelFontSize,
 						}
-					],
-					series : [{
-								name:'数据',
-								type:'bar',
-								barWidth: barWidth,
-								data:[{
-							        value : 150,
-							        itemStyle:{
-							        	color: "#0C6DB4"
-							        } 
-							    }, {
-							        value : 150,
-							        itemStyle:{
-							        	color: "#0C6DB4"
-							        }
-							    }, {
-							        value : 80,
-							        itemStyle:{
-							        	color: "#9B7A24"
-							        }
-							    }, {
-							        value : 34,
-							        itemStyle:{
-							        	color: "#732D9C"
-							        }
-							    }]
-							}
-						]
+					}
+				}
+				],
+				series : [{
+					name:'数据',
+					type:'bar',
+					barWidth: barWidth,
+					data:[{
+						value : 150,
+						itemStyle:{
+							color: "#0C6DB4"
+						} 
+					}, {
+						value : 150,
+						itemStyle:{
+							color: "#0C6DB4"
+						}
+					}, {
+						value : 80,
+						itemStyle:{
+							color: "#9B7A24"
+						}
+					}, {
+						value : 34,
+						itemStyle:{
+							color: "#732D9C"
+						}
+					}]
+				}
+				]
 		};
 		var complexChart01 = echarts.init(document.getElementById('complexChart01'));
 		complexChart01.setOption(complexOption01);
 		complexChart01.resize();
 	};
-	
+
 	function initComplexChart02() {
 		let complexOption02 = {
 				tooltip : {
@@ -621,8 +624,33 @@ $(function(){
 		var complexChart02 = echarts.init(document.getElementById('complexChart02'));
 		complexChart02.setOption(complexOption02);
 		complexChart02.resize();
-
 	}
-	
+
+	$(".icon-switch").on("click",function(e){
+		e.stopPropagation();
+		let left = $(this).offset().left;
+		let top = $(this).offset().top;
+		$("body").find("div.select-content").remove();
+		let selectIContent = "<div class='select-content'>" +
+		"<div class='select-title'>请选择一种算法</div>" +
+		"<ul>" +
+		"<li title='未佩戴安全帽次数未佩戴安全帽次数未佩戴安全帽次数'>未佩戴安全帽次数未佩戴安全帽次数未佩戴安全帽次数</li>" +
+		"<li title='行人非法闯入'>行人非法闯入</li>" +
+		"<li title='明火危险'>明火危险</li>" +
+		"</ul>" +
+		"</div>";
+		$("body").append(selectIContent);
+		$("div.select-content").css({
+			left: left - 160,
+			top: top + 30
+		})
+	});
+
+	$("body").on("click",function(e){
+		var target  = $(e.target);
+		if(target.closest(".select-content").length == 0){
+			$("body").find("div.select-content").hide();
+		}　
+	});
 
 });
