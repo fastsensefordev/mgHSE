@@ -10,6 +10,32 @@ import com.hs.response.ResultUtil;
 
 @Controller
 public class HomeController {
+	
+	@RequestMapping({"/dashboard"})
+    public ModelAndView dashboard() {
+        return new ModelAndView("dashboard");
+    }
+	
+	@RequestMapping({"safeChart"})
+    public ModelAndView safeChart() {
+        return new ModelAndView("safeChart");
+    }
+	
+	@RequestMapping({"illegalChart"})
+    public ModelAndView illegalChart() {
+        return new ModelAndView("illegalChart");
+    }
+	
+	@RequestMapping({"dangerChart"})
+    public ModelAndView dangerChart() {
+        return new ModelAndView("dangerChart");
+    }
+	
+	@RequestMapping({"totalChart"})
+    public ModelAndView totalChart() {
+        return new ModelAndView("totalChart");
+    }
+	
 	/**
 	* @Title: index
 	* @Description: 首页
@@ -80,11 +106,6 @@ public class HomeController {
     	modelAndView.setViewName("warnManage");
     	modelAndView.addObject("currMenu", "warnManage");
         return modelAndView;
-    }
-    
-    @RequestMapping({"/dashboard"})
-    public ModelAndView dashboard() {
-        return new ModelAndView("dashboard");
     }
     
     /**

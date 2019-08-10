@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+.chart-container {
+	background: #061033;
+	top: 0;
+	left: 0;
+	right: 0;
+	padding: 30px;
+}
+
+.chart-item {
+	height: 100%;
+	margin: 0;
+}

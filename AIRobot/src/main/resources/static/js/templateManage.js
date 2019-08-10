@@ -20,7 +20,7 @@ $(function(){
 		            {field: 'templateName', title: '链接名称'},
 		            {field: 'href', title: '链接',templet: function(d){
 		            	let hrefURL = d.href + d.id;
-		            	return "<a href='" + hrefURL + "' target='_blank'>" + hrefURL + "</a>";
+		            	return "<a href='" + hrefURL + "' target='_blank' class='link-item'>" + hrefURL + "</a>";
 		            }},
 		            {field: 'createTime', title: '创建时间'},
 		            {title: '操作',

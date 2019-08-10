@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>可视化看板</title>
+<link rel="stylesheet" th:href="@{/static/css/dashboard.css}">
+<link rel="stylesheet" th:href="@{/static/css/mychart.css}">
+</head>
+<body>
+	<div class="chart-container">
+		<div class="chart-item chart-02">
+			<i class="ibg bg-lt"></i>
+			<i class="ibg bg-rt"></i>
+			<i class="ibg bg-lb"></i>
+			<i class="ibg bg-rb"></i>
+			<div class="chart-content-body" id="illegalChartBody">
+				<div class="chart-content" id="illegalChart"></div>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/static/assets/jquery/jquery-3.3.1.min.js}"></script>
+	<script th:src="@{/static/assets/echarts/echarts.min.js}"></script>
+	<script th:src="@{/static/js/illegalChart.js}"></script>
+</body>
+</html>

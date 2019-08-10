@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>可视化看板</title>
+<link rel="stylesheet" th:href="@{/static/css/dashboard.css}">
+<link rel="stylesheet" th:href="@{/static/css/mychart.css}">
+</head>
+<body>
+	<div class="chart-container">
+		<div class="chart-item chart-01">
+			<div class="chart-title">
+				<div class="topical">未佩戴安全帽次数</div>
+				<div class="typeof">
+					<span class="icon-tubiao">图表</span>
+				</div>
+			</div>
+			<div class="chart-body" id="safeChartBody">
+				<div class="chart-content" id="safeChart"></div>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/static/assets/jquery/jquery-3.3.1.min.js}"></script>
+	<script th:src="@{/static/assets/echarts/echarts.min.js}"></script>
+	<script th:src="@{/static/js/safeChart.js}"></script>
+</body>
+</html>

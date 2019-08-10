@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>可视化看板</title>
+<link rel="stylesheet" th:href="@{/static/css/dashboard.css}">
+<link rel="stylesheet" th:href="@{/static/css/mychart.css}">
+</head>
+<body>
+	<div class="container chart-container">
+		<div class="chart-item chart-04">
+			<div class="chart-title">
+				<div class="topical">综合分析</div>
+				<div class="typeof">
+					<span class="icon-tubiao">图表</span>
+				</div>
+			</div>
+			<div class="chart-body">
+				<div class="chart-content" id="complexChart01"></div>
+				<div class="chart-content" id="complexChart02"></div>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/static/assets/jquery/jquery-3.3.1.min.js}"></script>
+	<script th:src="@{/static/assets/echarts/echarts.min.js}"></script>
+	<script th:src="@{/static/js/totalChart.js}"></script>
+</body>
+</html>
