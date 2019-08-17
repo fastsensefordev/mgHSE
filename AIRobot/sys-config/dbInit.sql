@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2019-07-31 22:41:57
+Date: 2019-08-17 16:03:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,6 +23,8 @@ CREATE TABLE `tbl_address` (
   `id` int(12) NOT NULL AUTO_INCREMENT,
   `ipType` int(2) DEFAULT '0' COMMENT '类型（0 算法 1 其他）',
   `ip` varchar(512) DEFAULT NULL COMMENT 'IP地址',
+  `level` int(2) DEFAULT NULL COMMENT '级别 1 2 3',
+  `area` varchar(255) DEFAULT NULL COMMENT '区域',
   `cameraId` varchar(512) DEFAULT NULL COMMENT '摄像头id',
   `location` varchar(512) DEFAULT NULL COMMENT '摄像头位置',
   `userId` int(12) DEFAULT NULL COMMENT '用户id',
@@ -30,27 +32,28 @@ CREATE TABLE `tbl_address` (
   `createTime` datetime DEFAULT NULL,
   `pid` int(12) DEFAULT NULL,
   `status` int(2) DEFAULT '0' COMMENT '状态（0未删除,1删除）',
-  `timestamp` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_address
 -- ----------------------------
-INSERT INTO `tbl_address` VALUES ('2', null, null, null, null, '1', 'jiayaobo', '2019-07-31 21:13:39', '0', '1', '2019-07-31 21:16:30');
-INSERT INTO `tbl_address` VALUES ('3', null, null, null, null, '1', 'jiayaobo', '2019-07-31 21:13:56', '0', '1', '2019-07-31 21:16:34');
-INSERT INTO `tbl_address` VALUES ('4', null, null, null, null, '1', 'jiayaobo', '2019-07-31 21:16:44', '0', '1', '2019-07-31 21:17:28');
-INSERT INTO `tbl_address` VALUES ('5', '0', '10.185.27.164', null, null, '1', 'jiayaobo', '2019-07-31 21:17:40', '0', '1', '2019-07-31 21:25:00');
-INSERT INTO `tbl_address` VALUES ('6', '0', 'http://10.187.2.113:8081/', null, null, '1', 'jiayaobo', '2019-07-31 21:24:56', '0', '0', null);
-INSERT INTO `tbl_address` VALUES ('7', '0', 'http://10.187.2.113:8081/', null, null, '1', 'jiayaobo', '2019-07-31 21:25:03', '0', '0', null);
-INSERT INTO `tbl_address` VALUES ('8', '0', 'http://10.187.2.113:8081/', null, null, '1', 'jiayaobo', '2019-07-31 21:25:05', '0', '0', null);
-INSERT INTO `tbl_address` VALUES ('9', '0', 'http://10.187.2.113:8081/', null, null, '1', 'jiayaobo', '2019-07-31 21:25:07', '0', '0', null);
-INSERT INTO `tbl_address` VALUES ('10', '1', 'https://www.baidu.com/', null, null, '1', 'jiayaobo', '2019-07-31 21:25:17', '0', '0', null);
-INSERT INTO `tbl_address` VALUES ('11', '1', 'https://mvnrepository.com/', null, null, '1', 'jiayaobo', '2019-07-31 21:25:25', '0', '0', null);
-INSERT INTO `tbl_address` VALUES ('12', null, null, '嫦娥1号', '(123.132,123.251)', '1', 'jiayaobo', '2019-07-31 21:40:17', '6', '0', '2019-07-31 21:41:18');
-INSERT INTO `tbl_address` VALUES ('13', null, null, '嫦娥2号', '(123.132,123.251)', '1', 'jiayaobo', '2019-07-31 21:41:33', '6', '0', null);
-INSERT INTO `tbl_address` VALUES ('14', null, null, '嫦娥3号', '(223.632,433.987)', '1', 'jiayaobo', '2019-07-31 21:41:53', '6', '0', null);
-INSERT INTO `tbl_address` VALUES ('15', null, null, '天宫1号', '19231.124,125541.321', '1', 'jiayaobo', '2019-07-31 21:46:45', '7', '0', null);
+INSERT INTO `tbl_address` VALUES ('6', '0', 'http://10.187.2.113:8081/', '1', null, null, null, '1', 'jiayaobo', '2019-07-31 21:24:56', '0', '0', '2019-08-01 23:01:48');
+INSERT INTO `tbl_address` VALUES ('7', '0', 'http://10.187.2.113:8081/', '1', null, null, null, '1', 'jiayaobo', '2019-07-31 21:25:03', '0', '0', '2019-08-01 23:01:48');
+INSERT INTO `tbl_address` VALUES ('8', '0', 'http://10.187.2.113:8081/', '1', null, null, null, '1', 'jiayaobo', '2019-07-31 21:25:05', '0', '0', '2019-08-01 23:01:48');
+INSERT INTO `tbl_address` VALUES ('9', '0', 'http://10.187.2.113:8081/', '1', null, null, null, '1', 'jiayaobo', '2019-07-31 21:25:07', '0', '0', '2019-08-01 23:01:48');
+INSERT INTO `tbl_address` VALUES ('10', '1', 'https://www.baidu.com/', '1', null, null, null, '1', 'jiayaobo', '2019-07-31 21:25:17', '0', '0', '2019-08-01 23:01:48');
+INSERT INTO `tbl_address` VALUES ('11', '1', 'https://mvnrepository.com/', '1', null, null, null, '1', 'jiayaobo', '2019-07-31 21:25:25', '0', '0', '2019-08-01 23:01:48');
+INSERT INTO `tbl_address` VALUES ('17', '0', null, '2', '1号大门', null, null, '1', 'jiayaobo', '2019-08-01 23:18:08', '6', '1', '2019-08-01 23:31:10');
+INSERT INTO `tbl_address` VALUES ('18', '0', null, '3', null, '是多少', '颠三倒四', '1', 'jiayaobo', '2019-08-01 23:18:39', '17', '0', null);
+INSERT INTO `tbl_address` VALUES ('19', '0', null, '3', null, '二道湾所的', '颠三倒四', '1', 'jiayaobo', '2019-08-01 23:23:34', '17', '0', null);
+INSERT INTO `tbl_address` VALUES ('20', '0', null, '2', '区域2', null, null, '1', 'jiayaobo', '2019-08-01 23:23:41', '6', '0', null);
+INSERT INTO `tbl_address` VALUES ('21', '0', null, '2', '都是', null, null, '1', 'jiayaobo', '2019-08-01 23:29:14', '7', '0', null);
+INSERT INTO `tbl_address` VALUES ('22', '0', null, '2', '都是颠三倒四', null, null, '1', 'jiayaobo', '2019-08-01 23:29:21', '9', '1', '2019-08-01 23:31:19');
+INSERT INTO `tbl_address` VALUES ('23', '0', null, '3', null, '多岁的', '都是', '1', 'jiayaobo', '2019-08-01 23:29:26', '22', '0', null);
+INSERT INTO `tbl_address` VALUES ('24', '0', null, '2', 'yunos.1.24', null, null, '1', 'jiayaobo', '2019-08-04 13:38:50', '6', '1', '2019-08-04 13:38:58');
+INSERT INTO `tbl_address` VALUES ('25', '0', null, '3', null, 'yunos.1.24', '123.21,54.124', '1', 'jiayaobo', '2019-08-04 13:39:12', '20', '0', '2019-08-04 13:39:12');
 
 -- ----------------------------
 -- Table structure for tbl_admin_key
@@ -64,6 +67,22 @@ CREATE TABLE `tbl_admin_key` (
 -- Records of tbl_admin_key
 -- ----------------------------
 INSERT INTO `tbl_admin_key` VALUES ('admin123');
+
+-- ----------------------------
+-- Table structure for tbl_config
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_config`;
+CREATE TABLE `tbl_config` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `config` varchar(512) DEFAULT NULL,
+  `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_config
+-- ----------------------------
+INSERT INTO `tbl_config` VALUES ('4', '\\9458e143-52f7-4712-8a11-42cbcd52021f\\9458e143-52f7-4712-8a11-42cbcd52021f.jpg', '2019-08-17 16:02:59');
 
 -- ----------------------------
 -- Table structure for tbl_login_log
@@ -97,7 +116,7 @@ CREATE TABLE `tbl_template` (
   `status` int(2) DEFAULT '0' COMMENT '状态（0未删除,1删除）',
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_template
@@ -172,6 +191,11 @@ INSERT INTO `tbl_template` VALUES ('84', '辅导费大多数未佩戴安全帽',
 INSERT INTO `tbl_template` VALUES ('85', '辅导费大多数行人非法闯入', 'illegalChart?aId=2', '2019-07-29 22:01:33', '1', 'jiayaobo', '83', '0', '2019-07-29 22:01:33');
 INSERT INTO `tbl_template` VALUES ('86', '辅导费大多数明火危险', 'dangerChart?aId=3', '2019-07-29 22:01:33', '1', 'jiayaobo', '83', '0', '2019-07-29 22:01:33');
 INSERT INTO `tbl_template` VALUES ('87', '辅导费大多数综合分析', 'totalChart?aId=4', '2019-07-29 22:01:33', '1', 'jiayaobo', '83', '0', '2019-07-29 22:01:33');
+INSERT INTO `tbl_template` VALUES ('88', 'hahahah', 'dashboard?id=', '2019-08-05 22:45:19', '12', 'jiayaobo', '0', '0', '2019-08-05 22:45:19');
+INSERT INTO `tbl_template` VALUES ('89', 'hahahah未佩戴安全帽', 'safeChart?aId=1', '2019-08-05 22:45:19', '12', 'jiayaobo', '88', '0', '2019-08-05 22:45:19');
+INSERT INTO `tbl_template` VALUES ('90', 'hahahah行人非法闯入', 'illegalChart?aId=2', '2019-08-05 22:45:19', '12', 'jiayaobo', '88', '0', '2019-08-05 22:45:19');
+INSERT INTO `tbl_template` VALUES ('91', 'hahahah明火危险', 'dangerChart?aId=3', '2019-08-05 22:45:19', '12', 'jiayaobo', '88', '0', '2019-08-05 22:45:19');
+INSERT INTO `tbl_template` VALUES ('92', 'hahahah综合分析', 'totalChart?aId=4', '2019-08-05 22:45:19', '12', 'jiayaobo', '88', '0', '2019-08-05 22:45:19');
 
 -- ----------------------------
 -- Table structure for tbl_user
@@ -187,21 +211,23 @@ CREATE TABLE `tbl_user` (
   `lastLoginTime` datetime DEFAULT NULL COMMENT '最新登录时间',
   `status` int(2) DEFAULT '0' COMMENT '是否删除（0 未删除 1已删除）',
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '时间戳',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `userName` (`userName`) USING BTREE,
+  UNIQUE KEY `phone` (`phone`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_user
 -- ----------------------------
-INSERT INTO `tbl_user` VALUES ('1', '18602902331', 'jiayaobo', 'BKHNYBX1zcqx93U7FiPG4Q==', '0', '2019-07-20 15:21:12', '2019-07-20 15:21:19', '0', '2019-07-27 10:55:26');
-INSERT INTO `tbl_user` VALUES ('2', '15102123215', 'admin', 'admin', '1', '2019-07-20 15:21:14', '2019-07-20 15:21:21', '0', '2019-07-21 09:44:08');
+INSERT INTO `tbl_user` VALUES ('1', '15421542134', 'jasonjia1', 'BKHNYBX1zcqx93U7FiPG4Q==', '0', '2019-07-20 15:21:12', '2019-07-20 15:21:19', '0', '2019-08-05 22:37:06');
+INSERT INTO `tbl_user` VALUES ('2', '15102123215', 'admin', '0hcyJP/6yvVjGytYS754TA==', '1', '2019-07-20 15:21:14', '2019-07-20 15:21:21', '0', '2019-08-05 22:35:31');
 INSERT INTO `tbl_user` VALUES ('3', '18602902321', 'woaini91', '4J3rvGnJyBZgR6IQAGsphA==', '0', '2019-07-21 14:09:03', null, '1', '2019-07-22 20:58:54');
 INSERT INTO `tbl_user` VALUES ('4', '18729015211', 'woaini', 'BKHNYBX1zcqx93U7FiPG4Q==', '1', '2019-07-21 14:11:59', null, '1', '2019-07-21 14:19:03');
 INSERT INTO `tbl_user` VALUES ('5', '18602902332', 'admin12', '0hcyJP/6yvVjGytYS754TA==', '1', '2019-07-21 14:25:26', null, '1', '2019-07-22 20:58:57');
 INSERT INTO `tbl_user` VALUES ('6', '18602301235', 'admintest', 'EAPeipXwWUV2Sg7Sd0kFkg==', '1', '2019-07-21 14:30:11', null, '0', '2019-07-21 14:30:11');
 INSERT INTO `tbl_user` VALUES ('7', '15102123214', 'test123', 'LNPRO2o/mOxmmPXQCMrNfQ==', '1', '2019-07-21 14:31:09', null, '0', '2019-07-21 14:31:09');
 INSERT INTO `tbl_user` VALUES ('8', '15102123212', 'woaini432', 'nWiVscYiOwd/44yWlT9UCQ==', '1', '2019-07-21 14:31:29', null, '0', '2019-07-21 14:31:29');
-INSERT INTO `tbl_user` VALUES ('9', '18602902329', 'adminewe', 'BKHNYBX1zcqx93U7FiPG4Q==', '0', '2019-07-21 14:32:09', null, '1', '2019-07-22 20:58:50');
+INSERT INTO `tbl_user` VALUES ('9', '18602902329', 'adminewe', 'BKHNYBX1zcqx93U7FiPG4Q==', '1', '2019-07-21 14:32:09', null, '0', '2019-08-05 22:21:38');
 INSERT INTO `tbl_user` VALUES ('10', '18602902326', 'dsddd', '0hcyJP/6yvVjGytYS754TA==', '1', '2019-07-21 14:32:38', null, '0', '2019-07-21 14:32:38');
 INSERT INTO `tbl_user` VALUES ('11', '15421542135', 'sasadsds', 'TKtphEDvrS2od9TKv71vZg==', '1', '2019-07-21 14:33:30', null, '0', '2019-07-21 14:33:30');
-INSERT INTO `tbl_user` VALUES ('12', '15421542134', 'jasonjia', 'BKHNYBX1zcqx93U7FiPG4Q==', '1', '2019-07-21 14:34:00', null, '0', '2019-07-27 11:32:30');
+INSERT INTO `tbl_user` VALUES ('12', '18602902331', 'jiayaobo', 'BKHNYBX1zcqx93U7FiPG4Q==', '1', '2019-07-21 14:34:00', null, '0', '2019-08-05 22:37:08');

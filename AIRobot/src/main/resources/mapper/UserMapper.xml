@@ -109,4 +109,15 @@
         where userName = #{userName}
 	</update>
 	
+	<select id="getImgCenter" resultType="String">
+		select config from tbl_config limit 1
+	</select>
+	<delete id="clearConfig">
+		delete from tbl_config
+	</delete>
+	<!-- 用户登录日志 -->
+	<insert id="saveConfig" parameterType="String">
+		insert into tbl_config(config)
+		values (#{config})   
+	</insert>
 </mapper>

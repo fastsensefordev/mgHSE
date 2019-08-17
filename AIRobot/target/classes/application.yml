@@ -6,6 +6,10 @@ spring:
     devtools: 
         restart: 
             enabled: true
+    servlet:
+       multipart:
+          max-request-size: 2MB
+          max-file-size: 2MB            
     mvc:
        static-path-pattern: /static/**
     datasource:
@@ -60,3 +64,5 @@ swagger:
    enable: true
 
 
+interface:
+   imgServer: http://172.14.33.204:8080/image/

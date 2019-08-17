@@ -1,5 +1,7 @@
 package com.hs.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.hs.model.User;
 import com.hs.request.AddUserRequest;
 import com.hs.request.GetUserListRequest;
@@ -61,6 +63,8 @@ public interface UserService {
 	 */
 	public ResultResponse retrievePassword(RetrievePasswordRequest request);
 	public User getLoginUser();
+	public ResultResponse uploadImg(MultipartFile file);
+	public ResultResponse getImgCenter();
 
 }
 

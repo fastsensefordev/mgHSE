@@ -129,6 +129,16 @@ html, body {
 	right: 24px;
 }
 
+.upload-file {
+	position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    cursor: pointer;
+    opacity: 0;
+}
 .total-bottom {
 	padding: 10px;
 	position: absolute;

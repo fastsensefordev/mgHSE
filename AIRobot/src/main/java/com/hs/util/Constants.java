@@ -26,6 +26,7 @@ public class Constants {
 	public static final Integer INT_2 = 2;
 	public static final Integer INT_3 = 3;
 	
+	public static final String UPLOADED_FOLDER = "D://upload/";
 }
 
 	

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hs.model.User;
 import com.hs.request.AddUserRequest;
@@ -150,6 +151,32 @@ public class UserController {
 			return ResultUtil.error(ResultEnum.VALUE_EMPTY, "新密码不能为空");
 		}
 		ResultResponse resopnse = userService.retrievePassword(request);
+		return resopnse;
+		
+	}
+	/**
+	 * @desc: 上传文件
+	 * @author: kpchen
+	 * @createTime: 2019年8月17日 下午2:53:52
+	 * @history:
+	 * @param httpServletRequest
+	 * @param httpServletResponse
+	 * @param file
+	 * @return ResultResponse
+	 */
+	@ApiOperation(value="uploadImg")
+	@RequestMapping("uploadImg")
+	public ResultResponse uploadImg(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
+			MultipartFile file) {
+		ResultResponse resopnse = userService.uploadImg(file);
+		return resopnse;
+		
+	}
+	
+	@ApiOperation(value="getImgCenter")
+	@RequestMapping("getImgCenter")
+	public ResultResponse getImgCenter() {
+		ResultResponse resopnse = userService.getImgCenter();
 		return resopnse;
 		
 	}

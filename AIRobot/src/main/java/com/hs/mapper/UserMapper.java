@@ -3,6 +3,8 @@ package com.hs.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.hs.model.LoginUserLog;
 import com.hs.model.User;
 
@@ -79,6 +81,9 @@ public interface UserMapper {
 	public int retrievePassword(Map<String, Object> retrieveMap);
 	public User getUserByName(User user);
 	public User getUserByPhone(User user);
+	public String getImgCenter();
+	public Integer clearConfig();
+	public int saveConfig(@Param("config") String config);
 	
 
 }

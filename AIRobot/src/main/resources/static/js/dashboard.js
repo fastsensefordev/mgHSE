@@ -1,5 +1,5 @@
 $(function(){
-
+	initImgCenter();
 	initClock();
 	
 	safeChartConfig.initSafeChart();
@@ -7,11 +7,23 @@ $(function(){
 	dangerChartConfig.initDangerChart();
 	totalChartConfig.initComplexChart01();
 	totalChartConfig.initComplexChart02();
-	
 	$(window).resize(function(){
 		$("body").find("div.select-content").hide();
 	});
-
+	
+	function initImgCenter() {
+		$.ajax({  
+			url:'user/getImgCenter',  
+			type:'post',      
+			data: {}, 
+			dataType:'json',  
+			success:function(data){  
+				if (data.code == 200 && data.data.imgPath != null) {
+					$("#imgCenter").attr("src",data.data.imgPath);
+				}
+			}  
+		});  
+	}
 	function initClock() {
 		var newTime = '';
 		getLangDate();
@@ -69,5 +81,26 @@ $(function(){
 			$("body").find("div.select-content").hide();
 		}　
 	});
+	//文件上传
+	$("#upload-file").on("change",function(){
+		let file = $(this).val();
+		var formData = new FormData();
+		formData.append("file",$("#upload-file")[0].files[0]);
+		$.ajax({
+	           type:"POST",
+	           url: "user/uploadImg",
+	           data:formData,
+	           dataType:"json",
+	           mimeType:"multipart/form-data",
+	           cache:false,
+	           processData:false,
+	           contentType:false,
+	           success:function(data){
+					if (data.code == 200 && data.data.imgPath != null) {
+						$("#imgCenter").attr("src",data.data.imgPath);
+					}
+		       }
 
+		});
+	});
 });

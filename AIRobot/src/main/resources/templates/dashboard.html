@@ -49,8 +49,9 @@
 			<div class="logo-item">
 				<div class="logo-title">智慧工厂 AI管理平台</div>
 			</div>
-			<div class="img-center">
-				<img th:src="@{/static/img/center_img.png}"/>
+			<div class="img-center" id="uploadImg">
+				<input type="file" class="upload-file" id="upload-file"/>
+				<img th:src="@{/static/img/center_img.png}" id="imgCenter"/>
 			</div>
 			<div class="total-bottom">
 				<i class="ibg bg-lt"></i>
