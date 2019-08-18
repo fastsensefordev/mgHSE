@@ -25,7 +25,10 @@ $(function(){
 		            		return "";
 		            	}
 		            }},
-		            {field: 'ip', title: '服务器地址'},
+		            {field: 'ip', title: '服务器地址',width:200,
+		            	templet:function(d) {
+		            	return "<a href='" + d.ip + "' target='_blank' class='link-item'>" + d.ip + "</a>";
+		            }},
 		            {field: 'area', title: '区域'},
 		            {field: 'cameraId', title: '摄像头ID'},
 		            {field: 'location', title: '摄像头位置'},
