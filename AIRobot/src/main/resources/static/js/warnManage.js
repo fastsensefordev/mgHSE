@@ -2,7 +2,7 @@ $(function(){
 	let loginUserRole = $("#loginUserInfo").attr("role");
 	let loginUser = $("#loginUserInfo").text().trim();
 	let warnTableOptions = {
-			toolbar: '#toolbarDemo',
+			toolbar: '#deleteElarm',
 			defaultToolbar: ['filter', 'print','exports'],
 			elem: '#warnListTable',
 			url:'warn/getWarnList',
@@ -19,46 +19,39 @@ $(function(){
 				};
 			},
 			cols: [[
-					{field:'id', title:'ID', hide: true},
-					{field:'alarmName', title:'报警类型'},
-					{field:'server', title:'报警地址'},
-					{field:'takePic1', title:'图片',templet:function(d){
-						return "<img src='"+d.takePic1+"'/>";
-					}},
-					{field:'alarmTime', title:'报警时间'},
-					{fixed: 'right', title:'操作',width: 150,templet:function(d){
-						let delTemp = '<a class="layui-btn layui-btn-danger layui-btn-xs table-btn" lay-event="del"><i class="layui-icon">&#xe640;</i>处理</a>';
-						let operateTemp = delTemp;
-						if (d.isDelete == 1) {
-							operateTemp = delDisabledTemp;
-						}
-						return operateTemp;
-					}}
-			]],
-			
+				{type: 'checkbox', fixed: 'left'},
+				{field:'id', title:'ID', hide: true},
+				{field:'alarmName', title:'报警类型'},
+				{field:'server', title:'报警地址'},
+				{field:'takePic1', title:'图片',templet:function(d){
+					return "<img src='"+d.takePic1+"'/>";
+				}},
+				{field:'alarmTime', title:'报警时间'},
+				{fixed: 'right', title:'操作',width: 150,templet:function(d){
+					let delTemp = '<a class="layui-btn layui-btn-danger layui-btn-xs table-btn" lay-event="del"><i class="layui-icon">&#xe640;</i>处理</a>';
+					let operateTemp = delTemp;
+					if (d.isDelete == 1) {
+						operateTemp = delDisabledTemp;
+					}
+					return operateTemp;
+				}}
+				]],
+
 	};
 	layui.use('table', function(){
 		var warnListTable = layui.table;
 		warnListTable.render(warnTableOptions);
 
 		//头工具栏事件
-		warnListTable.on('toolbar(userListTable)', function(obj){
-			let checkStatus = userListTable.checkStatus(obj.config.id);
+		warnListTable.on('toolbar(warnListTable)', function(obj){
+			let checkStatus = warnListTable.checkStatus(obj.config.id);
 			switch(obj.event){
-				case 'getCheckData':
-					var data = checkStatus.data;
-					layer.alert(JSON.stringify(data));
-					break;
-				case 'getCheckLength':
-					var data = checkStatus.data;
-					layer.msg('选中了：'+ data.length + ' 个');
-					break;
-				case 'addUser':
-					addUser();
-					break;
+			case 'deleteElarm':
+				deleteAlarm(checkStatus.data)
+				break;
 			};
 		});
-		 //监听行工具事件
+		//监听行工具事件
 		warnListTable.on('tool(warnListTable)', function(obj){
 			let data = obj.data;
 			let delBtn = $(this);
@@ -86,7 +79,30 @@ $(function(){
 				});
 			} 
 		});
-	});
 		
+		function deleteAlarm(data) {
+			let idList = [];
+			for (var i = 0; i < data.length; i++) {
+				idList.push(data[i].id)
+			}
+			let formParam = {
+					idList: idList
+			};
+			$.ajax({  
+				url:'warn/batchAlarms',  
+				type:'post',      
+				data: JSON.stringify(formParam), 
+				contentType: "application/json; charset=utf-8",
+				dataType:'json',   
+				success:function(data){  
+					if (data.code == 200) {
+						layer.msg("批量删除成功");
+						layui.table.reload("warnListTable",warnTableOptions);
+					}
+				}  
+			}); 
+		}
+	});
+
 
 });

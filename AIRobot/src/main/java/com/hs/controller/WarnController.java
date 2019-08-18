@@ -71,7 +71,7 @@ public class WarnController {
 	 * @param id
 	 * @return ResultResponse
 	 */
-	@GetMapping("batchAlarms")
+	@RequestMapping("batchAlarms")
 	public ResultResponse batchAlarms(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
 			@RequestBody BatchAlarmsRequest request) {
 		return warnService.batchAlarms(request);

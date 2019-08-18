@@ -26,7 +26,7 @@ public interface TemplateService {
 	 * @history:
 	 * @return ResultResponse
 	 */
-	public ResultResponse getTemplateList();
+	public ResultResponse getTemplateList(String serveAdd);
 	/**
 	 * @desc: 删除模板
 	 * @author: kpchen

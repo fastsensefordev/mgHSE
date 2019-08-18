@@ -61,10 +61,13 @@ public class TemplateServiceImpl implements TemplateService {
 	 * @desc 查询模板
 	 */
 	@Override
-	public ResultResponse getTemplateList() {
+	public ResultResponse getTemplateList(String serveAddress) {
 		try {
 			User existUser = userService.getLoginUser();
 			List<TemplateModel> models = templateMapper.getTemplateList(existUser.getId());
+			for (TemplateModel templateModel : models) {
+				templateModel.setHref(serveAddress + templateModel.getHref());
+			}
 			Map<String, Object> data = new LinkedHashMap<String, Object>();
 			data.put("data", models);
 			return ResultUtil.success(data);

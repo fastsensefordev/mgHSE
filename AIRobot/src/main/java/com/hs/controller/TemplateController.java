@@ -52,7 +52,8 @@ public class TemplateController {
 	@ApiOperation(value="查询模板", notes="查询已添加模板")
 	@RequestMapping("getTemplateList")
 	public ResultResponse getTemplateList(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
-		ResultResponse resopnse = templateService.getTemplateList();
+		String serveAdd = "http://" + httpServletRequest.getLocalAddr() + ":" + httpServletRequest.getServerPort() + httpServletRequest.getContextPath() +"/";
+		ResultResponse resopnse = templateService.getTemplateList(serveAdd);
 		return resopnse;
 	}
 	/**
