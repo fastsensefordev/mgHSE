@@ -22,18 +22,15 @@ $(function(){
 					{field:'id', title:'ID', hide: true},
 					{field:'alarmName', title:'报警类型'},
 					{field:'server', title:'报警地址'},
-					{field:'takePic1', title:'图片'},
+					{field:'takePic1', title:'图片',templet:function(d){
+						return "<img src='"+d.takePic1+"'/>";
+					}},
 					{field:'alarmTime', title:'报警时间'},
 					{fixed: 'right', title:'操作',width: 150,templet:function(d){
-						let editTemp = '<a class="layui-btn layui-btn-xs table-btn" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>';
-						let delTemp = '<a class="layui-btn layui-btn-danger layui-btn-xs table-btn" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>';
-						let operateTemp = "";
-						if (loginUserRole == 0) { //超级管理员 可以管理所有人的权限
-							operateTemp = editTemp + delTemp;
-						} else { //普通用户，管理自己
-							if (d.userName == loginUser || d.phone == loginUser) {
-								operateTemp = editTemp + delTemp;
-							}
+						let delTemp = '<a class="layui-btn layui-btn-danger layui-btn-xs table-btn" lay-event="del"><i class="layui-icon">&#xe640;</i>处理</a>';
+						let operateTemp = delTemp;
+						if (d.isDelete == 1) {
+							operateTemp = delDisabledTemp;
 						}
 						return operateTemp;
 					}}
@@ -62,20 +59,26 @@ $(function(){
 			};
 		});
 		 //监听行工具事件
-		warnListTable.on('tool(userListTable)', function(obj){
+		warnListTable.on('tool(warnListTable)', function(obj){
 			let data = obj.data;
+			let delBtn = $(this);
+			if ($(this).hasClass("disabled")) {
+				return;
+			}
 			if(obj.event === 'del'){
 				layer.confirm('确认处理该报警吗?', function(index){
 					$.ajax({  
 						url:'warn/dealAlarmById',  
-						type:'post',      
+						type:'GET',      
 						data: {
-							userId: obj.data.id
+							id: obj.data.id
 						}, 
 						dataType:'json',  
 						success:function(data){  
 							if (data.code == 200) {
 								layer.msg("处理成功");
+								console.log(obj);
+								delBtn.addClass("disabled");
 								layer.close(index);
 							}
 						}  

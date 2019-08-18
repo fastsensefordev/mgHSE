@@ -14,9 +14,7 @@
 	<!-- 更新 -->
 	<update id="dealAlarmById">
         update tbl_alarm_info
-        <set>
-            <if test="isDelete != null">isDelete = 1</if>
-        </set>
+        set isDelete = 1
         where id = #{id}
 	</update>
 	<!-- 批量删除 -->
@@ -29,7 +27,7 @@
 	</delete>
 	
 	<select id="getWarnList" resultType="com.hs.model.TblAlarmInfo">
-		select id,alarmId,alarmName,server,alarmTime
+		select id,alarmId,alarmName,server,alarmTime,isDelete,takePic1
 		from tbl_alarm_info
 		where isDelete = 0
 	</select>
