@@ -17,11 +17,26 @@
 				  <a href="">报警管理</a>
 				</span>
 			</div>
+			<div class="content-body">
+				<script type="text/html" id="toolbarDemo">
+  					<div class="layui-btn-container">
+    					<button type="button" class="layui-btn" lay-event="addUser" th:if="${session.loginRole} eq 0"><i class="layui-icon">&#xe608;</i> 新增</button>
+  					</div>
+				</script>
+				<div class="content-container">
+					<table class="layui-hide" id="warnListTable" lay-filter="warnListTable"></table>
+				</div>
+			</div>
+			<script type="text/html" id="operateButton">
+  				<a class="layui-btn layui-btn-xs table-btn" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>
+  				<a class="layui-btn layui-btn-danger layui-btn-xs table-btn" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
+			</script>
 		</div>
 	</div>
 	<script th:src="@{/static/assets/jquery/jquery-3.3.1.min.js}"></script>
 	<script th:src="@{/static/assets/layui/layui.js}"></script>
 	<script th:src="@{/static/js/header.js}"></script>
+	<script th:src="@{/static/js/warnManage.js}"></script>
 	<script>
 		//JavaScript代码区域
 		layui.use('element', function() {

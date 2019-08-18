@@ -31,7 +31,7 @@ $(function(){
 		            {field: 'location', title: '摄像头位置'},
 		            {field: 'createUser', title: '创建者'},
 		            {field: 'createTime', title: '创建时间'},
-		            {title: '操作',align:"center",
+		            {title: '操作',align:"center",width: 200,
 		             templet: function(d){
 		            	 let operateTemplate = "";
 		            	 //算法服务类型才允许添加摄像头

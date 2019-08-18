@@ -3,13 +3,19 @@ package com.hs.model;
 import java.util.Date;
 
 public class AlarmInfo {
-	//ID
+	/**
+	 * ID ***
+	 */
 	private long ID;
-	//报警事件名称
+	/**
+	 * 报警事件名称,算法名称
+	 */
 	private String AlarmName;
 	//报警发生产视频源名称(一般为摄像机名称)
 	private String SourceName;
-	//报警时间
+	/**
+	 * 报警时间
+	 */
 	private Date AlarmTime;
 	//停止报警时间
 	private Date StopAlarmTime;
@@ -21,7 +27,9 @@ public class AlarmInfo {
 	private int AreaIndex;
 	//Ivs事件类型
 	private String IvsEventType;
-	//图片1-报警对象图片
+	/**
+	 * 图片1-报警对象图片---****
+	 */
 	private String TakePic1;
 	//图片2-报警开始全景图片
 	private String TakePic2;

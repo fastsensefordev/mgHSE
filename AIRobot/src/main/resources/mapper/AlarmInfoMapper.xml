@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.mapper.AlarmInfoMapper">
+
+	<!-- 批量新增提醒 -->
+	<insert id="batchSaveAlarmInfo" parameterType="java.util.List">
+		INSERT INTO `tbl_alarm_info` (`alarmId`, `alarmName`,`takePic1`,`alarmTime`) 
+		VALUES 
+		<foreach collection="list" item="item" separator=",">
+      		(#{item.alarmId},#{item.alarmName},#{item.takePic1},#{item.alarmTime})
+      	</foreach>
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="dealAlarmById">
+        update tbl_alarm_info
+        <set>
+            <if test="isDelete != null">isDelete = 1</if>
+        </set>
+        where id = #{id}
+	</update>
+	<!-- 批量删除 -->
+	<delete id="batchAlarms">
+		delete from tbl_alarm_info
+		where id in
+		<foreach collection="idList"  item="item" open="(" separator="," close=")"  >
+           #{item}
+     	</foreach>
+	</delete>
+	
+	<select id="getWarnList" resultType="com.hs.model.TblAlarmInfo">
+		select id,alarmId,alarmName,server,alarmTime
+		from tbl_alarm_info
+		where isDelete = 0
+	</select>
+</mapper>

@@ -13,9 +13,9 @@
 		select 
 			id,
 			ipType,
-			case when ipType = 0 then "算法服务器"
-			     when ipType = 1 then "其他" 
-			     else "" end as ipTypeStr, 
+			case when ipType = 0 then "通用算法服务器"
+			     when ipType = 1 then "人脸识别算法服务器" 
+			     else "其他" end as ipTypeStr, 
 			case when ip is null then "" else ip end as ip,
 			level,
 			case when level = 1 then "服务器"
