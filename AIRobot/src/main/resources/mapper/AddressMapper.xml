@@ -38,4 +38,17 @@
 		update `tbl_address` set `status` = 1 where id = #{id}
 	</update>
 	
+	
+	<!-- 更新用户 -->
+	<update id="updateAddress" parameterType="com.hs.request.UpdateAddressRequest">
+        update tbl_address
+        <set>
+            <if test="ip != null">ip = #{ip},</if>
+            <if test="area != null">area = #{area},</if>
+            <if test="cameraId != null">cameraId = #{cameraId},</if>
+            <if test="location != null">location = #{location}</if>
+        </set>
+        where id = #{id}
+	</update>
+	
 </mapper>

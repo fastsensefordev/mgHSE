@@ -34,13 +34,14 @@ $(function(){
 		            {field: 'location', title: '摄像头位置'},
 		            {field: 'createUser', title: '创建者'},
 		            {field: 'createTime', title: '创建时间'},
-		            {title: '操作',align:"center",width: 200,
+		            {title: '操作',align:"right",width: 200,
 		             templet: function(d){
 		            	 let operateTemplate = "";
 		            	 //算法服务类型才允许添加摄像头
 		            	 if (d.ipType == 0 && (d.level == 1 || d.level ==2)) {
-		            		 operateTemplate += '<a class="layui-btn layui-btn-xs table-btn" lay-event="edit" mId="'+d.id+'" level="'+d.level+'"><i class="layui-icon">&#xe654;</i>新增</a>';
+		            		 operateTemplate += '<a class="layui-btn layui-btn-xs table-btn" lay-event="add" mId="'+d.id+'" level="'+d.level+'"><i class="layui-icon">&#xe654;</i>新增</a>';
 		            	 }
+		            	 operateTemplate += '<a class="layui-btn layui-btn-danger layui-btn-xs table-btn" lay-event="edit" mId="'+d.id+'" level="'+d.level+'"><i class="layui-icon">&#xe642;</i>编辑</a>';
 		            	 operateTemplate += '<a class="layui-btn layui-btn-danger layui-btn-xs table-btn" lay-event="del" mId="'+d.id+'"><i class="layui-icon">&#xe640;</i>删除</a>';
 		            	 return "<div class='operate-content'>"+ operateTemplate + "</div>";
 		             }}
@@ -74,7 +75,7 @@ $(function(){
 						}  
 					}); 
 				});
-	    	} else {
+	    	} else if (layEvent == "add") {
 	    		let level = $(this).attr("level");
 	    		if (level == "1") {
 	    			let addAddressIndex = layer.open({
@@ -89,7 +90,7 @@ $(function(){
 						btn1: function(){
 							let areaText =  $("#addAreaTemplate input[name='areaText']").val();
 							if (areaText == undefined || areaText == "" || areaText.trim() == "") {
-								layer.msg('摄像头ID不能为空');
+								layer.msg('区域不能为空');
 								return false;
 							}
 							let formParam = {
@@ -168,6 +169,149 @@ $(function(){
 					});
 	    		}
  	    		
+	    	} else {
+	    		let level = $(this).attr("level");
+	    		if (level == "1") {
+	    			let ipText = $(this).parents("tr").find("td[data-field='ip'] .layui-table-cell").text();
+	    			$("#editAddressTemplate input[name='ipText']").val(ipText);
+	    			let editAddressIndex = layer.open({
+						id: "editAddressTemplateModal",
+						title:"编辑服务器",
+						type: 1,
+						area: ["360px","240px"],
+						resize: false,
+						move: false,
+						btn: ['确定', '取消'],
+						content: $('#editAddressTemplate'), //这里content是一个普通的String
+						btn1: function(){
+							let ipText =  $("#editAddressTemplate input[name='ipText']").val();
+							if (ipText == undefined || ipText == "" || ipText.trim() == "") {
+								layer.msg('地址不能为空');
+								return false;
+							}
+							let formParam = {
+								id: mid,
+								ip: ipText
+							};
+							$.ajax({  
+								url:'address/updateAddress',  
+								type:'post',      
+								data: JSON.stringify(formParam), 
+								contentType: "application/json; charset=utf-8",
+								dataType:'json',  
+								success:function(data){  
+									if (data.code == 200) {
+										layer.msg("更新成功"); 
+										layer.close(editAddressIndex);
+										initTable();
+									} else {
+										layer.msg(data.msg); 
+										return false;
+									}
+								}  
+							});  
+						},
+						success: function(layero, index){
+							
+						}
+					});
+	    		} else if (level == "2") {
+	    			let areaText = $(this).parents("tr").find("td[data-field='area'] .layui-table-cell").text();
+	    			$("#editAreaTemplate input[name='areaText']").val(areaText);
+	    			let editAddressIndex = layer.open({
+	    				id: "editAreaTemplateModal",
+	    				title:"编辑区域",
+	    				type: 1,
+	    				area: ["360px","240px"],
+	    				resize: false,
+	    				move: false,
+	    				btn: ['确定', '取消'],
+	    				content: $('#editAreaTemplate'), //这里content是一个普通的String
+	    				btn1: function(){
+	    					let areaText =  $("#editAreaTemplate input[name='areaText']").val();
+	    					if (areaText == undefined || areaText == "" || areaText.trim() == "") {
+	    						layer.msg('区域不能为空');
+	    						return false;
+	    					}
+	    					let formParam = {
+    							id: mid,
+    							area: areaText
+	    					};
+	    					$.ajax({  
+	    						url:'address/updateAddress',  
+	    						type:'post',      
+	    						data: JSON.stringify(formParam), 
+	    						contentType: "application/json; charset=utf-8",
+	    						dataType:'json',  
+	    						success:function(data){  
+	    							if (data.code == 200) {
+	    								layer.msg("更新成功"); 
+	    								layer.close(editAddressIndex);
+	    								initTable();
+	    							} else {
+	    								layer.msg(data.msg); 
+	    								return false;
+	    							} 
+	    						}  
+	    					});  
+	    				},
+	    				success: function(layero, index){
+
+	    				}
+	    			});
+	    		} else {
+	    			let cameraId = $(this).parents("tr").find("td[data-field='cameraId'] .layui-table-cell").text();
+	    			let location = $(this).parents("tr").find("td[data-field='location'] .layui-table-cell").text();
+	    			$("#editCameraTemplate input[name='cameraId']").val(cameraId);
+					$("#editCameraTemplate input[name='location']").val(location);
+	    			let editCameraIndex = layer.open({
+						id: "editCameraTemplateModal",
+						title:"编辑摄像头",
+						type: 1,
+						area: ["440px","320px"],
+						resize: false,
+						move: false,
+						btn: ['确定', '取消'],
+						content: $('#editCameraTemplate'), //这里content是一个普通的String
+						btn1: function(){
+							let cameraId =  $("#editCameraTemplate input[name='cameraId']").val();
+							let location = $("#editCameraTemplate input[name='location']").val();
+							if (cameraId == undefined || cameraId == "" || cameraId.trim() == "") {
+								layer.msg('摄像头ID不能为空');
+								return false;
+							}
+							if (location == undefined || location == "" || location.trim() == "") {
+								layer.msg('摄像头位置不能为空');
+								return false;
+							}
+							let formParam = {
+								id: mid,
+								cameraId: cameraId,
+								location: location
+							};
+							$.ajax({  
+								url:'address/updateAddress',  
+								type:'post',      
+								data: JSON.stringify(formParam), 
+								contentType: "application/json; charset=utf-8",
+								dataType:'json',  
+								success:function(data){  
+									if (data.code == 200) {
+										layer.msg("更新成功"); 
+										layer.close(editCameraIndex);
+										initTable();
+									} else {
+										layer.msg(data.msg); 
+										return false;
+									}
+								}  
+							});  
+						},
+						success: function(layero, index){
+							
+						}
+					});
+	    		}
 	    	}
 	    	
 	    });

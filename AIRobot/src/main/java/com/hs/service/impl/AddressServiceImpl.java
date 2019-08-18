@@ -13,6 +13,7 @@ import com.hs.model.User;
 import com.hs.request.SaveAddressRequest;
 import com.hs.request.SaveAreaRequest;
 import com.hs.request.SaveCameraRequest;
+import com.hs.request.UpdateAddressRequest;
 import com.hs.response.ResultResponse;
 import com.hs.response.ResultUtil;
 import com.hs.service.AddressService;
@@ -126,6 +127,19 @@ public class AddressServiceImpl implements AddressService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResultUtil.error("删除失败");
+		}
+	}
+	/**
+	 * @desc 更新服务器地址
+	 */
+	@Override
+	public ResultResponse updateAddress(UpdateAddressRequest request) {
+		try {
+			addressMapper.updateAddress(request);
+			return ResultUtil.success();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResultUtil.error("更新失败");
 		}
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.hs.model.AddressModel;
+import com.hs.request.UpdateAddressRequest;
 
 public interface AddressMapper {
 	/**
@@ -35,6 +36,8 @@ public interface AddressMapper {
 	 * @return List<AddressModel>
 	 */
 	public int deleteAddress(@Param("id") Integer id);
+
+	public int updateAddress(UpdateAddressRequest request);
 }
 
 	

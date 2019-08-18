@@ -13,6 +13,7 @@ import com.hs.request.GetUserListRequest;
 import com.hs.request.SaveAddressRequest;
 import com.hs.request.SaveAreaRequest;
 import com.hs.request.SaveCameraRequest;
+import com.hs.request.UpdateAddressRequest;
 import com.hs.response.ResultResponse;
 import com.hs.service.AddressService;
 
@@ -115,6 +116,15 @@ public class AddressController {
 	public ResultResponse deleteAddress(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
 			Integer id) {
 		ResultResponse resopnse = addressService.deleteAddress(id);
+		return resopnse;
+	}
+	
+	
+	@ApiOperation(value="更新服务器地址", notes="更新服务器地址")
+	@RequestMapping("updateAddress")
+	public ResultResponse updateAddress(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
+			@RequestBody UpdateAddressRequest request) {
+		ResultResponse resopnse = addressService.updateAddress(request);
 		return resopnse;
 	}
 }
