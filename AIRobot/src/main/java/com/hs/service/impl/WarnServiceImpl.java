@@ -72,6 +72,24 @@ public class WarnServiceImpl implements WarnService {
 		}
 			
 	}
+	/**
+	 * @desc 获取报警名称列表
+	 */
+	@Override
+	public ResultResponse getAlarmList() {
+		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+		List<TblAlarmInfo> list = new ArrayList<TblAlarmInfo>();
+		try {
+			list = alarmInfoMapper.getAlarmList();
+			resultMap.put("list", list);
+			return ResultUtil.success(resultMap);
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("data", list);
+			return ResultUtil.error("查询失败", resultMap);
+		}
+			
+	}
 
 }
 

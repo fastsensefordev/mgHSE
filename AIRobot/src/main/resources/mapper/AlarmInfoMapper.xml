@@ -31,4 +31,11 @@
 		from tbl_alarm_info
 		where isDelete = 0
 	</select>
+	
+	<select id="getAlarmList" resultType="com.hs.model.TblAlarmInfo">
+		select alarmId,alarmName,server
+		from tbl_alarm_info
+		where isDelete = 0
+		group by alarmId
+	</select>
 </mapper>

@@ -1,12 +1,12 @@
 $(function(){
 	initImgCenter();
 	initClock();
-	
 	safeChartConfig.initSafeChart();
 	illegalChartConfig.initIllegalChart();
 	dangerChartConfig.initDangerChart();
 	totalChartConfig.initComplexChart01();
 	totalChartConfig.initComplexChart02();
+	
 	$(window).resize(function(){
 		$("body").find("div.select-content").hide();
 	});
@@ -24,6 +24,7 @@ $(function(){
 			}  
 		});  
 	}
+	
 	function initClock() {
 		var newTime = '';
 		getLangDate();
@@ -54,27 +55,54 @@ $(function(){
 		}
 		return date;
 	}
-
+	/**
+	 * 点击打开算法id
+	 */
 	$(".icon-switch").on("click",function(e){
+		let alarmId = $(this).parent().attr("alarmid");
+		let parentId = $(this).parent().attr("id");
 		e.stopPropagation();
 		let left = $(this).offset().left;
 		let top = $(this).offset().top;
 		$("body").find("div.select-content").remove();
-		let selectIContent = "<div class='select-content'>" +
-		"<div class='select-title'>请选择一种算法</div>" +
-		"<ul>" +
-		"<li title='未佩戴安全帽次数</li>" +
-		"<li title='行人非法闯入'>行人非法闯入</li>" +
-		"<li title='明火危险'>明火危险</li>" +
-		"</ul>" +
-		"</div>";
-		$("body").append(selectIContent);
-		$("div.select-content").css({
-			left: left - 160,
-			top: top + 30
-		})
+		$.ajax({  
+			url:'warn/getAlarmList',  
+			type:'post',      
+			data: {}, 
+			dataType:'json',  
+			success:function(data){  
+				if (data.code == 200) {
+					let selectIContent = 
+						"<div class='select-content' pid='"+parentId+"'><div class='select-title'>请选择一种算法</div><ul>";
+					for (var i = 0; i < data.data.list.length; i++) {
+						let alarmId = data.data.list[i].alarmId;
+						let alarmName = data.data.list[i].alarmName;
+						let server = data.data.list[i].server;
+						selectIContent += "<li title='"+alarmName+"' id='"+alarmId+"'>"+ alarmName +"</li>";
+					}
+					selectIContent += "</ul></div>";
+					$("body").append(selectIContent);
+					$("body .select-content li[id='"+alarmId+"']").addClass("active");
+					$("div.select-content").css({
+						left: left - 160,
+						top: top + 30
+					});
+				}
+			}  
+		});  
+		
 	});
-
+	
+	/**
+	 * 选择算法
+	 */
+	$("body").on("click",".select-content li",function(){
+		let alarmId = $(this).attr("id");
+		let pid = $(this).parents(".select-content").attr("pid");
+		$("#"+pid).attr("alarmid",alarmId);
+		$("body").find("div.select-content").hide();
+	});
+	
 	$("body").on("click",function(e){
 		var target  = $(e.target);
 		if(target.closest(".select-content").length == 0){

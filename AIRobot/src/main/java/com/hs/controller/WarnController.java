@@ -77,5 +77,19 @@ public class WarnController {
 		return warnService.batchAlarms(request);
 	}
 	
+	/**
+	 * @desc: 获取报警名称列表
+	 * @author: kpchen
+	 * @createTime: 2019年8月20日 下午10:34:06
+	 * @history:
+	 * @param httpServletRequest
+	 * @param httpServletResponse
+	 * @return ResultResponse
+	 */
+	@RequestMapping("getAlarmList")
+	public ResultResponse getAlarmList(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
+		return warnService.getAlarmList();
+	}
+	
 }
 

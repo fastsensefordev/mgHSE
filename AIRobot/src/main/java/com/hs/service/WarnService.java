@@ -12,6 +12,8 @@ public interface WarnService {
 
 	public ResultResponse getWarnList(GetWarnListRequest request);
 
+	public ResultResponse getAlarmList();
+
 }
 
 	

@@ -480,11 +480,14 @@ span.icon-tubiao {
 }
 
 .select-content ul li:hover {
-	color: #333;
+	color: #0695EB;
 }
 
 .select-content ul li:last-child {
 	border-bottom: 0px;
+}
+.select-content ul li.active {
+	color: #0695EB;
 }
 
 ::-webkit-scrollbar-track-piece {
