@@ -1,5 +1,9 @@
 package com.hs.controller;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,10 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.tempuri.IVasWebService;
+import org.tempuri.VasWebService;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.hs.model.AlarmInfo;
 import com.hs.request.BatchAlarmsRequest;
 import com.hs.request.GetWarnListRequest;
 import com.hs.response.ResultResponse;
+import com.hs.response.ResultUtil;
 import com.hs.service.WarnService;
 
 import io.swagger.annotations.Api;
@@ -89,6 +99,30 @@ public class WarnController {
 	@RequestMapping("getAlarmList")
 	public ResultResponse getAlarmList(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
 		return warnService.getAlarmList();
+	}
+	
+	
+	@RequestMapping("getEchartsByAid")
+	public ResultResponse getEchartsByAid(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,String alarmId) {
+		return warnService.getEchartsByAid(alarmId);
+	}
+	
+	@RequestMapping("getTotalChart")
+	public ResultResponse getTotalChart(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
+		VasWebService vasWebService = new VasWebService();
+		IVasWebService iVasWebService = vasWebService.getBasicHttpBindingIVasWebService();
+		String result = iVasWebService.alarmInfoGetRecordList(2019, 8, 12, "ID>1 order by ID DESC limit 10");
+		List<AlarmInfo> alarmInfos = JSON.parseObject(result,new TypeReference<List<AlarmInfo>>(){});
+		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+		resultMap.put("alarmInfos", alarmInfos);
+		return ResultUtil.success(resultMap);
+	}
+	
+	public static void main(String[] args) {
+		VasWebService vasWebService = new VasWebService();
+		IVasWebService iVasWebService = vasWebService.getBasicHttpBindingIVasWebService();
+		String result = iVasWebService.alarmInfoGetRecordList(2019, 8, 12, "ID>0 order by ID DESC limit 10");
+		List<AlarmInfo> alarmInfos = JSON.parseObject(result,new TypeReference<List<AlarmInfo>>(){});
 	}
 	
 }

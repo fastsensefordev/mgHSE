@@ -5,9 +5,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>可视化看板</title>
+<link rel="stylesheet" th:href="@{/static/assets/layui/css/layui.css}">
 <link rel="stylesheet" th:href="@{/static/css/dashboard.css}">
 </head>
 <body>
+	<input id="dashboardType" type="hidden" th:value="${type}"/>
 	<div class="container">
 		<div class="con-left">
 			<div class="time-content">
@@ -29,7 +31,13 @@
 						</div>
 					</div>
 					<div class="chart-body" id="safeChartBody">
-						<i class="icon-switch"></i>
+						<div class="chart-title-text">单位：次数</div>
+						<div class="select-body" th:classappend="${type eq 'edit'} ? '' : 'hide'">
+							<form class="layui-form">
+								<select class="alarm-select" lay-filter="alarm">
+								</select>
+							</form>
+						</div>
 						<div class="chart-content" id="safeChart"></div>
 					</div>
 				</div>
@@ -39,7 +47,13 @@
 					<i class="ibg bg-lb"></i>
 					<i class="ibg bg-rb"></i>
 					<div class="chart-content-body" id="illegalChartBody">
-						<i class="icon-switch"></i>
+						<div class="select-body" th:classappend="${type eq 'edit'} ? '' : 'hide'">
+							<form class="layui-form">
+								<select class="alarm-select" lay-filter="alarm">
+								</select>
+							</form>
+						</div>
+						<div class="chart-title-text">单位：次数</div>
 						<div class="chart-content" id="illegalChart"></div>
 					</div>
 				</div>
@@ -93,7 +107,13 @@
 				<i class="ibg bg-lb"></i>
 				<i class="ibg bg-rb"></i>
 				<div class="chart-content-body" id="dangerChartBody">
-					<i class="icon-switch"></i>
+					<div class="select-body" th:classappend="${type eq 'edit'} ? '' : 'hide'">
+						<form class="layui-form">
+							<select class="alarm-select" lay-filter="alarm">
+							</select>
+						</form>
+					</div>
+					<div class="chart-title-text">单位：次数</div>
 					<div class="chart-content" id="dangerChart"></div>
 				</div>
 				
@@ -106,14 +126,23 @@
 					</div>
 				</div>
 				<div class="chart-body">
-					<i class="icon-switch"></i>
-					<div class="chart-content" id="complexChart01"></div>
-					<div class="chart-content" id="complexChart02"></div>
+					<div class="select-body" th:classappend="${type eq 'edit'} ? '' : 'hide'">
+						<form class="layui-form">
+							<select class="alarm-select" lay-filter="alarm">
+							</select>
+						</form>
+					</div>
+					<div class="chart-title-text">单位：次数</div>
+					<div class="total-chart-content">
+						<div class="chart-content" id="complexChart01"></div>
+						<div class="chart-content" id="complexChart02"></div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<script th:src="@{/static/assets/jquery/jquery-3.3.1.min.js}"></script>
+	<script th:src="@{/static/assets/layui/layui.js}"></script>
 	<script th:src="@{/static/assets/echarts/echarts.min.js}"></script>
 	<script th:src="@{/static/js/commonFunction.js}"></script>
 	<script th:src="@{/static/js/safeChart.js}"></script>
@@ -121,5 +150,6 @@
 	<script th:src="@{/static/js/dangerChart.js}"></script>
 	<script th:src="@{/static/js/totalChart.js}"></script>
 	<script th:src="@{/static/js/dashboard.js}"></script>
+	
 </body>
 </html>

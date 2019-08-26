@@ -2,19 +2,40 @@
 	var totalChartConfig = {};
 	
 	function initComplexChart01() {
+		let alarmId = $("#illegalChartBody").attr("alarmid");
+		let xAxisData = [];
+		let barData = [];
+		$.ajax({  
+			url:'warn/getEchartsByAid',  
+			type:'post',      
+			data: {
+				alarmId: alarmId
+			}, 
+			async:false,
+			dataType:'json',
+			success:function(data){  
+				if (data.code == 200) {
+					for (var i = 0; i < data.data.data.length; i++) {
+//						xAxisData.push(data.data.data[i].time);
+//						barData.push(data.data.data[i].count);
+					}
+				}
+			}  
+		});
+		
 		let axisLabelFontSize = commonFuntion.getChartConfig().axisLabelFontSize;
 		let barWidth = commonFuntion.getChartConfig().barWidth;
 		let bgBarWidth = commonFuntion.getChartConfig().bgBarWidth;
 		let complexOption01 = {
-				title: {
-					show: true,
-					text: "单位：次数",
-					x: "right",
-					textStyle: {
-						fontSize: axisLabelFontSize,
-					    color: '#ECECEE'
-					}  
-				},
+//				title: {
+//					show: true,
+//					text: "单位：次数",
+//					x: "right",
+//					textStyle: {
+//						fontSize: axisLabelFontSize,
+//					    color: '#ECECEE'
+//					}  
+//				},
 				tooltip : {
 					trigger: 'axis',
 					axisPointer : {            // 坐标轴指示器，坐标轴触发有效
@@ -109,15 +130,15 @@
 					trigger: 'item',
 					formatter: "{a} <br/>{b} : {c} ({d}%)"
 				},
-				legend: {
-					x : 'center',
-					y : 'bottom',
-					data:['未佩戴安全帽','行人非法闯入','明火危险','人员聚集'],
-					textStyle: {
-						color: "#A9C2D3",
-						fontSize: axisLabelFontSize,
-					}
-				},
+//				legend: {
+//					x : 'center',
+//					y : 'bottom',
+//					data:['未佩戴安全帽','行人非法闯入','明火危险','人员聚集'],
+//					textStyle: {
+//						color: "#A9C2D3",
+//						fontSize: axisLabelFontSize,
+//					}
+//				},
 				calculable : true,
 				series : [
 					{

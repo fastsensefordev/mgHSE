@@ -326,12 +326,12 @@ i.ibg.bg-rb {
 	top: 10px;
 }
 
-.chart-04 .chart-body .chart-content:nth-child(2) {
+#complexChart01 {
 	height: 40%;
 	padding: 10px 0;
 }
 
-.chart-04 .chart-body .chart-content:nth-child(3) {
+#complexChart02 {
 	height: 60%;
 	padding: 10px 0;
 }
@@ -489,7 +489,38 @@ span.icon-tubiao {
 .select-content ul li.active {
 	color: #0695EB;
 }
-
+.chart-title-text {
+    position: absolute;
+    color: #fff;
+    font-size: 12px;
+    top: 10px;
+    right: 30px;
+}
+.chart-04 .chart-title-text {
+	top: 14px;
+}
+#safeChartBody .chart-title-text {
+	top: 14px;
+}
+.total-chart-content {
+	float: left;
+	height: 100%;
+	width: 100%;
+}
+.select-body {
+    float: left;
+    width: 120px;
+    position: absolute;
+    z-index: 9;
+}
+.select-body.hide {
+	display: none;
+}
+.select-body .layui-input, .layui-select, .layui-textarea {
+    background: transparent;
+    color: #fff;
+    height: 25px;
+}
 ::-webkit-scrollbar-track-piece {
 	background-color: #f8f8f8;
 }

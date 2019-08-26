@@ -14,6 +14,8 @@ public interface WarnService {
 
 	public ResultResponse getAlarmList();
 
+	public ResultResponse getEchartsByAid(String alarmId);
+
 }
 
 	

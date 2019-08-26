@@ -38,4 +38,17 @@
 		where isDelete = 0
 		group by alarmId
 	</select>
+	
+	<select id="getEchartsByAid" resultType="com.hs.model.TotalInfo">
+		SELECT
+			count(1) count,
+			DATE_FORMAT(alarmTime, "%Y-%m-%d") time
+		FROM
+			`tbl_alarm_info`
+		where alarmId = #{alarmId}
+		GROUP BY
+			DATE_FORMAT(alarmTime, "%Y-%m-%d")
+		ORDER BY alarmTime desc
+		limit 7
+	</select>
 </mapper>

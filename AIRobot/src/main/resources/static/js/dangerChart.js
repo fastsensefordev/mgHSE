@@ -1,6 +1,27 @@
 (function() {
 	var dangerChartConfig = {};
 	function initDangerChart() {
+		let alarmId = $("#dangerChartBody").attr("alarmid");
+		let xAxisData = [];
+		let barData = [];
+		$.ajax({  
+			url:'warn/getEchartsByAid',  
+			type:'post',      
+			data: {
+				alarmId: alarmId
+			}, 
+			async:false,
+			dataType:'json',
+			success:function(data){  
+				if (data.code == 200) {
+					for (var i = 0; i < data.data.data.length; i++) {
+						xAxisData.push(data.data.data[i].time);
+						barData.push(data.data.data[i].count);
+					}
+				}
+			}  
+		});
+		
 		let axisLabelFontSize = commonFuntion.getChartConfig().axisLabelFontSize;
 		let barWidth = commonFuntion.getChartConfig().barWidth;
 		let bgBarWidth = commonFuntion.getChartConfig().bgBarWidth;
@@ -14,13 +35,6 @@
 						fontSize : axisLabelFontSize,
 						color : '#0795EB'
 					},
-					subtext : "单位：次数",
-					subtextStyle : {
-						fontSize : 14,
-						color : '#ECECEE',
-						align : 'left',
-						baseline : 'top'
-					}
 				},
 				xAxis : {
 					type : 'category',
@@ -46,8 +60,7 @@
 							fontSize : axisLabelFontSize,
 						}
 					},
-					data : [ '6-08', '6-09', '6-10', '6-11', '6-12', '6-13',
-						'6-14' ]
+					data : xAxisData
 				},
 				yAxis : [ {
 					type : 'value',
@@ -84,7 +97,7 @@
 					}
 				} ],
 				series : [ {
-					data : [ 120, 130, 100, 140, 90, 260, 220 ],
+					data : barData,
 					type : 'line',
 					symbolSize : 6,
 					areaStyle : {

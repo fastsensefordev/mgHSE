@@ -12,8 +12,11 @@ import com.hs.response.ResultUtil;
 public class HomeController {
 	
 	@RequestMapping({"/dashboard"})
-    public ModelAndView dashboard() {
-        return new ModelAndView("dashboard");
+    public ModelAndView dashboard(String type) {
+        ModelAndView modelAndView = new ModelAndView();
+    	modelAndView.setViewName("dashboard");
+    	modelAndView.addObject("type", type);
+        return modelAndView;
     }
 	
 	@RequestMapping({"safeChart"})
