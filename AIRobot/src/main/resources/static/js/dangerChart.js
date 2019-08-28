@@ -1,7 +1,7 @@
 (function() {
 	var dangerChartConfig = {};
 	function initDangerChart() {
-		let alarmId = $("#dangerChartBody").attr("alarmid");
+		let alarmId = $("#dangerChartBody").find("select.alarm-select").val();
 		let xAxisData = [];
 		let barData = [];
 		$.ajax({  
@@ -18,6 +18,8 @@
 						xAxisData.push(data.data.data[i].time);
 						barData.push(data.data.data[i].count);
 					}
+					$("#dangerNumItem .alarm-name").html($("#dangerChartTopical").text().trim());
+					$("#dangerNumItem .total-num-span").html(data.data.countNum);
 				}
 			}  
 		});
@@ -26,16 +28,16 @@
 		let barWidth = commonFuntion.getChartConfig().barWidth;
 		let bgBarWidth = commonFuntion.getChartConfig().bgBarWidth;
 		let dangerOption = {
-				title : {
-					show : true,
-					text : "// 行人非法闯入 //",
-					x : "center",
-					padding : [ 25, 0, 20, 0 ],
-					textStyle : {
-						fontSize : axisLabelFontSize,
-						color : '#0795EB'
-					},
-				},
+//				title : {
+//					show : true,
+//					text : "// 行人非法闯入 //",
+//					x : "center",
+//					padding : [ 25, 0, 20, 0 ],
+//					textStyle : {
+//						fontSize : axisLabelFontSize,
+//						color : '#0795EB'
+//					},
+//				},
 				xAxis : {
 					type : 'category',
 					boundaryGap : false,

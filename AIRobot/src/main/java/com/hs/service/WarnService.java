@@ -1,6 +1,7 @@
 package com.hs.service;
 
 import com.hs.request.BatchAlarmsRequest;
+import com.hs.request.GetTotalChartRequest;
 import com.hs.request.GetWarnListRequest;
 import com.hs.response.ResultResponse;
 
@@ -15,6 +16,8 @@ public interface WarnService {
 	public ResultResponse getAlarmList();
 
 	public ResultResponse getEchartsByAid(String alarmId);
+
+	public ResultResponse getTotalChart(GetTotalChartRequest request);
 
 }
 

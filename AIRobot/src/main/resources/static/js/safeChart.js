@@ -4,7 +4,7 @@
 	 * 安全帽图表渲染初始化
 	 */
 	function initSafeChart() {
-		let alarmId = $("#safeChartBody").attr("alarmid");
+		let alarmId = $("#safeChartBody").find("select.alarm-select").val();
 		let xAxisData = [];
 		let barData = [];
 		let maxData = [];
@@ -37,6 +37,8 @@
 						maxData.push(maxObj);
 					}
 				}
+				$("#safeNumItem .alarm-name").html($("#safeChartTopical").text().trim());
+				$("#safeNumItem .total-num-span").html(data.data.countNum);
 			}  
 		});
 		let axisLabelFontSize = commonFuntion.getChartConfig().axisLabelFontSize;
@@ -141,7 +143,7 @@
 	safeChartConfig.initSafeChart = function(){
 		return initSafeChart();
 	}
-	initSafeChart();
+	
 	$(window).resize(function() {
 		initSafeChart();
 	});

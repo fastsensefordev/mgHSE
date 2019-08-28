@@ -2,11 +2,6 @@ $(function(){
 	initAlarm();
 	initImgCenter();
 	initClock();
-	safeChartConfig.initSafeChart();
-	illegalChartConfig.initIllegalChart();
-	dangerChartConfig.initDangerChart();
-	totalChartConfig.initComplexChart01();
-	totalChartConfig.initComplexChart02();
 	
 	$(window).resize(function(){
 		$("body").find("div.select-content").hide();
@@ -20,14 +15,10 @@ $(function(){
 			dataType:'json',  
 			success:function(data){  
 				if (data.code == 200) {
-					$(".chart-body").attr("alarmid",data.data.list[0].alarmId);
-					$(".chart-content-body").attr("alarmid",data.data.list[0].alarmId);
-					$(".total-chart-content").attr("alarmid",data.data.list[0].alarmId);
-					safeChartConfig.initSafeChart();
-					illegalChartConfig.initIllegalChart();
-					dangerChartConfig.initDangerChart();
-					totalChartConfig.initComplexChart01();
-					totalChartConfig.initComplexChart02();
+					let alarmName = data.data.list[0].alarmName;
+					$("#safeChartTopical").html(alarmName);
+					$("#illegalChartTopical").html(alarmName);
+					$("#dangerChartTopical").html(alarmName);
 					let optionHtml = "";
 					for (var i = 0; i < data.data.list.length; i++) {
 						optionHtml += "<option value='" + data.data.list[i].alarmId + "'>" + data.data.list[i].alarmName + "</option>";
@@ -38,21 +29,33 @@ $(function(){
 						form.render('select');
 						form.on('select(alarm)', function(data){
 			                let alarmId = data.value;
+			                let alarmName = data.elem[data.elem.selectedIndex].text;
 			                let parentId = $(data.elem).parents(".select-body").parent().attr("id");
-			                $(data.elem).parents(".select-body").parent().attr("alarmid",alarmId);
 			                if (parentId == "safeChartBody") {
+			                	$("#safeChartTopical").html(alarmName);
 								safeChartConfig.initSafeChart();
 							} else if (parentId == "illegalChartBody") {
+								$("#illegalChartTopical").html(alarmName);
 								illegalChartConfig.initIllegalChart();
 							} else if (parentId == "dangerChartBody") {
+								$("#dangerChartTopical").html(alarmName);
 								dangerChartConfig.initDangerChart();
 							}
 						});
 					});
+					
+					safeChartConfig.initSafeChart();
+					illegalChartConfig.initIllegalChart();
+					dangerChartConfig.initDangerChart();
+					totalChartConfig.initComplexChart01();
+					totalChartConfig.initComplexChart02();
 				}
 			}  
 		}); 
 	}
+	/**
+	 * 初始化图片
+	 */
 	function initImgCenter() {
 		$.ajax({  
 			url:'user/getImgCenter',  
@@ -99,72 +102,8 @@ $(function(){
 	}
 	
 	/**
-	 * 点击打开算法id
-	 */
-	$(".icon-switch").on("click",function(e){
-		let alarmId = $(this).parent().attr("alarmid");
-		let parentId = $(this).parent().attr("id");
-		e.stopPropagation();
-		let left = $(this).offset().left;
-		let top = $(this).offset().top;
-		$("body").find("div.select-content").remove();
-		$.ajax({  
-			url:'warn/getAlarmList',  
-			type:'post',      
-			data: {}, 
-			dataType:'json',  
-			success:function(data){  
-				if (data.code == 200) {
-					let selectIContent =  "<div class='select-content' pid='"+parentId+"'><div class='select-title'>请选择一种算法</div><ul>";
-					for (var i = 0; i < data.data.list.length; i++) {
-						let alarmId = data.data.list[i].alarmId;
-						let alarmName = data.data.list[i].alarmName;
-						let server = data.data.list[i].server;
-						selectIContent += "<li title='"+alarmName+"' id='"+alarmId+"'>"+ alarmName +"</li>";
-					}
-					selectIContent += "</ul></div>";
-					$("body").append(selectIContent);
-					$("body .select-content li[id='"+alarmId+"']").addClass("active");
-					if (alarmId == undefined) {
-						$("#"+parentId).attr("alarmid",data.data.list[0].alarmId);
-						$("body .select-content li[id='"+data.data.list[0].alarmId+"']").addClass("active");
-					}
-					if (parentId == "safeChartBody") {
-						safeChartConfig.initSafeChart();
-					} else if (parentId == "illegalChartBody") {
-						illegalChartConfig.initIllegalChart();
-					}
-					$("div.select-content").css({
-						left: left - 160,
-						top: top + 30
-					});
-				}
-			}  
-		});  
-		
-	});
-	
-	/**
 	 * 选择算法
 	 */
-/*	$("body").on("click",".select-content li",function(){
-		let alarmId = $(this).attr("id");
-		let parentId = $(this).parents(".select-content").attr("pid");
-		$("#"+parentId).attr("alarmid",alarmId);
-		$("body").find("div.select-content").hide();
-		if (parentId == "safeChartBody") {
-			safeChartConfig.initSafeChart();
-		} else if (parentId == "illegalChartBody") {
-			illegalChartConfig.initIllegalChart();
-		}
-	});
-	*/
-	/*$("body").on("click",function(e){
-		var target  = $(e.target);
-		if(target.closest(".select-content").length == 0){
-			$("body").find("div.select-content").hide();
-		}　
-	});*/
 	//文件上传
 	$("#upload-file").on("change",function(){
 		let file = $(this).val();
@@ -184,7 +123,6 @@ $(function(){
 						$("#imgCenter").attr("src",data.data.imgPath);
 					}
 		       }
-
 		});
 	});
 	

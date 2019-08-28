@@ -19,6 +19,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.hs.model.AlarmInfo;
 import com.hs.request.BatchAlarmsRequest;
+import com.hs.request.GetTotalChartRequest;
 import com.hs.request.GetWarnListRequest;
 import com.hs.response.ResultResponse;
 import com.hs.response.ResultUtil;
@@ -108,14 +109,9 @@ public class WarnController {
 	}
 	
 	@RequestMapping("getTotalChart")
-	public ResultResponse getTotalChart(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
-		VasWebService vasWebService = new VasWebService();
-		IVasWebService iVasWebService = vasWebService.getBasicHttpBindingIVasWebService();
-		String result = iVasWebService.alarmInfoGetRecordList(2019, 8, 12, "ID>1 order by ID DESC limit 10");
-		List<AlarmInfo> alarmInfos = JSON.parseObject(result,new TypeReference<List<AlarmInfo>>(){});
-		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-		resultMap.put("alarmInfos", alarmInfos);
-		return ResultUtil.success(resultMap);
+	public ResultResponse getTotalChart(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
+			GetTotalChartRequest request) {
+		return warnService.getTotalChart(request);
 	}
 	
 	public static void main(String[] args) {

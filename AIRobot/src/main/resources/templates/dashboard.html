@@ -25,13 +25,13 @@
 			<div class="chart-container">
 				<div class="chart-item chart-01">
 					<div class="chart-title">
-						<div class="topical">未佩戴安全帽次数</div>
+						<div class="topical" id="safeChartTopical">未佩戴安全帽次数</div>
 						<div class="typeof">
 							<span class="icon-tubiao">图表</span>
 						</div>
 					</div>
 					<div class="chart-body" id="safeChartBody">
-						<div class="chart-title-text">单位：次数</div>
+						<div class="chart-title-subtext">单位：次数</div>
 						<div class="select-body" th:classappend="${type eq 'edit'} ? '' : 'hide'">
 							<form class="layui-form">
 								<select class="alarm-select" lay-filter="alarm">
@@ -53,7 +53,8 @@
 								</select>
 							</form>
 						</div>
-						<div class="chart-title-text">单位：次数</div>
+						<div class="chart-title-text" id="illegalChartTopical">未佩戴安全帽次数</div>
+						<div class="chart-title-subtext">单位：次数</div>
 						<div class="chart-content" id="illegalChart"></div>
 					</div>
 				</div>
@@ -76,25 +77,25 @@
 					<li>
 						<div>
 							<span class="total-num-span">3080</span>
-							<span>总次数</span>
+							<span class="alarm-name">总次数</span>
 						</div>
 					</li>
 					<li>
-						<div>
+						<div id="safeNumItem">
 							<span class="total-num-span">1052</span>
-							<span>安全帽总数</span>
+							<span class="alarm-name">安全帽总数</span>
 						</div>
 					</li>
 					<li>
-						<div>
+						<div id="illegalNumItem">
 							<span class="total-num-span">258</span>
-							<span>明火总数</span>
+							<span class="alarm-name">明火总数</span>
 						</div>
 					</li>
 					<li>
-						<div>
+						<div id="dangerNumItem">
 							<span class="total-num-span">1847</span>
-							<span>行人闯入总数</span>
+							<span class="alarm-name">行人闯入总数</span>
 						</div>
 					</li>
 				</ul>
@@ -113,7 +114,8 @@
 							</select>
 						</form>
 					</div>
-					<div class="chart-title-text">单位：次数</div>
+					<div class="chart-title-text" id="dangerChartTopical">未佩戴安全帽次数</div>
+					<div class="chart-title-subtext">单位：次数</div>
 					<div class="chart-content" id="dangerChart"></div>
 				</div>
 				
@@ -126,13 +128,7 @@
 					</div>
 				</div>
 				<div class="chart-body">
-					<div class="select-body" th:classappend="${type eq 'edit'} ? '' : 'hide'">
-						<form class="layui-form">
-							<select class="alarm-select" lay-filter="alarm">
-							</select>
-						</form>
-					</div>
-					<div class="chart-title-text">单位：次数</div>
+					<div class="chart-title-subtext">单位：次数</div>
 					<div class="total-chart-content">
 						<div class="chart-content" id="complexChart01"></div>
 						<div class="chart-content" id="complexChart02"></div>

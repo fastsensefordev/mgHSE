@@ -16,6 +16,7 @@ import com.hs.mapper.AlarmInfoMapper;
 import com.hs.model.TblAlarmInfo;
 import com.hs.model.TotalInfo;
 import com.hs.request.BatchAlarmsRequest;
+import com.hs.request.GetTotalChartRequest;
 import com.hs.request.GetWarnListRequest;
 import com.hs.response.ResultResponse;
 import com.hs.response.ResultUtil;
@@ -103,6 +104,7 @@ public class WarnServiceImpl implements WarnService {
 			List<String> pastDaysList = DateCalcUtils.getPastDaysList(7);
 			
 			int maxCount = 0;
+			int countNum = 0;
 			for (String date : pastDaysList) {
 				TotalInfo info = new TotalInfo();
 				Integer count = 0;
@@ -115,15 +117,21 @@ public class WarnServiceImpl implements WarnService {
 				if (maxCount < count) {
 					maxCount = count;
 				}
+				countNum += count;
 			}
 			resultMap.put("data", resultList);
 			resultMap.put("maxCount", maxCount + 10);
+			resultMap.put("countNum", countNum);
 			return ResultUtil.success(resultMap);
 		} catch (Exception e) {
 			e.printStackTrace();
 			resultMap.put("data", resultList);
 			return ResultUtil.error("查询失败", resultMap);
 		}
+	}
+	@Override
+	public ResultResponse getTotalChart(GetTotalChartRequest request) {
+		return null;
 	}
 
 }
