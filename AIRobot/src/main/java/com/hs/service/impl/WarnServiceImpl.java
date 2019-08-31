@@ -1,11 +1,13 @@
 package com.hs.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -14,6 +16,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hs.mapper.AlarmInfoMapper;
 import com.hs.model.TblAlarmInfo;
+import com.hs.model.TotalCalcInfo;
 import com.hs.model.TotalInfo;
 import com.hs.request.BatchAlarmsRequest;
 import com.hs.request.GetTotalChartRequest;
@@ -131,7 +134,41 @@ public class WarnServiceImpl implements WarnService {
 	}
 	@Override
 	public ResultResponse getTotalChart(GetTotalChartRequest request) {
-		return null;
+		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+		List<TotalCalcInfo> resultList = new ArrayList<TotalCalcInfo>();
+		try {
+			String alarmIds = request.getAlarmIds();
+			if (StringUtils.isNoneBlank(alarmIds)) {
+				String[] ids = alarmIds.split(",");
+				List<String> idList= new ArrayList<>(Arrays.asList(ids));
+				List<TotalCalcInfo> calcInfos = alarmInfoMapper.getTotalChart(idList);
+				
+				Map<String, TotalCalcInfo> alarmMap = calcInfos.parallelStream().collect(Collectors.toMap(TotalCalcInfo::getAlarmId, alarmIndo -> alarmIndo));
+				List<TblAlarmInfo> alarmList = alarmInfoMapper.getAlarmList();
+				
+				Map<Long, String> alarmListMap = alarmList.parallelStream().collect(Collectors.toMap(TblAlarmInfo::getAlarmId, TblAlarmInfo::getAlarmName));
+				
+				for (String alarmId : idList) {
+					TotalCalcInfo info = new TotalCalcInfo();
+					Integer count = 0;
+					String alarmName = "";
+					if (alarmMap.containsKey(alarmId)) {
+						count = alarmMap.get(alarmId).getCount();
+						alarmName = alarmListMap.get(Long.parseLong(alarmId));
+					}
+					info.setCount(count);
+					info.setAlarmId(alarmId);
+					info.setAlarmName(alarmName);
+					resultList.add(info);
+				}
+			}
+			resultMap.put("data", resultList);
+			return ResultUtil.success(resultMap);
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("data", resultList);
+			return ResultUtil.error("查询失败", resultMap);
+		}
 	}
 
 }

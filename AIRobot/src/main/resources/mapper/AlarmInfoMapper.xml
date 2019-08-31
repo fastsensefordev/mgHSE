@@ -40,15 +40,32 @@
 	</select>
 	
 	<select id="getEchartsByAid" resultType="com.hs.model.TotalInfo">
+		<![CDATA[
+		 
+			SELECT
+				count(1) count,
+				DATE_FORMAT(alarmTime, "%Y-%m-%d") time
+			FROM
+				`tbl_alarm_info`
+			where alarmId = #{alarmId}
+			and date_sub(curdate(), interval 7 day) <= DATE_FORMAT(alarmTime, "%Y-%m-%d")
+			GROUP BY
+				DATE_FORMAT(alarmTime, "%Y-%m-%d")
+		]]>
+	</select>
+	
+	<select id="getTotalChart" resultType="com.hs.model.TotalCalcInfo">
 		SELECT
 			count(1) count,
-			DATE_FORMAT(alarmTime, "%Y-%m-%d") time
+			alarmId
 		FROM
 			`tbl_alarm_info`
-		where alarmId = #{alarmId}
-		GROUP BY
-			DATE_FORMAT(alarmTime, "%Y-%m-%d")
-		ORDER BY alarmTime desc
-		limit 7
+		where alarmId in 
+		<foreach collection="alarmIdList"  item="item" open="(" separator="," close=")"  >
+          	#{item}
+    	</foreach>
+		and date_sub(curdate(), interval 7 day) <![CDATA[<=]]> DATE_FORMAT(alarmTime, "%Y-%m-%d")
+		GROUP BY alarmId
+		
 	</select>
 </mapper>

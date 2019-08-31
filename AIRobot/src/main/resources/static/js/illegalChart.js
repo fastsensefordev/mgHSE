@@ -20,8 +20,16 @@
 						xAxisData.push(data.data.data[i].time);
 						barData.push(data.data.data[i].count);
 					}
-					$("#illegalNumItem .alarm-name").html($("#illegalChartTopical").text().trim());
-					$("#illegalNumItem .total-num-span").html(data.data.countNum);
+					let totalNum = data.data.countNum;
+					let alarmName = $("#illegalChartTopical").text().trim();
+					
+					$("#illegalNumItem .alarm-name").html(alarmName);
+					$("#illegalNumItem .total-num-span").html(totalNum);
+					
+					let chartsNum = parseInt($("#safeNumItem .total-num-span").text()) 
+					+ parseInt($("#illegalNumItem .total-num-span").text()) 
+					+ parseInt($("#dangerNumItem .total-num-span").text());
+					$("#chartsTotalNum").html(chartsNum);
 				}
 			}  
 		});
@@ -30,23 +38,6 @@
 		let barWidth = commonFuntion.getChartConfig().barWidth;
 		let bgBarWidth = commonFuntion.getChartConfig().bgBarWidth;
 		let illegalOption = {
-//				title: {
-//					show: true,
-//					text: "// 行人非法闯入 //",
-//					x: "center",
-//					padding: [25,0,20,0],
-//					textStyle: {
-//						fontSize: axisLabelFontSize,
-//					    color: '#0795EB'
-//					},
-//					subtext: "单位：次数",
-//					subtextStyle: {
-//						 fontSize: 14,
-//						 color: '#ECECEE',
-//						 align: 'left',
-//						 baseline: 'top'
-//					}
-//				},
 				xAxis: {
 					type: 'category',
 					boundaryGap: false,
@@ -136,9 +127,8 @@
 	illegalChartConfig.initIllegalChart = function(){
 		return initIllegalChart();
 	}
-	initIllegalChart();
-	$(window).resize(function(){
-		initIllegalChart();
-	});
+//	$(window).resize(function(){
+//		initIllegalChart();
+//	});
 	window.illegalChartConfig = illegalChartConfig;
 }());

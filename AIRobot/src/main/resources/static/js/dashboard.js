@@ -33,7 +33,7 @@ $(function(){
 			                let parentId = $(data.elem).parents(".select-body").parent().attr("id");
 			                if (parentId == "safeChartBody") {
 			                	$("#safeChartTopical").html(alarmName);
-								safeChartConfig.initSafeChart();
+			                	safeChartConfig.initSafeChart();
 							} else if (parentId == "illegalChartBody") {
 								$("#illegalChartTopical").html(alarmName);
 								illegalChartConfig.initIllegalChart();
@@ -41,17 +41,31 @@ $(function(){
 								$("#dangerChartTopical").html(alarmName);
 								dangerChartConfig.initDangerChart();
 							}
+			                setAlarmIds2TotalChart();////设置选中的算法集合
+			                totalChartConfig.initComplexChart();
 						});
 					});
 					
 					safeChartConfig.initSafeChart();
 					illegalChartConfig.initIllegalChart();
 					dangerChartConfig.initDangerChart();
-					totalChartConfig.initComplexChart01();
-					totalChartConfig.initComplexChart02();
+					
+					setAlarmIds2TotalChart();//设置选中的算法集合
+					
+					totalChartConfig.initComplexChart();
 				}
 			}  
 		}); 
+	}
+	/**
+	 * 设置选中的算法集合
+	 */
+	function setAlarmIds2TotalChart() {
+		let safeAlarmId = $("#safeChartBody").find("select.alarm-select").val();
+		let illegalAlarmId = $("#illegalChartBody").find("select.alarm-select").val();
+		let dangerAlarmId = $("#dangerChartBody").find("select.alarm-select").val();
+		let alarmids = safeAlarmId + "," + illegalAlarmId +"," + dangerAlarmId;
+		$("#totalChartContent").attr("alarmids", alarmids);
 	}
 	/**
 	 * 初始化图片

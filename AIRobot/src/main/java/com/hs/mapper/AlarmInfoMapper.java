@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.hs.model.TblAlarmInfo;
+import com.hs.model.TotalCalcInfo;
 import com.hs.model.TotalInfo;
 
 public interface AlarmInfoMapper {
@@ -39,6 +40,8 @@ public interface AlarmInfoMapper {
 	public List<TblAlarmInfo> getAlarmList();
 
 	public List<TotalInfo> getEchartsByAid(@Param("alarmId") String alarmId);
+
+	public List<TotalCalcInfo> getTotalChart(@Param("alarmIdList") List<String> idList);
 	
 }
 

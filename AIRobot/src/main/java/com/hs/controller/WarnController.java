@@ -1,8 +1,6 @@
 package com.hs.controller;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +20,6 @@ import com.hs.request.BatchAlarmsRequest;
 import com.hs.request.GetTotalChartRequest;
 import com.hs.request.GetWarnListRequest;
 import com.hs.response.ResultResponse;
-import com.hs.response.ResultUtil;
 import com.hs.service.WarnService;
 
 import io.swagger.annotations.Api;

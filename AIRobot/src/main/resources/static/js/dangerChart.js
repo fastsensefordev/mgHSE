@@ -18,8 +18,16 @@
 						xAxisData.push(data.data.data[i].time);
 						barData.push(data.data.data[i].count);
 					}
-					$("#dangerNumItem .alarm-name").html($("#dangerChartTopical").text().trim());
-					$("#dangerNumItem .total-num-span").html(data.data.countNum);
+					let totalNum = data.data.countNum;
+					let alarmName = $("#dangerChartTopical").text().trim();
+					
+					$("#dangerNumItem .alarm-name").html(alarmName);
+					$("#dangerNumItem .total-num-span").html(totalNum);
+					
+					let chartsNum = parseInt($("#safeNumItem .total-num-span").text()) 
+								  + parseInt($("#illegalNumItem .total-num-span").text()) 
+								  + parseInt($("#dangerNumItem .total-num-span").text());
+					$("#chartsTotalNum").html(chartsNum);
 				}
 			}  
 		});
@@ -28,16 +36,6 @@
 		let barWidth = commonFuntion.getChartConfig().barWidth;
 		let bgBarWidth = commonFuntion.getChartConfig().bgBarWidth;
 		let dangerOption = {
-//				title : {
-//					show : true,
-//					text : "// 行人非法闯入 //",
-//					x : "center",
-//					padding : [ 25, 0, 20, 0 ],
-//					textStyle : {
-//						fontSize : axisLabelFontSize,
-//						color : '#0795EB'
-//					},
-//				},
 				xAxis : {
 					type : 'category',
 					boundaryGap : false,
@@ -123,13 +121,14 @@
 		dangerChart.setOption(dangerOption);
 		dangerChart.resize();
 	}
-	initDangerChart();
+	
 	dangerChartConfig.initDangerChart = function(){
 		return initDangerChart();
 	}
 
-	$(window).resize(function(){
-		initDangerChart();
-	});
+//	$(window).resize(function(){
+//		initDangerChart();
+//	});
+	
 	window.dangerChartConfig = dangerChartConfig;
 }());

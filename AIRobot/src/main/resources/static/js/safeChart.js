@@ -37,24 +37,22 @@
 						maxData.push(maxObj);
 					}
 				}
-				$("#safeNumItem .alarm-name").html($("#safeChartTopical").text().trim());
-				$("#safeNumItem .total-num-span").html(data.data.countNum);
+				let totalNum = data.data.countNum;
+				let alarmName = $("#safeChartTopical").text().trim();
+					
+				$("#safeNumItem .alarm-name").html(alarmName);
+				$("#safeNumItem .total-num-span").html(totalNum);
+				
+				let chartsNum = parseInt($("#safeNumItem .total-num-span").text()) 
+							  + parseInt($("#illegalNumItem .total-num-span").text()) 
+							  + parseInt($("#dangerNumItem .total-num-span").text());
+				$("#chartsTotalNum").html(chartsNum);
 			}  
 		});
 		let axisLabelFontSize = commonFuntion.getChartConfig().axisLabelFontSize;
 		let barWidth = commonFuntion.getChartConfig().barWidth;
 		let bgBarWidth = commonFuntion.getChartConfig().bgBarWidth;
 		let safeOption = {
-//				title : {
-//					show : true,
-//					text : "单位：次数",
-//					x : "right",
-//					padding : [ 7, 20, 0, 0 ],
-//					textStyle : {
-//						fontSize : axisLabelFontSize,
-//						color : '#ECECEE'
-//					}
-//				},
 				tooltip : {
 					trigger : 'axis',
 					axisPointer : { // 坐标轴指示器，坐标轴触发有效
@@ -144,9 +142,9 @@
 		return initSafeChart();
 	}
 	
-	$(window).resize(function() {
+/*	$(window).resize(function() {
 		initSafeChart();
-	});
+	});*/
 	
 	window.safeChartConfig = safeChartConfig;
 }());

@@ -1,20 +1,16 @@
 package com.hs.request;
 
-import java.util.List;
-
 public class GetTotalChartRequest {
 
-	private List<String> idList;
+	private String alarmIds;
 
-	public List<String> getIdList() {
-		return idList;
+	public String getAlarmIds() {
+		return alarmIds;
 	}
 
-	public void setIdList(List<String> idList) {
-		this.idList = idList;
+	public void setAlarmIds(String alarmIds) {
+		this.alarmIds = alarmIds;
 	}
-	
-	
 	
 }
 
