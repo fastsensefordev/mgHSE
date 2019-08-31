@@ -6,11 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>可视化看板</title>
 <link rel="stylesheet" th:href="@{/static/assets/layui/css/layui.css}">
+<link rel="stylesheet" th:href="@{/static/css/common.css}">
 <link rel="stylesheet" th:href="@{/static/css/dashboard.css}">
 </head>
 <body>
 	<input id="dashboardType" type="hidden" th:value="${type}"/>
 	<div class="container">
+		<div class="screen-full">
+			<i class="icon-saveas" id="saveAsTemplate" th:classappend="${type eq 'edit'} ? '' : 'hide'"></i>
+			<i class="icon-fullscreen max-full" id="fullScreen" th:classappend="${type eq 'edit'} ? 'hide' : ''"></i>
+		</div>
 		<div class="con-left">
 			<div class="time-content">
 				<div class="time-body">
@@ -146,6 +151,19 @@
 	<script th:src="@{/static/js/dangerChart.js}"></script>
 	<script th:src="@{/static/js/totalChart.js}"></script>
 	<script th:src="@{/static/js/dashboard.js}"></script>
-	
+	<script>
+		//JavaScript代码区域
+		layui.use('element', function() {
+			var element = layui.element;
+		});
+	</script>
+<div class="modal-container layui-form" id="saveTemplate" style="display: none;">
+	<div class="layui-form-item">
+		<label class="layui-form-label">名称</label>
+		<div class="layui-input-block">
+			<input type="text" name="templateName"  placeholder="请输入模板名称" autocomplete="off" class="layui-input"/>
+		</div>
+	</div>
+</div>	
 </body>
 </html>

@@ -523,14 +523,55 @@ span.icon-tubiao {
     position: absolute;
     z-index: 9;
 }
-.select-body.hide {
-	display: none;
+.select-body.hide,.hide {
+	display: none !important;
 }
 .select-body .layui-input, .layui-select, .layui-textarea {
     background: transparent;
     color: #fff;
     height: 25px;
 }
+
+/**全屏**/
+.screen-full {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	width: 34px;
+	height: 40px;
+	/* background: rgba(255, 255, 255, 0.21); */
+	align-items: center;
+	display: flex;
+	/* border-radius: 0px 0 0 50px; */
+}
+
+.screen-full i.icon-saveas {
+    display: inline-block;
+    width: 21px;
+    height: 21px;
+    background: url(../img/icon_saveas.png) no-repeat;
+    cursor: pointer;
+    float: left;
+}
+
+.screen-full i.icon-fullscreen {
+    display: inline-block;
+    width: 21px;
+    height: 21px;
+    background: url(../img/icon_fullscreen.png) no-repeat;
+    cursor: pointer;
+    float: left;
+    margin-left: 5px;
+}
+
+.screen-full i.icon-fullscreen.max-full {
+	position: 0 0;
+}
+
+.screen-full i.icon-fullscreen.min-full {
+	background-position: 0 -21px;
+}
+
 ::-webkit-scrollbar-track-piece {
 	background-color: #f8f8f8;
 }
