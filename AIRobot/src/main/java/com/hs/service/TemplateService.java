@@ -36,6 +36,16 @@ public interface TemplateService {
 	 * @return ResultResponse
 	 */
 	public ResultResponse deleteTemplate(Integer id);
+	/**
+	 * @desc: 根据ID查询模板
+	 * @author: kpchen
+	 * @createTime: 2019年9月1日 上午11:45:28
+	 * @history:
+	 * @param id
+	 * @return ResultResponse
+	 */
+	public ResultResponse getTemplateById(Integer id);
+	public ResultResponse updateTemplate(SaveTemplateRequest request);
 
 }
 

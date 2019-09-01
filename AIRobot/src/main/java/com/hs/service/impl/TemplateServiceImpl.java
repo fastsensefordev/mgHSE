@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.hs.mapper.TemplateMapper;
 import com.hs.model.TemplateModel;
 import com.hs.model.User;
@@ -57,6 +58,35 @@ public class TemplateServiceImpl implements TemplateService {
 			return ResultUtil.error("保存失败");
 		}
 	}
+	
+	@Override
+	public ResultResponse updateTemplate(SaveTemplateRequest request) {
+		try {
+			TemplateModel template = request.getTemplate();
+			templateMapper.updateTemplate(template);
+			List<TemplateModel> childrens = request.getChildrens();
+			String alarmIdStr = template.getAlarmId();
+			@SuppressWarnings("unchecked")
+			Map<String, String> alarmMap = (Map<String, String>) JSON.parse(alarmIdStr);  
+			for (TemplateModel temp : childrens) {
+				Integer pid = template.getId();
+				if (temp.getHref().equals("safeChart")) {
+					templateMapper.updateChildTemplate(pid, temp.getHref(), alarmMap.get("safeAlarmId"));
+				} else if (temp.getHref().equals("illegalChart")) {
+					templateMapper.updateChildTemplate(pid, temp.getHref(), alarmMap.get("illegalAlarmId"));
+				} else if (temp.getHref().equals("dangerChart")) {
+					templateMapper.updateChildTemplate(pid, temp.getHref(), alarmMap.get("dangerAlarmId"));
+				} else {
+					templateMapper.updateChildTemplate(pid, temp.getHref(), template.getAlarmId());
+				}
+				
+			}
+			return ResultUtil.success();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResultUtil.error("更新失败");
+		}
+	}
 	/**
 	 * @desc 查询模板
 	 */
@@ -87,6 +117,18 @@ public class TemplateServiceImpl implements TemplateService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResultUtil.error("删除失败");
+		}
+	}
+	@Override
+	public ResultResponse getTemplateById(Integer id) {
+		Map<String, Object> data = new LinkedHashMap<String, Object>();
+		try {
+			TemplateModel templateModel = templateMapper.getTemplateById(id);
+			data.put("template", templateModel);
+			return ResultUtil.success(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResultUtil.error("未查询到数据",data);
 		}
 	}
 

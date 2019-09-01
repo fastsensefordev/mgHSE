@@ -40,6 +40,31 @@ public class TemplateController {
 		ResultResponse resopnse = templateService.saveTemplate(request);
 		return resopnse;
 	}
+	
+	@ApiOperation(value="更新模板")
+	@RequestMapping("updateTemplate")
+	public ResultResponse updateTemplate(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
+			@RequestBody SaveTemplateRequest request) {
+		ResultResponse resopnse = templateService.updateTemplate(request);
+		return resopnse;
+	}
+	/**
+	 * @desc: 根据ID查询模板
+	 * @author: kpchen
+	 * @createTime: 2019年9月1日 上午11:45:00
+	 * @history:
+	 * @param httpServletRequest
+	 * @param httpServletResponse
+	 * @param id
+	 * @return ResultResponse
+	 */
+	@ApiOperation(value="查询模板", notes="查询模板")
+	@RequestMapping("getTemplateById")
+	public ResultResponse getTemplateById(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,Integer id) {
+		ResultResponse resopnse = templateService.getTemplateById(id);
+		return resopnse;
+	}
+	
 	/**
 	 * @desc: 查询模板
 	 * @author: kpchen

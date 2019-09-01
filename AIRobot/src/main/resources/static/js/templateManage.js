@@ -19,10 +19,7 @@ $(function(){
 		        cols: [[
 		            {field: 'templateName', title: '链接名称'},
 		            {field: 'href', title: '链接',templet: function(d){
-		            	let hrefURL = d.href;
-		            	if (d.isParent) {
-		            		hrefURL = d.href + d.id;
-		            	}
+		            	let hrefURL = d.href + "?id=" + d.id;
 		            	return "<a href='" + hrefURL + "' target='_blank' class='link-item'>" + hrefURL + "</a>";
 		            }},
 		            {field: 'createTime', title: '创建时间'},

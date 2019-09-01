@@ -12,11 +12,20 @@ public class TemplateModel {
 	private Integer id;
 	private String templateName;
 	private String href;
+	private String alarmId;
 	private String createTime;
 	private Integer userId;
 	private String createUser;
 	private Integer pid;
 	private Integer status;
+
+	public String getAlarmId() {
+		return alarmId;
+	}
+
+	public void setAlarmId(String alarmId) {
+		this.alarmId = alarmId;
+	}
 
 	public Integer getId() {
 		return id;

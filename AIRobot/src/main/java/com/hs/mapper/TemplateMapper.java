@@ -42,6 +42,18 @@ public interface TemplateMapper {
 	 * @return List<TemplateModel>
 	 */
 	public int deleteTemplate(@Param("id") Integer id);
+	/**
+	 * 
+	 * @desc: 查询模板
+	 * @author: kpchen
+	 * @createTime: 2019年9月1日 上午11:48:02
+	 * @history:
+	 * @param id
+	 * @return TemplateModel
+	 */
+	public TemplateModel getTemplateById(@Param("id") Integer id);
+	public int updateTemplate(TemplateModel template);
+	public int updateChildTemplate(@Param("pid") Integer pid,@Param("href") String href,@Param("alarmId")  String alarmId);
 
 }
 
