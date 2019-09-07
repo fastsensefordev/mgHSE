@@ -98,6 +98,7 @@ public class TemplateController {
 		ResultResponse resopnse = templateService.deleteTemplate(id);
 		return resopnse;
 	}
+	
 }
 
 	

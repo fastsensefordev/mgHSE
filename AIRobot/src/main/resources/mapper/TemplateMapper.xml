@@ -4,16 +4,16 @@
 
 	<!-- 新增模板 -->
 	<insert id="saveTemplate" parameterType="com.hs.model.TemplateModel" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO `tbl_template` (`templateName`, `href`,`alarmId`, `createTime`, `createUser`,`userId`, `pid`, `status`) 
-		VALUES (#{templateName}, #{href}, #{alarmId}, now(), #{createUser}, #{userId}, 0, #{status})
+		INSERT INTO `tbl_template` (`templateName`, `href`,`imgUrl`,`alarmId`, `createTime`, `createUser`,`userId`, `pid`, `status`) 
+		VALUES (#{templateName}, #{href},#{imgUrl} , #{alarmId}, now(), #{createUser}, #{userId}, 0, #{status})
 	</insert>
 	
 	<!-- 批量新增模板 -->
 	<insert id="saveTemplateList" parameterType="com.hs.model.TemplateModel" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO `tbl_template` (`templateName`, `href`,`alarmId`,`createTime`, `createUser`,`userId` , `pid`, `status`) 
+		INSERT INTO `tbl_template` (`templateName`, `href`,`imgUrl`,`alarmId`,`createTime`, `createUser`,`userId` , `pid`, `status`) 
 		VALUES
 		<foreach collection="list" item="item" separator=",">
-      		(#{item.templateName}, #{item.href}, #{item.alarmId}, now(), #{item.createUser}, #{item.userId}, #{item.pid}, #{item.status})
+      		(#{item.templateName}, #{item.href}, #{item.imgUrl}, #{item.alarmId}, now(), #{item.createUser}, #{item.userId}, #{item.pid}, #{item.status})
         </foreach>
 	</insert>
 	
@@ -25,11 +25,10 @@
 	</select>
 	
 	<select id="getTemplateById" resultType="com.hs.model.TemplateModel">
-		select `id`,`templateName`, `href`, `alarmId`,`createTime`, `createUser`, `userId`,`pid`, `status`
+		select `id`,`templateName`, `href`,`imgUrl` , `alarmId`,`createTime`, `createUser`, `userId`,`pid`, `status`
 			from `tbl_template`
 			where `id` = #{id} and `status` = 0
 	</select>
-	
 	
 	<update id="deleteTemplate" >
 		update `tbl_template` set `status` = 1 where id = #{id} or pid = #{id}
@@ -37,7 +36,11 @@
 	
 	<update id="updateTemplate" parameterType="com.hs.model.TemplateModel">
         update tbl_template
-        set alarmId = #{alarmId},templateName = #{templateName}
+         <set>
+            <if test="alarmId != null">alarmId = #{alarmId},</if>
+            <if test="templateName != null">templateName = #{templateName},</if>
+            <if test="imgUrl != null">imgUrl = #{imgUrl},</if>
+        </set>
         where id = #{id}
 	</update>
 	

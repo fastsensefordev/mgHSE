@@ -5,9 +5,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>可视化看板</title>
-<link rel="stylesheet" th:href="@{/static/assets/layui/css/layui.css}">
-<link rel="stylesheet" th:href="@{/static/css/common.css}">
-<link rel="stylesheet" th:href="@{/static/css/dashboard.css}">
+<link type="text/css" rel="stylesheet" th:href="@{/static/assets/layui/css/layui.css}"/>
+<link type="text/css" rel="stylesheet" th:href="@{/static/css/common.css}"/>
+<link type="text/css" rel="stylesheet" th:href="@{/static/css/dashboard.css}"/>
 </head>
 <body>
 	<input id="dashboardType" type="hidden" th:value="${type}"/>
@@ -70,7 +70,7 @@
 				<div class="logo-title">智慧工厂 AI管理平台</div>
 			</div>
 			<div class="img-center" id="uploadImg">
-				<input type="file" class="upload-file" id="upload-file"/>
+				<input type="file" class="upload-file" id="upload-file" th:classappend="${type eq 'edit'} ? '' : 'hide'"/>
 				<img th:src="@{/static/img/center_img.png}" id="imgCenter"/>
 			</div>
 			<div class="total-bottom">

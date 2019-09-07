@@ -100,17 +100,22 @@ $(function(){
 		 * 初始化图片
 		 */
 		function initImgCenter() {
-			$.ajax({  
-				url:'user/getImgCenter',  
-				type:'post',      
-				data: {}, 
-				dataType:'json',  
-				success:function(data){  
-					if (data.code == 200 && data.data.imgPath != null) {
-						$("#imgCenter").attr("src",data.data.imgPath);
-					}
-				}  
-			});  
+			let id = commonFuntion.getUrlParam("id");
+			if (id != null && id != undefined) {
+				$.ajax({  
+					url:'template/getTemplateById',  
+					type:'post',      
+					data: {
+						id: id
+					}, 
+					dataType:'json',  
+					success:function(data){  
+						if (data.code == 200 && data.data.template.imgUrl != null) {
+							$("#imgCenter").attr("src",data.data.template.imgUrl);
+						}
+					}  
+				});  
+			}
 		}
 		
 		function initClock() {
@@ -155,13 +160,13 @@ $(function(){
 			$.ajax({
 		           type:"POST",
 		           url: "user/uploadImg",
-	           data:formData,
-	           dataType:"json",
-	           mimeType:"multipart/form-data",
-	           cache:false,
-	           processData:false,
-	           contentType:false,
-	           success:function(data){
+		           data:formData,
+		           dataType:"json",
+		           mimeType:"multipart/form-data",
+		           cache:false,
+		           processData:false,
+		           contentType:false,
+		           success:function(data){
 					if (data.code == 200 && data.data.imgPath != null) {
 						$("#imgCenter").attr("src",data.data.imgPath);
 					}
@@ -232,7 +237,8 @@ $(function(){
 							id: id,
 							alarmId: JSON.stringify(alarmArray),
 							templateName: templateName,
-							href: "dashboard"
+							href: "dashboard",
+							imgUrl: $("#imgCenter").attr("src")
 						},
 						childrens: templateChildrens
 					};
@@ -313,7 +319,8 @@ $(function(){
 						template: {
 							alarmId: JSON.stringify(alarmArray),
 							templateName: templateName,
-							href: "dashboard"
+							href: "dashboard",
+							imgUrl: $("#imgCenter").attr("src")
 						},
 						childrens: templateChildrens
 					};

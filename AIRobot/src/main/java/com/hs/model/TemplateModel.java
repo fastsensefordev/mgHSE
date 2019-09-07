@@ -12,20 +12,13 @@ public class TemplateModel {
 	private Integer id;
 	private String templateName;
 	private String href;
+	private String imgUrl;
 	private String alarmId;
 	private String createTime;
 	private Integer userId;
 	private String createUser;
 	private Integer pid;
 	private Integer status;
-
-	public String getAlarmId() {
-		return alarmId;
-	}
-
-	public void setAlarmId(String alarmId) {
-		this.alarmId = alarmId;
-	}
 
 	public Integer getId() {
 		return id;
@@ -49,6 +42,22 @@ public class TemplateModel {
 
 	public void setHref(String href) {
 		this.href = href;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
+	public String getAlarmId() {
+		return alarmId;
+	}
+
+	public void setAlarmId(String alarmId) {
+		this.alarmId = alarmId;
 	}
 
 	public String getCreateTime() {
@@ -75,14 +84,6 @@ public class TemplateModel {
 		this.createUser = createUser;
 	}
 
-	public Integer getStatus() {
-		return status;
-	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-
 	public Integer getPid() {
 		return pid;
 	}
@@ -91,11 +92,19 @@ public class TemplateModel {
 		this.pid = pid;
 	}
 
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
-		return "TemplateModel [id=" + id + ", templateName=" + templateName + ", href=" + href + ", createTime="
-				+ createTime + ", userId=" + userId + ", createUser=" + createUser + ", pid=" + pid + ", status="
-				+ status + "]";
+		return "TemplateModel [id=" + id + ", templateName=" + templateName + ", href=" + href + ", imgUrl=" + imgUrl
+				+ ", alarmId=" + alarmId + ", createTime=" + createTime + ", userId=" + userId + ", createUser="
+				+ createUser + ", pid=" + pid + ", status=" + status + "]";
 	}
 
 }
