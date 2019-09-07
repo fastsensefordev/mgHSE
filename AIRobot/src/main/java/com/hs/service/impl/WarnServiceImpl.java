@@ -146,7 +146,7 @@ public class WarnServiceImpl implements WarnService {
 				Map<String, TotalCalcInfo> alarmMap = calcInfos.parallelStream().collect(Collectors.toMap(TotalCalcInfo::getAlarmId, alarmIndo -> alarmIndo));
 				List<TblAlarmInfo> alarmList = alarmInfoMapper.getAlarmList();
 				
-				Map<Long, String> alarmListMap = alarmList.parallelStream().collect(Collectors.toMap(TblAlarmInfo::getAlarmId, TblAlarmInfo::getAlarmName));
+				Map<Integer, String> alarmListMap = alarmList.parallelStream().collect(Collectors.toMap(TblAlarmInfo::getAlarmId, TblAlarmInfo::getAlarmName));
 				
 				for (String alarmId : idList) {
 					TotalCalcInfo info = new TotalCalcInfo();
@@ -154,7 +154,7 @@ public class WarnServiceImpl implements WarnService {
 					String alarmName = "";
 					if (alarmMap.containsKey(alarmId)) {
 						count = alarmMap.get(alarmId).getCount();
-						alarmName = alarmListMap.get(Long.parseLong(alarmId));
+						alarmName = alarmListMap.get(Integer.parseInt(alarmId));
 					}
 					info.setCount(count);
 					info.setAlarmId(alarmId);
