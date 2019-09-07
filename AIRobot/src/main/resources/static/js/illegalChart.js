@@ -3,7 +3,26 @@
 	var illegalChartConfig = {};
 	
 	function initIllegalChart() {
+		let sid = commonFuntion.getUrlParam("sid");
 		let alarmId = $("#illegalChartBody").find("select.alarm-select").val();
+		if (sid != null && sid != undefined) {
+			$.ajax({  
+				url:'template/getTemplateById',  
+				type:'post',      
+				data: {
+					id: sid
+				}, 
+				async:false,
+				dataType:'json',  
+				success:function(data){  
+					if (data.code == 200 && data.data.template != null) {
+						alarmId = JSON.parse(data.data.template.alarmId);
+						templateName = data.data.template.templateName;
+						console.log(alarmId)
+					}
+				}  
+			});  
+		}
 		let xAxisData = [];
 		let barData = [];
 		$.ajax({  

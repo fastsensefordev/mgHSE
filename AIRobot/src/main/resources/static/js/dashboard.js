@@ -343,18 +343,17 @@ $(function(){
 	});
 	
 	/**
-	 * 保存模板
+	 * 全屏
 	 */
-	function saveTemplate(templateName,addTempIndex) {}
 	$("#fullScreen").on("click",function(){
 		if ($(this).hasClass("max-full")) {
-			fullScreen($(".dashboard .content-body-detail")[0]);
+			fullScreen($("body")[0]);
 			$(this).removeClass("max-full");
 			$(this).addClass("min-full");
 		} else {
 			$(this).removeClass("min-full");
 			$(this).addClass("max-full");
-			exitFullScreen($(".dashboard .content-body-detail")[0]);
+			exitFullScreen($("body")[0]);
 		}
 	});
 	

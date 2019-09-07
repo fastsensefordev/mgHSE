@@ -3,6 +3,29 @@
 	
 	function initComplexChart() {
 		let alarmids = $("#totalChartContent").attr("alarmids");
+		let sid = commonFuntion.getUrlParam("sid");
+		let templateName = "";
+		let alarmIdObj = null;
+		if (sid != null && sid != undefined) {
+			$.ajax({  
+				url:'template/getTemplateById',  
+				type:'post',      
+				data: {
+					id: sid
+				}, 
+				async:false,
+				dataType:'json',  
+				success:function(data){  
+					if (data.code == 200 && data.data.template != null) {
+						alarmIdObj = JSON.parse(data.data.template.alarmId);
+						templateName = data.data.template.templateName;
+						console.log(alarmIdObj)
+						alarmids = alarmIdObj.safeAlarmId + "," + alarmIdObj.illegalAlarmId + "," + alarmIdObj.dangerAlarmId;
+						console.log(alarmids)
+					}
+				}  
+			});  
+		}
 		let xAxisData = [];
 		let colorData = ["#0695EB","#31C557","#FD7270"];
 		let barData = [];
