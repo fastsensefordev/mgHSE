@@ -4,10 +4,10 @@
 
 	<!-- 批量新增提醒 -->
 	<insert id="batchSaveAlarmInfo" parameterType="java.util.List">
-		INSERT INTO `tbl_alarm_info` (`alarmId`, `alarmName`,`takePic1`,`alarmTime`) 
+		INSERT INTO `tbl_alarm_info` (`alarmId`,`sourceId`, `alarmName`, `server`,`takePic1`,`alarmTime`) 
 		VALUES 
 		<foreach collection="list" item="item" separator=",">
-      		(#{item.alarmId},#{item.alarmName},#{item.takePic1},#{item.alarmTime})
+      		(#{item.alarmId},#{item.sourceId},#{item.alarmName},#{item.server},#{item.takePic1},#{item.alarmTime})
       	</foreach>
 	</insert>
 	
@@ -66,6 +66,16 @@
     	</foreach>
 		and date_sub(curdate(), interval 7 day) <![CDATA[<=]]> DATE_FORMAT(alarmTime, "%Y-%m-%d")
 		GROUP BY alarmId
-		
 	</select>
+	
+	<select id="getAlarmType" resultType="com.hs.model.AlarmType">
+		select id,alarmNameEn,alarmName
+		from tbl_alarm_type
+		where alarmNameEn = #{alarmNameEn} limit 1
+	</select>
+	
+	<insert id="saveAlarmType" parameterType="com.hs.model.AlarmType" useGeneratedKeys="true" keyProperty="id">
+		insert into tbl_alarm_type(alarmNameEn,alarmName)
+		values (#{alarmNameEn},#{alarmName})   
+	</insert>
 </mapper>

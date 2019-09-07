@@ -522,14 +522,18 @@ span.icon-tubiao {
     width: 120px;
     position: absolute;
     z-index: 9;
+    top: 7px;
+    left: 7px;
 }
 .select-body.hide,.hide {
 	display: none !important;
 }
 .select-body .layui-input, .layui-select, .layui-textarea {
-    background: transparent;
+	background: transparent;
     color: #fff;
     height: 25px;
+    border-radius: 0;
+    border: 1px solid rgba(221, 221, 221, 0.7490
 }
 
 /**全屏**/

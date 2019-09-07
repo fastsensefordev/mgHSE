@@ -13,6 +13,8 @@ import com.hs.request.BatchAlarmsRequest;
 import com.hs.request.GetTotalChartRequest;
 import com.hs.request.GetWarnListRequest;
 import com.hs.response.ResultResponse;
+import com.hs.response.ResultUtil;
+import com.hs.service.AlarmService;
 import com.hs.service.WarnService;
 
 import io.swagger.annotations.Api;
@@ -31,6 +33,8 @@ public class WarnController {
 
 	@Autowired
 	private WarnService warnService;
+	@Autowired
+	private AlarmService alarmService;
 
 	/**
 	 * @author: 报警列表
@@ -92,23 +96,49 @@ public class WarnController {
 		return warnService.getAlarmList();
 	}
 
-
+	/**
+	 * @desc: 通过id查询alarm实体
+	 * @author: kpchen
+	 * @createTime: 2019年9月7日 下午12:23:23
+	 * @history:
+	 * @param httpServletRequest
+	 * @param httpServletResponse
+	 * @param alarmId
+	 * @return ResultResponse
+	 */
 	@RequestMapping("getEchartsByAid")
 	public ResultResponse getEchartsByAid(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,String alarmId) {
 		return warnService.getEchartsByAid(alarmId);
 	}
 
+	/**
+	 * @desc: 获取综合数据
+	 * @author: kpchen
+	 * @createTime: 2019年9月7日 下午12:23:10
+	 * @history:
+	 * @param httpServletRequest
+	 * @param httpServletResponse
+	 * @param request
+	 * @return ResultResponse
+	 */
 	@RequestMapping("getTotalChart")
 	public ResultResponse getTotalChart(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
 			GetTotalChartRequest request) {
 		return warnService.getTotalChart(request);
 	}
-
-	public static void main(String[] args) {
-		//		VasWebService vasWebService = new VasWebService();
-		//		IVasWebService iVasWebService = vasWebService.getBasicHttpBindingIVasWebService();
-		//		String result = iVasWebService.alarmInfoGetRecordList(2019, 8, 12, "ID>0 order by ID DESC limit 10");
-		//		List<AlarmInfo> alarmInfos = JSON.parseObject(result,new TypeReference<List<AlarmInfo>>(){});
+	/**
+	 * @desc: 处理今天数据
+	 * @author: kpchen
+	 * @createTime: 2019年9月7日 下午12:24:54
+	 * @history:
+	 * @param httpServletRequest
+	 * @param httpServletResponse
+	 * @return ResultResponse
+	 */
+	@RequestMapping("dealWithToday")
+	public ResultResponse dealWithToday(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
+		alarmService.parseData();
+		return ResultUtil.success();
 	}
 
 }

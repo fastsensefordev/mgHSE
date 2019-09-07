@@ -10,6 +10,7 @@ import com.hs.service.AlarmService;
 public class AlarmTimmer {
 	@Autowired
 	private AlarmService alarmService;
+	
     @Scheduled(cron="0 0/1 * * * ?")
 	public void execute() {
     	alarmService.parseData();

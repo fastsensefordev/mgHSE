@@ -21,7 +21,9 @@ $(function(){
 			cols: [[
 				{type: 'checkbox', fixed: 'left'},
 				{field:'id', title:'ID', hide: true},
-				{field:'alarmName', title:'报警类型'},
+				{field:'alarmName', title:'<span class="filter-name">报警类型</span><i class="icon-filter"></i>',templet:function(d) {
+					return d.alarmName;
+				}},
 				{field:'server', title:'报警地址'},
 				{field:'takePic1', title:'图片',templet:function(d){
 					return "<img src='"+d.takePic1+"'/>";

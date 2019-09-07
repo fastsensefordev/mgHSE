@@ -1,5 +1,6 @@
 package com.hs.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AlarmInfo {
@@ -14,11 +15,15 @@ public class AlarmInfo {
 	/**
 	 * 报警时间
 	 */
-	private Date AlarmTime;
+	private String AlarmTime;
 	/**
 	 * 图片1-报警对象图片---****
 	 */
 	private String TakePic1;
+	/**
+	 * 名称的英文名
+	 */
+	private String IvsEventType;
 	
 	public Long getID() {
 		return ID;
@@ -32,11 +37,19 @@ public class AlarmInfo {
 	public void setAlarmName(String alarmName) {
 		AlarmName = alarmName;
 	}
-	public Date getAlarmTime() {
+	public String getAlarmTime() {
 		return AlarmTime;
 	}
-	public void setAlarmTime(Date alarmTime) {
-		AlarmTime = alarmTime;
+	public void setAlarmTime(String alarmTime) {
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+		      Date date = sdf1.parse(alarmTime);//拿到Date对象
+		      String str = sdf2.format(date);//输出格式：2017-01-22 09:28:33
+		      AlarmTime = str;
+		  } catch (Exception e) {
+		      e.printStackTrace();
+		  }
 	}
 	public String getTakePic1() {
 		return TakePic1;
@@ -44,6 +57,12 @@ public class AlarmInfo {
 	public void setTakePic1(String takePic1) {
 		TakePic1 = takePic1;
 	}
-
+	public String getIvsEventType() {
+		return IvsEventType;
+	}
+	public void setIvsEventType(String ivsEventType) {
+		IvsEventType = ivsEventType;
+	}
+	
 
 }
