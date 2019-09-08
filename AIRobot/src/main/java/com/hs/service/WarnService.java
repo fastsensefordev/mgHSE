@@ -1,5 +1,6 @@
 package com.hs.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hs.request.BatchAlarmsRequest;
 import com.hs.request.GetTotalChartRequest;
 import com.hs.request.GetWarnListRequest;
@@ -18,6 +19,8 @@ public interface WarnService {
 	public ResultResponse getEchartsByAid(String alarmId);
 
 	public ResultResponse getTotalChart(GetTotalChartRequest request);
+
+	public JSONObject getAlarmNameList();
 
 }
 

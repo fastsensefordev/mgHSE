@@ -21,7 +21,7 @@ $(function(){
 			cols: [[
 				{type: 'checkbox', fixed: 'left'},
 				{field:'id', title:'ID', hide: true},
-				{field:'alarmName', title:'<span class="filter-name">报警类型</span><i class="icon-filter"></i>',templet:function(d) {
+				{field:'alarmName', title:'<span class="filter-name">报警类型</span>',templet:function(d) {
 					return d.alarmName;
 				}},
 				{field:'server', title:'报警地址'},
@@ -43,14 +43,30 @@ $(function(){
 	layui.use('table', function(){
 		var warnListTable = layui.table;
 		warnListTable.render(warnTableOptions);
-
+		var tableFilter = layui.tableFilter;
+		//3、定义一个tableFilter 挂载到 table 上
+		var tableFilterIns = tableFilter.render({
+		    'elem' : '#warnListTable',//table的选择器
+		    'mode' : 'api',//过滤模式
+		    'filters' : [{
+		    	field: "alarmName",
+		    	type: "checkbox",
+		    	url: "warn/getAlarmNameList"
+		    }],//过滤项配置
+		    'done': function(filters){
+		        //结果回调
+		    }
+		})	
 		//头工具栏事件
 		warnListTable.on('toolbar(warnListTable)', function(obj){
 			let checkStatus = warnListTable.checkStatus(obj.config.id);
 			switch(obj.event){
-			case 'deleteElarm':
-				deleteAlarm(checkStatus.data)
-				break;
+				case 'deleteElarm': 
+					deleteAlarm(checkStatus.data) 
+					break;
+				case 'exportElarm': 
+					exportAlarm();
+					break;
 			};
 		});
 		//监听行工具事件
@@ -80,8 +96,17 @@ $(function(){
 					}); 
 				});
 			} 
+			
 		});
-		
+		/**
+		 * 过滤
+		 */
+		$("body").on("click",".icon-filter",function(){
+			$("")
+		});
+		/**
+		 * 删除
+		 */
 		function deleteAlarm(data) {
 			let idList = [];
 			for (var i = 0; i < data.length; i++) {
@@ -103,6 +128,12 @@ $(function(){
 					}
 				}  
 			}); 
+		}
+		/**
+		 * 导出
+		 */
+		function exportAlarm() {
+			
 		}
 	});
 

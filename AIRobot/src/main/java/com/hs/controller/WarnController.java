@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hs.request.BatchAlarmsRequest;
 import com.hs.request.GetTotalChartRequest;
 import com.hs.request.GetWarnListRequest;
@@ -94,6 +95,19 @@ public class WarnController {
 	@RequestMapping("getAlarmList")
 	public ResultResponse getAlarmList(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
 		return warnService.getAlarmList();
+	}
+	/**
+	 * @desc: 获取报警列表
+	 * @author: kpchen
+	 * @createTime: 2019年9月8日 上午11:35:01
+	 * @history:
+	 * @param httpServletRequest
+	 * @param httpServletResponse
+	 * @return ResultResponse
+	 */
+	@RequestMapping("getAlarmNameList")
+	public JSONObject getAlarmNameList(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
+		return warnService.getAlarmNameList();
 	}
 
 	/**

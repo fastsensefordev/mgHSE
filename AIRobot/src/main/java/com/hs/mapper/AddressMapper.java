@@ -38,6 +38,15 @@ public interface AddressMapper {
 	public int deleteAddress(@Param("id") Integer id);
 
 	public int updateAddress(UpdateAddressRequest request);
+	/**
+	 * 获取算法服务器地址
+	 * @desc: AIRobot
+	 * @author: kpchen
+	 * @createTime: 2019年9月8日 上午10:10:50
+	 * @history:
+	 * @return List<AddressModel>
+	 */
+	public List<String> getCalcAddressList();
 }
 
 	

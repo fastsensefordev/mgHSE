@@ -7,6 +7,10 @@
 		INSERT INTO `tbl_address` (`ipType`, `ip`,`level`,`area`, `cameraId`,`location`, `userId`, `createUser`,`createTime`,`pid`, `status`) 
 		VALUES (#{ipType}, #{ip}, #{level}, #{area},#{cameraId}, #{location}, #{userId}, #{createUser},now(),#{pid}, #{status})
 	</insert>
+	<!-- 获取算法服务器地址 -->
+	<select id="getCalcAddressList" resultType="String">
+		select ip from tbl_address where `status` = 0 and ipType=0 and level=1
+	</select>
 	
 	<!-- 获取当前服务器地址列表 -->
 	<select id="getAddressList" resultType="com.hs.model.AddressModel">

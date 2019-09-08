@@ -8,6 +8,7 @@ import com.hs.model.AlarmType;
 import com.hs.model.TblAlarmInfo;
 import com.hs.model.TotalCalcInfo;
 import com.hs.model.TotalInfo;
+import com.hs.request.GetWarnListRequest;
 
 public interface AlarmInfoMapper {
 	/**
@@ -30,7 +31,7 @@ public interface AlarmInfoMapper {
 	 * @history:
 	 * @return List<TblAlarmInfo>
 	 */
-	public List<TblAlarmInfo> getWarnList();
+	public List<TblAlarmInfo> getWarnList(GetWarnListRequest request);
 	/**
 	 * @desc: 获取报警名称列表
 	 * @author: kpchen

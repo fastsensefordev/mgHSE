@@ -1,5 +1,6 @@
 package com.hs.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.hs.mapper.AddressMapper;
 import com.hs.mapper.AlarmInfoMapper;
 import com.hs.model.AlarmInfo;
 import com.hs.model.AlarmType;
@@ -20,29 +22,39 @@ import com.hs.util.WebServiceUtil;
 public class AlarmService {
 	@Autowired
 	private AlarmInfoMapper alarmInfoMapper;
+	@Autowired
+	private AddressMapper addressMapper;
 	
 	public void parseData() {
-		String serveAddress = "http://172.23.35.203:8733";
-		Long idStart = 0L;
-		String result = WebServiceUtil.getRecordList(serveAddress, "2019", "9", "7", "ID> "+idStart+" order by ID ASC limit 10");
-		List<AlarmInfo> alarmResultList = new ArrayList<AlarmInfo>();
-		if (StringUtils.isNoneBlank(result)) {
-			alarmResultList = JSON.parseObject(result,new TypeReference<List<AlarmInfo>>(){});
-			insert2Data(serveAddress,alarmResultList);//入库处理
-		}
-		//循环分页查询
-		while (CollectionUtils.isNotEmpty(alarmResultList)) {
-			idStart = alarmResultList.get(alarmResultList.size()-1).getID();
-			result = WebServiceUtil.getRecordList(serveAddress, "2019", "9", "5", "ID>"+idStart+" order by ID ASC limit 10");
+		LocalDate localDate = LocalDate.now();
+		String year = String.valueOf(localDate.getYear());
+		String month = String.valueOf(localDate.getMonthValue());
+		String day = String.valueOf(localDate.getDayOfMonth());
+		List<String> serverList = addressMapper.getCalcAddressList();
+		for (String serveAddress : serverList) {
+			Long idStart = 0L;
+			//查询数据
+			String result = WebServiceUtil.getRecordList(serveAddress, year, month, day, "ID > " + idStart + " order by ID ASC limit 10");
+			List<AlarmInfo> alarmResultList = new ArrayList<AlarmInfo>();
 			if (StringUtils.isNoneBlank(result)) {
-				alarmResultList.clear();//清空数据
 				alarmResultList = JSON.parseObject(result,new TypeReference<List<AlarmInfo>>(){});
-				insert2Data(serveAddress, alarmResultList);//入库处理
-			} else {
-				alarmResultList.clear();//清空数据
+				insert2Data(serveAddress,alarmResultList);//入库处理
 			}
-		} 
+			//循环分页查询
+			while (CollectionUtils.isNotEmpty(alarmResultList)) {
+				idStart = alarmResultList.get(alarmResultList.size()-1).getID();
+				result = WebServiceUtil.getRecordList(serveAddress, year, month, day, "ID >" + idStart + " order by ID ASC limit 10");
+				if (StringUtils.isNoneBlank(result)) {
+					alarmResultList.clear();//清空数据
+					alarmResultList = JSON.parseObject(result,new TypeReference<List<AlarmInfo>>(){});
+					insert2Data(serveAddress, alarmResultList);//入库处理
+				} else {
+					alarmResultList.clear();//清空数据
+				}
+			} 
+		}
 	}
+	
 	/**
 	 * @desc: 处理数据并插入数据库
 	 * @author: kpchen

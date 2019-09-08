@@ -2,6 +2,7 @@ package com.hs.service.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hs.mapper.AlarmInfoMapper;
@@ -66,8 +68,15 @@ public class WarnServiceImpl implements WarnService {
 		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 		List<TblAlarmInfo> list = new ArrayList<TblAlarmInfo>();
 		try {
+			String alarmName = request.getAlarmName();
+			//查询条件不为空的时候 设置alarm
+			if (StringUtils.isNoneBlank(alarmName)) {
+				String[] alarmStrs = alarmName.split(",");
+				List<String> alarmList = Arrays.asList(alarmStrs);
+				request.setAlarmList(alarmList);
+			}
 			PageHelper.startPage(request.getPage(), request.getLimit());
-			list = alarmInfoMapper.getWarnList();
+			list = alarmInfoMapper.getWarnList(request);
 			PageInfo<TblAlarmInfo> page = new PageInfo<TblAlarmInfo>(list);
 			resultMap.put("data", page.getList());
 			resultMap.put("total", page.getTotal());
@@ -96,6 +105,31 @@ public class WarnServiceImpl implements WarnService {
 			return ResultUtil.error("查询失败", resultMap);
 		}
 			
+	}
+	
+	/**
+	 * @desc 获取报警名称列表
+	 */
+	@Override
+	public JSONObject getAlarmNameList() {
+		JSONObject jsonObject = new JSONObject();
+		List<Map<String, String>> resultList = new ArrayList<Map<String, String>>();
+		List<TblAlarmInfo> list = new ArrayList<TblAlarmInfo>();
+		try {
+			list = alarmInfoMapper.getAlarmList();
+			Map<String, String> resultMap = null;
+			for (TblAlarmInfo tblAlarmInfo : list) {
+				resultMap = new HashMap<String, String>();
+				resultMap.put("key", tblAlarmInfo.getAlarmName());
+				resultMap.put("value", tblAlarmInfo.getAlarmName());
+				resultList.add(resultMap);
+			}
+			jsonObject.put("data", resultList);
+			return jsonObject;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return jsonObject;
+		}
 	}
 	@Override
 	public ResultResponse getEchartsByAid(String alarmId) {

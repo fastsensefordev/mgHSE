@@ -316,4 +316,9 @@ html, body {
     height: 16px;
     background: url(../img/icon_filter.png) no-repeat;
     float: left;
+    margin: 5px;
+    cursor: pointer;
+}
+.layui-table-filter.layui-inline {
+	float: right;
 }

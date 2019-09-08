@@ -18,6 +18,9 @@ $(function(){
 			if (remeber) {
 				localStorage.setItem("userName", userName);
 				localStorage.setItem("password", password);
+			} else {
+				localStorage.removeItem('userName');
+				localStorage.removeItem('password');
 			}
 			$.ajax({  
 				url:'loginBy',  
@@ -109,10 +112,12 @@ $(function(){
 			var password = localStorage.getItem('password');
 			if (userName != null && userName != undefined) {
 				$("#LAY-user-login-username").val(userName);
+				$("#LAY-user-remeber").prop("checked",true);
 			}
 			if (password != null && password != undefined) {
 				$("#LAY-user-login-password").val(password);
 			}
+			
 		}
 	});
 });
