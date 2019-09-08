@@ -99,12 +99,6 @@ $(function(){
 			
 		});
 		/**
-		 * 过滤
-		 */
-		$("body").on("click",".icon-filter",function(){
-			$("")
-		});
-		/**
 		 * 删除
 		 */
 		function deleteAlarm(data) {
@@ -133,7 +127,7 @@ $(function(){
 		 * 导出
 		 */
 		function exportAlarm() {
-			
+			window.location.href = "warn/downloadAlarm";
 		}
 	});
 

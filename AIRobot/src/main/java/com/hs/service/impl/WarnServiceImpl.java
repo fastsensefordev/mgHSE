@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hs.mapper.AlarmInfoMapper;
+import com.hs.model.AlarmExcelModel;
 import com.hs.model.TblAlarmInfo;
 import com.hs.model.TotalCalcInfo;
 import com.hs.model.TotalInfo;
@@ -87,6 +88,24 @@ public class WarnServiceImpl implements WarnService {
 			return ResultUtil.error("查询失败", resultMap);
 		}
 			
+	}
+	
+	@Override
+	public List<AlarmExcelModel> getAllWarnList(GetWarnListRequest request) {
+		List<AlarmExcelModel> list = new ArrayList<AlarmExcelModel>();
+		try {
+			String alarmName = request.getAlarmName();
+			//查询条件不为空的时候 设置alarm
+			if (StringUtils.isNoneBlank(alarmName)) {
+				String[] alarmStrs = alarmName.split(",");
+				List<String> alarmList = Arrays.asList(alarmStrs);
+				request.setAlarmList(alarmList);
+			}
+			list = alarmInfoMapper.getAllWarnList(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 	/**
 	 * @desc 获取报警名称列表

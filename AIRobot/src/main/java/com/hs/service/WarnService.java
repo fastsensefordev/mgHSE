@@ -1,6 +1,9 @@
 package com.hs.service;
 
+import java.util.List;
+
 import com.alibaba.fastjson.JSONObject;
+import com.hs.model.AlarmExcelModel;
 import com.hs.request.BatchAlarmsRequest;
 import com.hs.request.GetTotalChartRequest;
 import com.hs.request.GetWarnListRequest;
@@ -21,6 +24,8 @@ public interface WarnService {
 	public ResultResponse getTotalChart(GetTotalChartRequest request);
 
 	public JSONObject getAlarmNameList();
+
+	public List<AlarmExcelModel> getAllWarnList(GetWarnListRequest request);
 
 }
 

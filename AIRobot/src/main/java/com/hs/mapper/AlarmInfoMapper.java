@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.hs.model.AlarmExcelModel;
 import com.hs.model.AlarmType;
 import com.hs.model.TblAlarmInfo;
 import com.hs.model.TotalCalcInfo;
@@ -48,6 +49,8 @@ public interface AlarmInfoMapper {
 	public void saveAlarmType(AlarmType saveAlarmModel);
 
 	public AlarmType getAlarmType(@Param("alarmNameEn") String alarmNameEn);
+
+	public List<AlarmExcelModel> getAllWarnList(GetWarnListRequest request);
 	
 }
 

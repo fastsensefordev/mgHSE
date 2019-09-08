@@ -38,6 +38,20 @@
 		</if>
 	</select>
 	
+	<select id="getAllWarnList" resultType="com.hs.model.AlarmExcelModel">
+		select alarmName,server,alarmTime,takePic1
+		from tbl_alarm_info
+		where isDelete = 0
+		<if test="alarmList != null and alarmList.size() >0 ">
+			and alarmName in
+			<foreach collection="alarmList" item="item" separator="," open="(" close=")" >
+      			(#{item})
+      		</foreach>
+		</if>
+		and date_sub(curdate(), interval 7 day) <![CDATA[<=]]> DATE_FORMAT(alarmTime, "%Y-%m-%d")
+	</select>
+	
+	
 	<select id="getAlarmList" resultType="com.hs.model.TblAlarmInfo">
 		select alarmId,alarmName,server
 		from tbl_alarm_info

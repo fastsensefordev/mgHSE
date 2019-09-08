@@ -1,8 +1,16 @@
 package com.hs.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hs.model.AlarmExcelModel;
 import com.hs.request.BatchAlarmsRequest;
 import com.hs.request.GetTotalChartRequest;
 import com.hs.request.GetWarnListRequest;
@@ -18,6 +27,8 @@ import com.hs.response.ResultUtil;
 import com.hs.service.AlarmService;
 import com.hs.service.WarnService;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 /**
@@ -154,6 +165,50 @@ public class WarnController {
 		alarmService.parseData();
 		return ResultUtil.success();
 	}
+	
+	/**
+	 * @desc: 导出
+	 * @author: kpchen
+	 * @createTime: 2019年9月8日 下午3:26:01
+	 * @history:
+	 * @param httpServletRequest
+	 * @param httpServletResponse
+	 * @param request
+	 * @throws Exception void
+	 */
+	@RequestMapping("downloadAlarm")
+	public void downloadAlarm(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
+			GetWarnListRequest request) throws Exception {
+		List<AlarmExcelModel> alarmExcelModels = warnService.getAllWarnList(request);
+		ExportParams params = new ExportParams("华视威讯报警详情","报警详情");
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("date", new Date());//导出一般都要日期
+		data.put("list", alarmExcelModels);//导出list集合
+		Workbook book = ExcelExportUtil.exportExcel(params,AlarmExcelModel.class, alarmExcelModels);
+		export(httpServletResponse, book, "华视威讯报警详情");
+	}
+	
+	 /**
+     * export导出请求头设置
+     *
+     * @param response
+     * @param workbook
+     * @param fileName
+     * @throws Exception
+     */
+    private static void export(HttpServletResponse response, Workbook workbook, String fileName) throws Exception {
+        response.reset();
+        response.setContentType("application/x-msdownload");
+        fileName = fileName + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        response.setHeader("Content-disposition", "attachment; filename=" + new String(fileName.getBytes("gb2312"), "ISO-8859-1") + ".xls");
+        ServletOutputStream outStream = null;
+        try {
+            outStream = response.getOutputStream();
+            workbook.write(outStream);
+        } finally {
+            outStream.close();
+        }
+    }
 
 }
 
