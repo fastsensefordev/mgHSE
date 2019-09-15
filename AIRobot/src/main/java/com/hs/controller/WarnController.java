@@ -23,7 +23,6 @@ import com.hs.request.BatchAlarmsRequest;
 import com.hs.request.GetTotalChartRequest;
 import com.hs.request.GetWarnListRequest;
 import com.hs.response.ResultResponse;
-import com.hs.response.ResultUtil;
 import com.hs.service.AlarmService;
 import com.hs.service.WarnService;
 
@@ -162,8 +161,33 @@ public class WarnController {
 	 */
 	@RequestMapping("dealWithToday")
 	public ResultResponse dealWithToday(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
-		alarmService.parseData();
-		return ResultUtil.success();
+		return alarmService.parseData();
+	}
+	/**
+	 * @desc: 获取今天的定时任务是否有异常
+	 * @author: kpchen
+	 * @createTime: 2019年9月15日 下午7:09:15
+	 * @history:
+	 * @param httpServletRequest
+	 * @param httpServletResponse
+	 * @return ResultResponse
+	 */
+	@RequestMapping("getErrorLog")
+	public ResultResponse getErrorLog(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
+		return alarmService.getErrorLog();
+	}
+	/**
+	 * @desc: 删除报警日志
+	 * @author: kpchen
+	 * @createTime: 2019年9月15日 下午7:43:32
+	 * @history:
+	 * @param httpServletRequest
+	 * @param httpServletResponse
+	 * @return ResultResponse
+	 */
+	@RequestMapping("deleteErrorLog")
+	public ResultResponse deleteErrorLog(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
+		return alarmService.deleteErrorLog();
 	}
 	
 	/**

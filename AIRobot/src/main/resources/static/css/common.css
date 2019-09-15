@@ -114,3 +114,20 @@
     background: #ddd;
     color: #999;
 }
+
+.layui-btn-container {
+	float: left;
+	width: 390px;
+}
+#dealwithData {
+	display: none;
+}
+.warn-error {
+    float: left;
+    color: #FD7270;
+    width: calc(100% - 390px);
+}
+
+.layui-btn.error-btn {
+	background: #FD7270;
+}

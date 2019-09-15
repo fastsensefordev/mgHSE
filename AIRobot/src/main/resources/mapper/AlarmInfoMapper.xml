@@ -93,9 +93,34 @@
 		from tbl_alarm_type
 		where alarmNameEn = #{alarmNameEn} limit 1
 	</select>
-	
+	<!-- 保存报警类型 -->
 	<insert id="saveAlarmType" parameterType="com.hs.model.AlarmType" useGeneratedKeys="true" keyProperty="id">
 		insert into tbl_alarm_type(alarmNameEn,alarmName)
 		values (#{alarmNameEn},#{alarmName})   
 	</insert>
+	
+	<!-- 删除当天的报警日志 -->
+	<delete id="dealAlarmsByDate">
+		delete from tbl_alarm_info where DATE_FORMAT(alarmTime, "%Y-%m-%d") = #{date}
+	</delete>
+	
+	
+	<!-- 删除当天异常日志记录 -->
+	<delete id="deleteErrorLog">
+		delete from tbl_task_errorlog where DATE_FORMAT(updateTime, "%Y-%m-%d") = #{date}
+	</delete>
+	
+	<!-- 插入异常日志 -->
+	<insert id="saveErrorLog" parameterType="com.hs.model.TaskErrorLog">
+		INSERT INTO `tbl_task_errorlog` (`info`,`updateTime`) 
+		VALUES (#{info}, #{updateTime})
+	</insert>
+	
+	<!-- 获取今天的定时任务是否有异常 -->
+	<select id="getErrorLog" resultType="String">
+		select info
+		from tbl_task_errorlog
+		where DATE_FORMAT(updateTime, "%Y-%m-%d") = #{date} limit 1
+	</select>
+	
 </mapper>

@@ -39,7 +39,6 @@ layui.use(['layer', 'form','table'], function(){
 					return operateTemp;
 				}}
 				]],
-
 	};
 	
 	warnListTable.render(warnTableOptions);
@@ -65,6 +64,9 @@ layui.use(['layer', 'form','table'], function(){
 				break;
 			case 'exportElarm': 
 				exportAlarm();
+				break;
+			case 'dealwithData':
+				dealwithData();
 				break;
 		};
 	});
@@ -95,8 +97,53 @@ layui.use(['layer', 'form','table'], function(){
 				}); 
 			});
 		} 
-		
 	});
+	
+	initErrorLog();
+	/**
+	 * 初始化任务日志
+	 */
+	function initErrorLog() {
+		$.ajax({  
+			url:'warn/getErrorLog',  
+			type:'post',      
+			data: {}, 
+			async:false,
+			dataType:'json',  
+			success:function(data){  
+				if (data.code == 200 && data.data.data != null) {
+					$("#dealwithData").show();
+					$(".warn-error").html("<marquee direction=left><i class='layui-icon layui-icon-speaker'></i> 温馨提示您："+data.data.data+"</marquee>");
+				} else if (data.code == 200) {
+					$("#dealwithData").hide();
+				}
+			}  
+		}); 
+	}
+	
+	function dealwithData() {
+		var loadindex = layer.load(0, {shade: false});
+		$.ajax({  
+			url:'warn/dealWithToday',  
+			type:'post',      
+			data: {}, 
+			dataType:'json',  
+			success:function(data){  
+				if (data.code == 200) {
+					$("#dealwithData").hide();
+					$(".warn-error").html("");
+					layer.close(loadindex);	
+					warnListTable.render(warnTableOptions);
+				} else if (data.code == 500) {
+					layer.close(loadindex);	
+					initErrorLog();
+				}
+			},
+			error: function (XMLHttpRequest, textStatus, errorThrown) {
+			　	layer.close(loadindex);	
+			}
+		}); 
+	}
 	/**
 	 * 删除
 	 */
@@ -128,7 +175,6 @@ layui.use(['layer', 'form','table'], function(){
 	function exportAlarm() {
 		window.location.href = "warn/downloadAlarm";
 	}
-
 	 
 	showImage = function(){
         $('[data-magnify]').Magnify({
@@ -144,25 +190,7 @@ layui.use(['layer', 'form','table'], function(){
             keyboard:true,
             draggable:true,
             movable:true,
-            modalSize:[800,600],
-            beforeOpen:function (obj,data) {
-                console.log('beforeOpen')
-            },
-            opened:function (obj,data) {
-                console.log('opened')
-            },
-            beforeClose:function (obj,data) {
-                console.log('beforeClose')
-            },
-            closed:function (obj,data) {
-                console.log('closed')
-            },
-            beforeChange:function (obj,data) {
-                console.log('beforeChange')
-            },
-            changed:function (obj,data) {
-                console.log('changed')
-            }
+            modalSize:[800,600]
         });
     }
 	

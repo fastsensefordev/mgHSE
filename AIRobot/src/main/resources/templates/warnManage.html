@@ -23,7 +23,9 @@
   					<div class="layui-btn-container">
     					<button type="button" class="layui-btn" lay-event="deleteElarm"><i class="layui-icon">&#xe640;</i> 批量删除</button>
 						<button type="button" class="layui-btn" lay-event="exportElarm"><i class="layui-icon layui-icon-export"></i> 导出数据</button>
+						<button type="button" class="layui-btn error-btn" lay-event="dealwithData" id="dealwithData"><i class="layui-icon">&#xe652;</i> 数据重跑</button>
   					</div>
+					<div class="warn-error"></div>
 				</script>
 				<div class="content-container">
 					<table class="layui-hide" id="warnListTable" lay-filter="warnListTable"></table>

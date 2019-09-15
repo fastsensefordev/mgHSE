@@ -24,17 +24,17 @@ $(function(){
 		            	} else {
 		            		return "";
 		            	}
-		            }},
-		            {field: 'ip', title: '服务器地址',width:200,
+		            },width:220},
+		            {field: 'ip', title: '服务器地址',width:230,
 		            	templet:function(d) {
 		            	return "<a href='" + d.ip + "' target='_blank' class='link-item'>" + d.ip + "</a>";
 		            }},
-		            {field: 'area', title: '区域'},
+		            {field: 'area', title: '区域',width:200},
 		            {field: 'cameraId', title: '摄像头ID'},
 		            {field: 'location', title: '摄像头位置'},
 		            {field: 'createUser', title: '创建者'},
-		            {field: 'createTime', title: '创建时间'},
-		            {title: '操作',align:"right",width: 200,
+		            {field: 'createTime', title: '创建时间',width:160},
+		            {title: '操作',align:"right",width: 220,
 		             templet: function(d){
 		            	 let operateTemplate = "";
 		            	 //算法服务类型才允许添加摄像头
