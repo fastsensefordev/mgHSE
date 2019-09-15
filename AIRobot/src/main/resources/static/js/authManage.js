@@ -3,7 +3,7 @@ $(function(){
 	let loginUser = $("#loginUserInfo").text().trim();
 	let userTableOptions = {
 			toolbar: '#toolbarDemo',
-			defaultToolbar: ['filter', 'print','exports'],
+			defaultToolbar: ['filter'],
 			elem: '#userListTable',
 			url:'user/getUserList',
 			page: true,

@@ -28,11 +28,14 @@ import com.hs.response.ResultResponse;
 import com.hs.response.ResultUtil;
 import com.hs.service.WarnService;
 import com.hs.util.DateCalcUtils;
+import com.hs.util.InterfaceConfig;
 @Service
 public class WarnServiceImpl implements WarnService {
 	
 	@Autowired
 	private AlarmInfoMapper alarmInfoMapper;
+	@Autowired
+	private InterfaceConfig interfaceConfig;
 	/**
 	 * @desc 处理告警
 	 */
@@ -79,7 +82,11 @@ public class WarnServiceImpl implements WarnService {
 			PageHelper.startPage(request.getPage(), request.getLimit());
 			list = alarmInfoMapper.getWarnList(request);
 			PageInfo<TblAlarmInfo> page = new PageInfo<TblAlarmInfo>(list);
-			resultMap.put("data", page.getList());
+			List<TblAlarmInfo> alarmInfos = page.getList();
+			for (TblAlarmInfo tblAlarmInfo : alarmInfos) {
+				tblAlarmInfo.setTakePic1(tblAlarmInfo.getTakePic1().replace("D:\\File_Images\\", interfaceConfig.getImgServer()));
+			}
+			resultMap.put("data", alarmInfos);
 			resultMap.put("total", page.getTotal());
 			return ResultUtil.success(resultMap);
 		} catch (Exception e) {

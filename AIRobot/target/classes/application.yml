@@ -65,5 +65,5 @@ swagger:
 
 
 interface:
-   imgServer: http://172.14.33.204:8080/image/
+   imgServer: http://172.23.35.203:8080/image/
    serverName: /vaswebservice/?singlewsdl
