@@ -33,7 +33,9 @@ public class SessionFilter implements Filter {
         session.setMaxInactiveInterval(7200);//失效时间2小时
         
         String domainName = (String) session.getAttribute(Constants.DOMAIN_NAME);
-        if (uri.startsWith("/robot/static") || uri.startsWith("/static") || uri.contains("login") || uri.contains("retrievePassword") || uri.contains("dashboard")) {
+        if (uri.startsWith("/robot/static") || uri.startsWith("/static") || uri.contains("login") 
+        		|| uri.contains("retrievePassword") || uri.contains("dashboard")
+        		|| uri.contains("/warn") || uri.contains("getTemplateById")) {
         	filterChain.doFilter(request, response);
         	return;
         }

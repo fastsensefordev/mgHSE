@@ -21,15 +21,19 @@ $(function(){
 				}  
 			});  
 		}
+		
 		initAlarm();
 		initImgCenter();
 		initClock();
+		
+		setInterval(initAlarm,60*60*1000);//1小时执行一次
 		
 		$(window).resize(function(){
 			$("body").find("div.select-content").hide();
 		});
 		
 		function initAlarm() {
+			console.log("刷新一次")
 			layui.use('form',function () { 
 				var form = layui.form //获取form模块
 				$.ajax({  
