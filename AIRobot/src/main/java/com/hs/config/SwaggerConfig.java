@@ -26,7 +26,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("华视威讯-可视化看板系统")
+                .title("极视智能-可视化看板系统")
                 .description("powered by By-Health")
                 .termsOfServiceUrl("http://www.huaweishixun.com/")
                 //.contact(contact)

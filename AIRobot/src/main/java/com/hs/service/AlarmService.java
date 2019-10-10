@@ -154,6 +154,52 @@ public class AlarmService {
 			
 	}
 
+	public ResultResponse parseDataSomeday(String date) {
+		String[] days = date.split("-");
+		try {
+			String year = days[0];
+			String month = days[1];
+			String day = days[2];
+			alarmInfoMapper.dealAlarmsByDate(day);
+			List<String> serverList = addressMapper.getCalcAddressList();
+			for (String serveAddress : serverList) {
+				Long idStart = 0L;
+				//查询数据
+				String result = WebServiceUtil.getRecordList(serveAddress, year, month, day,
+						"ID > " + idStart + " order by ID ASC limit 10");
+				List<AlarmInfo> alarmResultList = new ArrayList<AlarmInfo>();
+				if (StringUtils.isNoneBlank(result)) {
+					alarmResultList = JSON.parseObject(result, new TypeReference<List<AlarmInfo>>() {
+					});
+					insert2Data(serveAddress, alarmResultList);//入库处理
+				}
+				//循环分页查询
+				while (CollectionUtils.isNotEmpty(alarmResultList)) {
+					idStart = alarmResultList.get(alarmResultList.size() - 1).getID();
+					result = WebServiceUtil.getRecordList(serveAddress, year, month, day,
+							"ID >" + idStart + " order by ID ASC limit 10");
+					if (StringUtils.isNoneBlank(result)) {
+						alarmResultList.clear();//清空数据
+						alarmResultList = JSON.parseObject(result, new TypeReference<List<AlarmInfo>>() {
+						});
+						insert2Data(serveAddress, alarmResultList);//入库处理
+					} else {
+						alarmResultList.clear();//清空数据
+					}
+				}
+			} 
+			alarmInfoMapper.deleteErrorLog(date);//删除当天异常日志记录
+			return ResultUtil.success();
+		} catch (Exception e) {
+			e.printStackTrace();
+			TaskErrorLog errorLog = new TaskErrorLog();
+			errorLog.setInfo(date + " 定时任务数据包抓取处理失败，请及时处理~");
+			errorLog.setUpdateTime(date);
+			alarmInfoMapper.saveErrorLog(errorLog);
+			return ResultUtil.error();
+		}
+	}
+
 }
 
 	

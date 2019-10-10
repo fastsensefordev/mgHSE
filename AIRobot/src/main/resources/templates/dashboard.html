@@ -13,7 +13,7 @@
 	<input id="dashboardType" type="hidden" th:value="${type}"/>
 	<div class="container">
 		<div class="screen-full">
-			<i class="icon-saveas" id="saveAsTemplate" th:classappend="${type eq 'edit'} ? '' : 'hide'"></i>
+			<i class="icon-saveas" id="saveAsTemplate" th:classappend="${type eq 'edit'} ? '' : 'hide'" title="保存"></i>
 			<i class="icon-fullscreen max-full" id="fullScreen" th:classappend="${type eq 'edit'} ? 'hide' : ''"></i>
 		</div>
 		<div class="con-left">

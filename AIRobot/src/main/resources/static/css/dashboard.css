@@ -573,9 +573,11 @@ span.icon-tubiao {
     color: #fff;
     height: 25px;
     border-radius: 0;
-    border: 1px solid rgba(221, 221, 221, 0.7490);
+    border: 1px solid rgba(221, 221, 221, 0);
 }
-
+.layui-form-select dl dd.layui-this {
+	background-color: #1890FF !important;	
+}
 ::-webkit-scrollbar-track-piece {
 	background-color: #f8f8f8;
 }

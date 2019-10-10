@@ -10,6 +10,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import com.hs.request.BatchAlarmsRequest;
 import com.hs.request.GetTotalChartRequest;
 import com.hs.request.GetWarnListRequest;
 import com.hs.response.ResultResponse;
+import com.hs.response.ResultUtil;
 import com.hs.service.AlarmService;
 import com.hs.service.WarnService;
 
@@ -163,6 +165,14 @@ public class WarnController {
 	public ResultResponse dealWithToday(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
 		return alarmService.parseData();
 	}
+	
+	@RequestMapping("dealWithSomeDay")
+	public ResultResponse dealWithToday(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,String day) {
+		if (StringUtils.isBlank(day)) {
+			return ResultUtil.error("day 参数为空");
+		}
+		return alarmService.parseDataSomeday(day);
+	}
 	/**
 	 * @desc: 获取今天的定时任务是否有异常
 	 * @author: kpchen
@@ -204,12 +214,12 @@ public class WarnController {
 	public void downloadAlarm(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
 			GetWarnListRequest request) throws Exception {
 		List<AlarmExcelModel> alarmExcelModels = warnService.getAllWarnList(request);
-		ExportParams params = new ExportParams("华视威讯报警详情","报警详情");
+		ExportParams params = new ExportParams("极视智能报警详情","报警详情");
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("date", new Date());//导出一般都要日期
 		data.put("list", alarmExcelModels);//导出list集合
 		Workbook book = ExcelExportUtil.exportExcel(params,AlarmExcelModel.class, alarmExcelModels);
-		export(httpServletResponse, book, "华视威讯报警详情");
+		export(httpServletResponse, book, "极视智能报警详情");
 	}
 	
 	 /**
