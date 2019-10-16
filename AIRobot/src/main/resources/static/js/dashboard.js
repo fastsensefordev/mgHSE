@@ -115,7 +115,11 @@ $(function(){
 					dataType:'json',  
 					success:function(data){  
 						if (data.code == 200 && data.data.template.imgUrl != null) {
-							$("#imgCenter").attr("src",data.data.template.imgUrl);
+							if (data.data.template.imgUrl.indexOf("/robot/static/img/center_img.png") > 0) {
+								$("#imgCenter").attr("src",data.data.template.imgUrl);
+							} else {
+								$("#imgCenter").attr("src", data.data.imgServer + data.data.template.imgUrl);
+							}
 						}
 					}  
 				});  
@@ -173,6 +177,7 @@ $(function(){
 		           success:function(data){
 					if (data.code == 200 && data.data.imgPath != null) {
 						$("#imgCenter").attr("src",data.data.imgPath);
+						$("#imgCenter").attr("imgurlpath",data.data.imgUrlPath);
 					}
 		       }
 		});
@@ -242,7 +247,7 @@ $(function(){
 							alarmId: JSON.stringify(alarmArray),
 							templateName: templateName,
 							href: "dashboard",
-							imgUrl: $("#imgCenter").attr("src")
+							imgUrl: $("#imgCenter").attr("imgurlpath")
 						},
 						childrens: templateChildrens
 					};
@@ -324,7 +329,7 @@ $(function(){
 							alarmId: JSON.stringify(alarmArray),
 							templateName: templateName,
 							href: "dashboard",
-							imgUrl: $("#imgCenter").attr("src")
+							imgUrl: $("#imgCenter").attr("imgurlpath")
 						},
 						childrens: templateChildrens
 					};

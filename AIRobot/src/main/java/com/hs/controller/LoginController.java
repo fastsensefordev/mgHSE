@@ -33,6 +33,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/")
 public class LoginController {
+	
 	@Autowired
 	private LoginService loginService;
 	/**

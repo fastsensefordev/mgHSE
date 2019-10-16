@@ -1,5 +1,7 @@
 package com.hs.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,17 +15,20 @@ import com.hs.service.LoginService;
 import com.hs.util.Constants;
 import com.hs.util.PasswordUtils;
 import com.hs.util.SessionUtils;
+
 @Service
 public class LoginServiceImpl implements LoginService {
+
+	private final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
 	@Autowired
 	private UserMapper userMapper;
-	
+
 	/**
 	 * 登录验证
 	 */
 	@Override
 	public ResultResponse login(LoginRequest request) {
-		
+
 		User user = new User();
 		user.setUserName(request.getUserName());
 		user.setPhone(request.getUserName());
@@ -33,15 +38,14 @@ public class LoginServiceImpl implements LoginService {
 			if (null != existUser && password.equals(existUser.getPassword())) {
 				SessionUtils.setAttribute(Constants.DOMAIN_NAME, existUser.getUserName());
 				SessionUtils.setAttribute(Constants.LOGIN_ROLE, existUser.getUserType());
-				return ResultUtil.error(ResultEnum.SUCCESS,"登录成功");
+				return ResultUtil.error(ResultEnum.SUCCESS, "登录成功");
 			} else {
-				return ResultUtil.error(ResultEnum.UNAUTHORIZED,"用户名或密码错误");
+				return ResultUtil.error(ResultEnum.UNAUTHORIZED, "用户名或密码错误");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			return ResultUtil.error(ResultEnum.UNAUTHORIZED,"服务器异常，请联系运维人员");
+			logger.error("LoginServiceImpl.login Error:", e);
+			return ResultUtil.error(ResultEnum.UNAUTHORIZED, "服务器异常，请联系运维人员");
 		}
 	}
 
 }
-

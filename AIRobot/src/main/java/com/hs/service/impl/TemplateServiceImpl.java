@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,9 @@ import com.hs.response.ResultUtil;
 import com.hs.service.TemplateService;
 import com.hs.service.UserService;
 import com.hs.util.Constants;
+import com.hs.util.InterfaceConfig;
 import com.hs.util.SessionUtils;
+
 /**
  * @desc: 模板管理service 实现类
  * @author: kpchen
@@ -27,10 +31,14 @@ import com.hs.util.SessionUtils;
  */
 @Service
 public class TemplateServiceImpl implements TemplateService {
+	
+	private final Logger logger = LoggerFactory.getLogger(TemplateServiceImpl.class);
 	@Autowired
 	private TemplateMapper templateMapper;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private InterfaceConfig interfaceConfig;
 	/**
 	 * @desc 保存模板
 	 */
@@ -54,11 +62,13 @@ public class TemplateServiceImpl implements TemplateService {
 			templateMapper.saveTemplateList(childrens);
 			return ResultUtil.success();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("LoginServiceImpl.saveTemplate Error:", e);
 			return ResultUtil.error("保存失败");
 		}
 	}
-	
+	/**
+	 * @desc 更新模板
+	 */
 	@Override
 	public ResultResponse updateTemplate(SaveTemplateRequest request) {
 		try {
@@ -67,7 +77,7 @@ public class TemplateServiceImpl implements TemplateService {
 			List<TemplateModel> childrens = request.getChildrens();
 			String alarmIdStr = template.getAlarmId();
 			@SuppressWarnings("unchecked")
-			Map<String, String> alarmMap = (Map<String, String>) JSON.parse(alarmIdStr);  
+			Map<String, String> alarmMap = (Map<String, String>) JSON.parse(alarmIdStr);
 			for (TemplateModel temp : childrens) {
 				Integer pid = template.getId();
 				if (temp.getHref().equals("safeChart")) {
@@ -79,14 +89,15 @@ public class TemplateServiceImpl implements TemplateService {
 				} else {
 					templateMapper.updateChildTemplate(pid, temp.getHref(), template.getAlarmId());
 				}
-				
+
 			}
 			return ResultUtil.success();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("LoginServiceImpl.updateTemplate Error:", e);
 			return ResultUtil.error("更新失败");
 		}
 	}
+
 	/**
 	 * @desc 查询模板
 	 */
@@ -102,10 +113,11 @@ public class TemplateServiceImpl implements TemplateService {
 			data.put("data", models);
 			return ResultUtil.success(data);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("LoginServiceImpl.getTemplateList Error:", e);
 			return ResultUtil.error("查询失败");
 		}
 	}
+
 	/**
 	 * @desc 删除模板
 	 */
@@ -115,23 +127,23 @@ public class TemplateServiceImpl implements TemplateService {
 			templateMapper.deleteTemplate(id);
 			return ResultUtil.success();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("LoginServiceImpl.deleteTemplate Error:", e);
 			return ResultUtil.error("删除失败");
 		}
 	}
+
 	@Override
 	public ResultResponse getTemplateById(Integer id) {
 		Map<String, Object> data = new LinkedHashMap<String, Object>();
 		try {
 			TemplateModel templateModel = templateMapper.getTemplateById(id);
 			data.put("template", templateModel);
+			data.put("imgServer", interfaceConfig.getImgServer());
 			return ResultUtil.success(data);
 		} catch (Exception e) {
-			e.printStackTrace();
-			return ResultUtil.error("未查询到数据",data);
+			logger.error("LoginServiceImpl.getTemplateById Error:", e);
+			return ResultUtil.error("未查询到数据", data);
 		}
 	}
 
 }
-
-	

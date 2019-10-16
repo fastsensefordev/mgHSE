@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,10 +42,12 @@ import com.hs.util.SessionUtils;
 @Service
 public class UserServiceImpl implements UserService {
 
+	private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	@Autowired
 	private UserMapper userMapper;
 	@Autowired
 	private InterfaceConfig interfaceConfig;
+
 	/**
 	 * 获取用户列表
 	 */
@@ -59,7 +63,7 @@ public class UserServiceImpl implements UserService {
 			resultMap.put("total", page.getTotal());
 			return ResultUtil.success(resultMap);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("UserServiceImpl.getUserList Error:", e);
 			resultMap.put("data", userList);
 			return ResultUtil.error("查询失败", resultMap);
 		}
@@ -81,7 +85,7 @@ public class UserServiceImpl implements UserService {
 			userMapper.addUser(request.getUser());
 			return ResultUtil.success();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("UserServiceImpl.addUser Error:", e);
 			return ResultUtil.error();
 		}
 	}
@@ -107,7 +111,7 @@ public class UserServiceImpl implements UserService {
 			userMapper.updateUser(user);
 			return ResultUtil.success();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("UserServiceImpl.updateUser Error:", e);
 			return ResultUtil.error("更新失败");
 		}
 	}
@@ -124,7 +128,7 @@ public class UserServiceImpl implements UserService {
 			userMapper.updateUser(user);
 			return ResultUtil.success();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("UserServiceImpl.deleteUser Error:", e);
 			return ResultUtil.error("删除失败");
 		}
 	}
@@ -156,7 +160,7 @@ public class UserServiceImpl implements UserService {
 			}
 			return ResultUtil.success();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("UserServiceImpl.retrievePassword Error:", e);
 			return ResultUtil.error("操作失败");
 		}
 	}
@@ -174,7 +178,7 @@ public class UserServiceImpl implements UserService {
 			User existUser = userMapper.getUserByNameOrPhone(user);
 			return existUser;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("UserServiceImpl.getLoginUser Error:", e);
 			return null;
 		}
 
@@ -186,12 +190,14 @@ public class UserServiceImpl implements UserService {
 			return ResultUtil.error("文件为空");
 		}
 		try {
-			String imgUrlByOs = saveUploadedFiles(file);
+			String imgUrlPath = saveUploadedFiles(file);
+			String imgUrlByOs = interfaceConfig.getImgServer() + imgUrlPath;
 			Map<String, Object> paramMap = new HashMap<>();
 			paramMap.put("imgPath", imgUrlByOs);
+			paramMap.put("imgUrlPath", imgUrlPath);
 			return ResultUtil.success(paramMap);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("UserServiceImpl.uploadImg Error:", e);
 		}
 		return null;
 	}
@@ -210,19 +216,20 @@ public class UserServiceImpl implements UserService {
 		file.transferTo(destFile);
 		userMapper.clearConfig();
 		userMapper.saveConfig(File.separator + uuidString.toString() + File.separator + originalFilename);
-		String resultImgPath = interfaceConfig.getImgServer() + uuidString.toString() + File.separator + originalFilename;
+		String resultImgPath =  uuidString.toString() + File.separator
+				+ originalFilename;
 		return resultImgPath;
 	}
-	
-	public static String getFileNameNoEx(String filename) { 
-        if ((filename != null) && (filename.length() > 0)) { 
-            int dot = filename.lastIndexOf('.'); 
-            if ((dot >-1) && (dot < (filename.length()))) { 
-                return filename.substring(0, dot); 
-            } 
-        } 
-        return filename; 
-    }
+
+	public static String getFileNameNoEx(String filename) {
+		if ((filename != null) && (filename.length() > 0)) {
+			int dot = filename.lastIndexOf('.');
+			if ((dot > -1) && (dot < (filename.length()))) {
+				return filename.substring(0, dot);
+			}
+		}
+		return filename;
+	}
 
 	@Override
 	public ResultResponse getImgCenter() {
@@ -232,10 +239,10 @@ public class UserServiceImpl implements UserService {
 			resultMap.put("imgPath", interfaceConfig.getImgServer() + imgPath);
 			return ResultUtil.success(resultMap);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("UserServiceImpl.getImgCenter Error:", e);
 			return ResultUtil.error("查询失败");
 		}
-			
+
 	}
 
 }

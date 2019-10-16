@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +22,17 @@ import com.hs.service.AddressService;
 import com.hs.service.UserService;
 import com.hs.util.Constants;
 import com.hs.util.SessionUtils;
+
 @Service
 public class AddressServiceImpl implements AddressService {
 	
+	private final Logger logger = LoggerFactory.getLogger(AddressServiceImpl.class);
 	@Autowired
 	private AddressMapper addressMapper;
 	@Autowired
 	private UserService userService;
+
+
 	/**
 	 * 获取地址管理
 	 */
@@ -38,11 +44,12 @@ public class AddressServiceImpl implements AddressService {
 			data.put("data", models);
 			return ResultUtil.success(data);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("AddressServiceImpl.getAddressList Error:", e);
 			return ResultUtil.error("查询失败");
 		}
-			
+
 	}
+
 	/**
 	 * @desc 保存服务器地址
 	 */
@@ -62,11 +69,11 @@ public class AddressServiceImpl implements AddressService {
 			addressMapper.saveAddress(addressModel);
 			return ResultUtil.success();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("AddressServiceImpl.saveAddress Error:", e);
 			return ResultUtil.error("保存失败");
 		}
-			
 	}
+
 	/**
 	 * @desc 保存摄像
 	 */
@@ -87,11 +94,11 @@ public class AddressServiceImpl implements AddressService {
 			addressMapper.saveAddress(addressModel);
 			return ResultUtil.success();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("AddressServiceImpl.saveCamera Error:", e);
 			return ResultUtil.error("保存失败");
 		}
 	}
-	
+
 	/**
 	 * @desc 保存区域
 	 */
@@ -111,11 +118,11 @@ public class AddressServiceImpl implements AddressService {
 			addressMapper.saveAddress(addressModel);
 			return ResultUtil.success();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("AddressServiceImpl.saveArea Error:", e);
 			return ResultUtil.error("保存失败");
 		}
 	}
-	
+
 	/**
 	 * @desc 删除地址或摄像头
 	 */
@@ -125,10 +132,11 @@ public class AddressServiceImpl implements AddressService {
 			addressMapper.deleteAddress(id);
 			return ResultUtil.success();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("AddressServiceImpl.deleteAddress Error:", e);
 			return ResultUtil.error("删除失败");
 		}
 	}
+
 	/**
 	 * @desc 更新服务器地址
 	 */
@@ -138,12 +146,9 @@ public class AddressServiceImpl implements AddressService {
 			addressMapper.updateAddress(request);
 			return ResultUtil.success();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("AddressServiceImpl.updateAddress Error:", e);
 			return ResultUtil.error("更新失败");
 		}
 	}
 
-
 }
-
-	
