@@ -124,12 +124,12 @@ public class PasswordUtils {
 		return null;         
 	}
 
-	public static void main(String[] args) {
-		String content = "admin";
-		System.out.println("加密后的密文是:"+PasswordUtils.AESEncode(content));
-		System.out.println("请输入要解密的内容（密文）:");
-		content = PasswordUtils.AESEncode(content);
-		System.out.println("解密后的明文是:"+PasswordUtils.AESDncode(content));
-	}
+	/*
+	 * public static void main(String[] args) { String content = "admin";
+	 * System.out.println("加密后的密文是:"+PasswordUtils.AESEncode(content));
+	 * System.out.println("请输入要解密的内容（密文）:"); content =
+	 * PasswordUtils.AESEncode(content);
+	 * System.out.println("解密后的明文是:"+PasswordUtils.AESDncode(content)); }
+	 */
 
 }

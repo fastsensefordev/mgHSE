@@ -13,7 +13,6 @@ public class DateCalcUtils {
 		for (int i = intervals; i >= 0; i--) {
 			pastDaysList.add(getPastDate(i));
 		}
-		System.out.println(pastDaysList);
 		return pastDaysList;
 	}
 	

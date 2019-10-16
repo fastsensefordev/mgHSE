@@ -46,9 +46,10 @@ public class WebServiceUtil {
 		return result;
 	}
 	
-	public static void main(String[] args) throws RemoteException, ServiceException {
-		String serveAddress = "http://172.23.35.203:8733";
-		String result = WebServiceUtil.getRecordList(serveAddress, "2019", "9", "7", "ID> 0 order by ID ASC limit 10");
-		System.out.println(result);
-	}
+	/*
+	 * public static void main(String[] args) throws RemoteException,
+	 * ServiceException { String serveAddress = "http://172.23.35.203:8733"; String
+	 * result = WebServiceUtil.getRecordList(serveAddress, "2019", "9", "7",
+	 * "ID> 0 order by ID ASC limit 10"); System.out.println(result); }
+	 */
 }
