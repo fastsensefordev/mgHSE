@@ -10,8 +10,13 @@ import com.hs.service.AlarmService;
 public class AlarmTimmer {
 	@Autowired
 	private AlarmService alarmService;
-	
-    //@Scheduled(cron="0 0/1 * * * ?")
+	/**
+	 * @desc: 每天晚上21:55执行一次
+	 * @author: kpchen
+	 * @createTime: 2019年10月16日 下午9:55:13
+	 * @history: void
+	 */
+    //@Scheduled(cron= "0 55 21 * * ?")
 	public void execute() {
     	alarmService.parseData();
 	}

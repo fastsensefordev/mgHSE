@@ -123,6 +123,7 @@
         </encoder>
     </appender>
 
+	<logger name="com.hs.mapper" level="DEBUG" />
     <!-- root级别 DEBUG -->
     <root>
         <!-- 打印debug级别日志及以上级别日志 -->
