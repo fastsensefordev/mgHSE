@@ -163,10 +163,9 @@
 	totalChartConfig.initComplexChart = function(){
 		initComplexChart();
 	}
-//	$(window).resize(function(){
-//		initComplexChart01();
-//		initComplexChart02();
-//	});
+	$(window).resize(function(){
+		initComplexChart();
+	});
 	
 	window.totalChartConfig = totalChartConfig;
 	

@@ -146,8 +146,10 @@
 	illegalChartConfig.initIllegalChart = function(){
 		return initIllegalChart();
 	}
-//	$(window).resize(function(){
-//		initIllegalChart();
-//	});
+	
+	$(window).resize(function(){
+		initIllegalChart();
+	});
+	
 	window.illegalChartConfig = illegalChartConfig;
 }());

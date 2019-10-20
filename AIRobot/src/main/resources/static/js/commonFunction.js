@@ -11,6 +11,10 @@
 			chartConfig.axisLabelFontSize = 28;
 			chartConfig.barWidth = "50px";
 			chartConfig.bgBarWidth = "40px";
+		} else {
+			chartConfig.axisLabelFontSize = 14;
+			chartConfig.barWidth = "26px";
+			chartConfig.bgBarWidth = "20px";
 		}
 		return chartConfig;
 	}

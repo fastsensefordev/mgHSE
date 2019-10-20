@@ -161,9 +161,9 @@
 		return initSafeChart();
 	}
 	
-/*	$(window).resize(function() {
+	$(window).resize(function() {
 		initSafeChart();
-	});*/
+	});
 	
 	window.safeChartConfig = safeChartConfig;
 }());

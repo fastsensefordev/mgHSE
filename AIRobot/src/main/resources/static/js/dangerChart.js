@@ -145,9 +145,9 @@
 		return initDangerChart();
 	}
 
-//	$(window).resize(function(){
-//		initDangerChart();
-//	});
+	$(window).resize(function(){
+		initDangerChart();
+	});
 	
 	window.dangerChartConfig = dangerChartConfig;
 }());
