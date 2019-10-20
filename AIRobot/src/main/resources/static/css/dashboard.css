@@ -715,4 +715,10 @@ span.icon-tubiao {
 	.chart-04 {
 		margin: 40px 0;
 	}
+	.chart-title-text {
+		font-size: 30px;
+	}
+	.chart-title-subtext {
+		font-size: 26px;
+	}
 }
