@@ -597,7 +597,7 @@ span.icon-tubiao {
 	background-color: #bbb;
 }
 
-@media(min-width:3840px) {
+@media(min-width:3800px) {
 	.time-content {
 		height: 15%;
 	}

@@ -7,7 +7,7 @@
 	};
 	function getChartConfig() {
 		let windowWidth = $(window).width();
-		if (windowWidth >= 3840) {
+		if (windowWidth >= 3800) {
 			chartConfig.axisLabelFontSize = 28;
 			chartConfig.barWidth = "50px";
 			chartConfig.bgBarWidth = "40px";

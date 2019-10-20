@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
 			User user = new User();
 			user.setId(userId);
 			user.setStatus(Constants.USER_STATUS_DELETE);
-			userMapper.updateUser(user);
+			userMapper.deleteUser(user);
 			return ResultUtil.success();
 		} catch (Exception e) {
 			logger.error("UserServiceImpl.deleteUser Error:", e);

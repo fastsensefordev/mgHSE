@@ -1,6 +1,13 @@
 $(function(){
 	illegalChartConfig.initIllegalChart();
 	
+	setInterval(initAlarm,60*60*1000);//1小时执行一次
+	
+	function initAlarm() {
+		let now = new Date();
+		console.log("initIllegalChart 刷新一次" + now);
+		illegalChartConfig.initIllegalChart();
+	}
 	$("#fullScreen").on("click",function(){
 		if ($(this).hasClass("max-full")) {
 			fullScreen($(".dashboard .content-body-detail")[0]);

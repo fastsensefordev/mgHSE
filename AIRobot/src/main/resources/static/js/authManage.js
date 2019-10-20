@@ -236,6 +236,9 @@ $(function(){
 							layer.msg("添加成功"); 
 							layer.close(addUserIndex);
 							layui.table.reload("userListTable",userTableOptions);
+						} else {
+							layer.msg("添加失败"); 
+							return false;
 						}
 					}  
 				});  

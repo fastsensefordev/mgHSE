@@ -78,6 +78,10 @@
         </set>
         where id = #{id}
 	</update>
+	
+	<delete id="deleteUser">
+		delete from tbl_user  where id = #{id} 
+	</delete>
 	<!-- 查询超级密码公钥 -->
 	<select id="getAdminKey" resultType="String">
 		select adminKey from tbl_admin_key limit 1

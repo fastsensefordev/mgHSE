@@ -84,6 +84,7 @@ public interface UserMapper {
 	public String getImgCenter();
 	public Integer clearConfig();
 	public int saveConfig(@Param("config") String config);
+	public int deleteUser(User user);
 	
 
 }

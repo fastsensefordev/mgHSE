@@ -39,9 +39,16 @@ layui.use(['layer', 'form','table'], function(){
 					return operateTemp;
 				}}
 				]],
+				done: function(res, curr, count){
+					console.log("监听where:", this.where);
+					if (JSON.stringify(this.where) != "{}") {
+						tableFilterIns.reload();
+					}
+				}
 	};
 	
 	warnListTable.render(warnTableOptions);
+	
 	//3、定义一个tableFilter 挂载到 table 上
 	var tableFilterIns = tableFilter.render({
 	    'elem' : '#warnListTable',//table的选择器
@@ -50,11 +57,9 @@ layui.use(['layer', 'form','table'], function(){
 	    	field: "alarmName",
 	    	type: "checkbox",
 	    	url: "warn/getAlarmNameList"
-	    }],//过滤项配置
-	    'done': function(filters){
-	    	warnListTable.render(warnTableOptions);
-	    }
-	})	
+	    }]
+	})
+	
 	//头工具栏事件
 	warnListTable.on('toolbar(warnListTable)', function(obj){
 		let checkStatus = warnListTable.checkStatus(obj.config.id);

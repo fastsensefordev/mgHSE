@@ -62,6 +62,7 @@ layui.define(['table', 'jquery', 'form'], function (exports) {
 				var th = elem.next().find('.layui-table-header th[data-field="'+filterField+'"]');
 				var icon = filterType == 'input' ? 'layui-icon-search' : 'layui-icon-down';
 				var filterIcon = $('<span class="layui-table-filter layui-inline"><i class="layui-icon '+icon+'"></i></span>');
+				th.find('.layui-table-cell').remove();
 				th.find('.layui-table-cell').append(filterIcon)
 				
 				//图标默认高亮

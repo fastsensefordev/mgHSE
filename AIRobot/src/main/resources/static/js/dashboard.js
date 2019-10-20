@@ -33,7 +33,8 @@ $(function(){
 		});
 		
 		function initAlarm() {
-			console.log("刷新一次")
+			let now = new Date();
+			console.log("刷新一次" + now);
 			layui.use('form',function () { 
 				var form = layui.form //获取form模块
 				$.ajax({  

@@ -1,6 +1,14 @@
 $(function(){
 	dangerChartConfig.initDangerChart();
 	
+	setInterval(initAlarm,60*60*1000);//1小时执行一次
+	
+	function initAlarm() {
+		let now = new Date();
+		console.log("initDangerChart 刷新一次" + now);
+		dangerChartConfig.initDangerChart();
+	}
+	
 	$("#fullScreen").on("click",function(){
 		if ($(this).hasClass("max-full")) {
 			fullScreen($(".dashboard .content-body-detail")[0]);

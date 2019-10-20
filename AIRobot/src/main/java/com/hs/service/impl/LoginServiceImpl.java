@@ -1,5 +1,7 @@
 package com.hs.service.impl;
 
+import java.time.LocalDateTime;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,12 @@ public class LoginServiceImpl implements LoginService {
 			if (null != existUser && password.equals(existUser.getPassword())) {
 				SessionUtils.setAttribute(Constants.DOMAIN_NAME, existUser.getUserName());
 				SessionUtils.setAttribute(Constants.LOGIN_ROLE, existUser.getUserType());
+				
+				User updateUser = new User();
+				updateUser.setId(existUser.getId());
+				LocalDateTime lastLoginTime = LocalDateTime.now();
+				updateUser.setLastLoginTime(lastLoginTime.toString());
+				userMapper.updateUser(updateUser);
 				return ResultUtil.error(ResultEnum.SUCCESS, "登录成功");
 			} else {
 				return ResultUtil.error(ResultEnum.UNAUTHORIZED, "用户名或密码错误");
