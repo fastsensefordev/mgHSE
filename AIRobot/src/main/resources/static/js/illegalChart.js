@@ -5,6 +5,8 @@
 	function initIllegalChart() {
 		let sid = commonFuntion.getUrlParam("sid");
 		let alarmId = $("#illegalChartBody").find("select.alarm-select").val();
+		let name = $("#illegalChartBody option:selected").text();
+		$("#illegalChartTopical").html(name);
 		if (sid != null && sid != undefined) {
 			$.ajax({  
 				url:'template/getTemplateById',  

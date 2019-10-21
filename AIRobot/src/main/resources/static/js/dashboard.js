@@ -51,6 +51,13 @@ $(function(){
 							let optionHtml = "";
 							for (var i = 0; i < data.data.list.length; i++) {
 								optionHtml += "<option value='" + data.data.list[i].alarmId + "'>" + data.data.list[i].alarmName + "</option>";
+								//会选
+								if (alarmIdObj != null) {
+									let aName = alarmName;
+									if (alarmIdObj.safeAlarmId == data.data.list[i].alarmId) {
+										aName = data.data.list[i].alarmName;
+									}
+								}
 							}
 							$(".alarm-select").html(optionHtml);
 							
@@ -58,6 +65,7 @@ $(function(){
 								$("#safeChartBody").find("select.alarm-select").val(alarmIdObj.safeAlarmId);
 								$("#illegalChartBody").find("select.alarm-select").val(alarmIdObj.illegalAlarmId);
 								$("#dangerChartBody").find("select.alarm-select").val(alarmIdObj.dangerAlarmId);
+								console.log($("#dangerChartBody").find("select.alarm-select").text());
 							}
 							form.render('select');
 							form.on('select(alarm)', function(data){

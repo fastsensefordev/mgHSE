@@ -3,6 +3,8 @@
 	function initDangerChart() {
 		let sid = commonFuntion.getUrlParam("sid");
 		let alarmId = $("#dangerChartBody").find("select.alarm-select").val();
+		let name = $("#dangerChartBody option:selected").text();
+		$("#dangerChartTopical").html(name);
 		if (sid != null && sid != undefined) {
 			$.ajax({  
 				url:'template/getTemplateById',  

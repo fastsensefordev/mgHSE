@@ -6,6 +6,8 @@
 	function initSafeChart() {
 		let sid = commonFuntion.getUrlParam("sid");
 		let alarmId = $("#safeChartBody").find("select.alarm-select").val();
+		let name = $("#safeChartBody option:selected").text();
+		$("#safeChartTopical").html(name);
 		if (sid != null && sid != undefined) {
 			$.ajax({  
 				url:'template/getTemplateById',  
