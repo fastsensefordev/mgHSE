@@ -11,6 +11,17 @@
       	</foreach>
 	</insert>
 	
+	<!-- 保存定时任务最后更新日期 -->
+	<insert id="saveTaskDate">
+		INSERT INTO `tbl_task_date`(`date`) values (#{date})
+	</insert>
+	<!-- 获取最后的更新日期 -->
+	<select id="getLastTaskDate" resultType="String">
+		select date from tbl_task_date order by date desc limit 1
+	</select>
+	<delete id="deleteTaskDate">
+		delete from tbl_task_date where date = #{date}
+	</delete>
 	<!-- 更新 -->
 	<update id="dealAlarmById">
         update tbl_alarm_info
@@ -36,6 +47,7 @@
       			(#{item})
       		</foreach>
 		</if>
+		order by alarmTime desc
 	</select>
 	
 	<select id="getAllWarnList" resultType="com.hs.model.AlarmExcelModel">

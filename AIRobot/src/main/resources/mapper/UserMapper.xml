@@ -61,11 +61,10 @@
 	</insert>
 	
 	<!-- 用户登录日志 -->
-	<insert id="tbl_login_log" parameterType="com.hs.model.LoginUserLog" useGeneratedKeys="true" keyProperty="id">
-		insert into tbl_user(uId,loginTime,ip)
-		values (#{uId}, now(), ip)   
+	<insert id="saveLoginLog" parameterType="com.hs.model.LoginUserLog" useGeneratedKeys="true" keyProperty="id">
+		insert into tbl_login_log(uId,loginTime,ip)
+		values (#{uId}, now(), #{ip})   
 	</insert>
-	
 	<!-- 更新用户 -->
 	<update id="updateUser" parameterType="com.hs.model.User">
         update tbl_user

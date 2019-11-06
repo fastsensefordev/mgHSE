@@ -56,7 +56,7 @@ public class LoginController {
 		if (StringUtils.isEmpty(request.getPassword())) {
 			return ResultUtil.error(ResultEnum.VALUE_EMPTY, "密码不能为空");
 		}
-		ResultResponse resopnse = loginService.login(request);
+		ResultResponse resopnse = loginService.login(request,httpServletRequest);
 		return resopnse;
 		
 	}

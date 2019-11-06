@@ -163,7 +163,8 @@ public class WarnController {
 	 */
 	@RequestMapping("dealWithToday")
 	public ResultResponse dealWithToday(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
-		return alarmService.parseData();
+		alarmService.parseData();
+		return ResultUtil.success();
 	}
 	
 	@RequestMapping("dealWithSomeDay")

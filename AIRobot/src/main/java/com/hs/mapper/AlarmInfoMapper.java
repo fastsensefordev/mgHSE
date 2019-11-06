@@ -82,6 +82,19 @@ public interface AlarmInfoMapper {
 	 * @return int
 	 */
 	public int deleteErrorLog(@Param("date") String date);
+	/**
+	 * @desc: 保存本次定时任务的日期时间
+	 * @author: kpchen
+	 * @createTime: 2019年11月6日 下午8:36:36
+	 * @history:
+	 * @param date
+	 * @return int
+	 */
+	public int saveTaskDate(@Param("date") String date);
+
+	public String getLastTaskDate();
+
+	public int deleteTaskDate(@Param("date") String date);
 	
 }
 
