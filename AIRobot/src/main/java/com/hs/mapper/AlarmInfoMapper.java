@@ -96,6 +96,10 @@ public interface AlarmInfoMapper {
 
 	public int deleteTaskDate(@Param("date") String date);
 	
+	public int saveLastTaskId(@Param("serveAddress") String serveAddress, @Param("lastId") Long lastId, @Param("dateStr") String dateStr);
+	
+	public Long getTaskLastId(@Param("serveAddress") String serveAddress,  @Param("dateStr") String dateStr);
+	
 }
 
 	

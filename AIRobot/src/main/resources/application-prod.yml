@@ -45,4 +45,5 @@ spring:
 
 interface:
    imgServer: http://172.28.186.94:8080/image/
+   calcImgServer: http://172.28.186.94:8080/image/
    serverName: /vaswebservice/?singlewsdl

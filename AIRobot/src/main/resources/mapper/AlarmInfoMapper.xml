@@ -116,10 +116,9 @@
 		delete from tbl_alarm_info where DATE_FORMAT(alarmTime, "%Y-%m-%d") = #{date}
 	</delete>
 	
-	
 	<!-- 删除当天异常日志记录 -->
 	<delete id="deleteErrorLog">
-		delete from tbl_task_errorlog where DATE_FORMAT(updateTime, "%Y-%m-%d") = #{date}
+		delete from tbl_task_errorlog
 	</delete>
 	
 	<!-- 插入异常日志 -->
@@ -127,12 +126,23 @@
 		INSERT INTO `tbl_task_errorlog` (`info`,`updateTime`) 
 		VALUES (#{info}, #{updateTime})
 	</insert>
-	
+
 	<!-- 获取今天的定时任务是否有异常 -->
 	<select id="getErrorLog" resultType="String">
 		select info
-		from tbl_task_errorlog
-		where DATE_FORMAT(updateTime, "%Y-%m-%d") = #{date} limit 1
+		from tbl_task_errorlog order by id desc limit 1
+<!-- 		where DATE_FORMAT(updateTime, "%Y-%m-%d") = #{date} limit 1 -->
+	</select>
+	
+	<insert id="saveLastTaskId" useGeneratedKeys="true" keyProperty="lastId" keyColumn="id">
+		INSERT INTO tbl_last_taskid (serveAddress,lastId,dateStr) 
+		values (#{serveAddress}, #{lastId},#{dateStr})
+		ON DUPLICATE KEY UPDATE
+		lastId = #{lastId}
+	</insert>
+	
+	<select id="getTaskLastId" resultType="Long">
+		select lastId from tbl_last_taskid where serveAddress = #{serveAddress} and dateStr = #{dateStr} limit 1
 	</select>
 	
 </mapper>

@@ -8,6 +8,8 @@ import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,7 @@ import com.hs.util.WebServiceUtil;
 
 @Service
 public class AlarmService {
+	private final Logger logger = LoggerFactory.getLogger(AlarmService.class);
 	@Autowired
 	private AlarmInfoMapper alarmInfoMapper;
 	@Autowired
@@ -40,9 +43,8 @@ public class AlarmService {
 			date = localDate.toString();
 		}
 		List<String> dateList = DateCalcUtils.getDateList(date, localDate.toString());
-
-		for (String dateStr : dateList) {
-			try {
+		try {
+			for (String dateStr : dateList) {
 				if (lastDate != null && lastDate != dateStr) {
 					alarmInfoMapper.saveTaskDate(dateStr);//保存本次跑的日期
 				}
@@ -78,16 +80,16 @@ public class AlarmService {
 						}
 					}
 				} 
-				alarmInfoMapper.deleteErrorLog(dateStr);//删除当天异常日志记录
 				alarmInfoMapper.deleteTaskDate(dateStr);
-			} catch (Exception e) {
-				e.printStackTrace();
-				TaskErrorLog errorLog = new TaskErrorLog();
-				errorLog.setInfo(localDate.toString() + " 定时任务数据包抓取处理失败，请及时处理~");
-				errorLog.setUpdateTime(localDate.toString());
-				alarmInfoMapper.saveErrorLog(errorLog);
-				break;
 			}
+			alarmInfoMapper.deleteErrorLog(nowDate.toString());//删除当天异常日志记录
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("parseData:", e);
+			TaskErrorLog errorLog = new TaskErrorLog();
+			errorLog.setInfo(nowDate.toString() + " 定时任务数据包抓取处理失败，请及时处理~");
+			errorLog.setUpdateTime(nowDate.toString());
+			alarmInfoMapper.saveErrorLog(errorLog);
 		}
 	}
 
@@ -142,7 +144,7 @@ public class AlarmService {
 			resultMap.put("data", infos);
 			return ResultUtil.success(resultMap);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("getErrorLog:", e);
 			return ResultUtil.error("查询失败", resultMap);
 		}
 	}
@@ -162,7 +164,7 @@ public class AlarmService {
 			alarmInfoMapper.deleteErrorLog(localDate.toString());
 			return ResultUtil.success(resultMap);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("deleteErrorLog:", e);
 			return ResultUtil.error("删除定时任务日志失败", resultMap);
 		}
 
@@ -212,6 +214,53 @@ public class AlarmService {
 			alarmInfoMapper.saveErrorLog(errorLog);
 			return ResultUtil.error();
 		}
+	}
+
+	public void realTimeTask() {
+		LocalDate nowDate = LocalDate.now();
+		LocalDate localDate = nowDate.minusDays(1);//前一天数据
+		String dateStr = localDate.toString();
+		String dateArrs[] = dateStr.split("-");
+		String year = dateArrs[0];
+		String month = dateArrs[1];
+		String day = dateArrs[2];
+		List<String> serverList = addressMapper.getCalcAddressList();
+		for (String serveAddress : serverList) {
+			Long idStart = 0L;
+			try {
+				Long lastId = alarmInfoMapper.getTaskLastId(serveAddress, dateStr);
+				if (lastId != null) { //取上一次ID
+					idStart = lastId;
+				}
+				//查询数据
+				String result = WebServiceUtil.getRecordList(serveAddress, year, month, day,
+						"ID > " + idStart + " order by ID ASC limit 10");
+				List<AlarmInfo> alarmResultList = new ArrayList<AlarmInfo>();
+				if (StringUtils.isNoneBlank(result)) {
+					alarmResultList = JSON.parseObject(result, new TypeReference<List<AlarmInfo>>() {
+					});
+					insert2Data(serveAddress, alarmResultList);//入库处理
+				}
+				//循环分页查询
+				while (CollectionUtils.isNotEmpty(alarmResultList)) {
+					idStart = alarmResultList.get(alarmResultList.size() - 1).getID();
+					alarmInfoMapper.saveLastTaskId(serveAddress, idStart, dateStr);//保存本次的任务id
+					result = WebServiceUtil.getRecordList(serveAddress, year, month, day,
+							"ID >" + idStart + " order by ID ASC limit 10");
+					if (StringUtils.isNoneBlank(result)) {
+						alarmResultList.clear();//清空数据
+						alarmResultList = JSON.parseObject(result, new TypeReference<List<AlarmInfo>>() {
+						});
+						insert2Data(serveAddress, alarmResultList);//入库处理
+					} else {
+						alarmResultList.clear();//清空数据
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				alarmInfoMapper.saveLastTaskId(serveAddress,idStart,dateStr);
+			}
+		} 
 	}
 
 }

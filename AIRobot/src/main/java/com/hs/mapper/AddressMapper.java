@@ -47,6 +47,7 @@ public interface AddressMapper {
 	 * @return List<AddressModel>
 	 */
 	public List<String> getCalcAddressList();
+
 }
 
 	

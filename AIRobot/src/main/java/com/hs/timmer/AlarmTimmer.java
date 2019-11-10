@@ -16,9 +16,14 @@ public class AlarmTimmer {
 	 * @createTime: 2019年10月16日 下午9:55:13
 	 * @history: void
 	 */
-    @Scheduled(cron= "0 05 00 * * ?")
+    //@Scheduled(cron= "0 10 00 * * ?")
 	public void execute() {
     	alarmService.parseData();
+	}
+    
+    //@Scheduled(cron= "0/20 * * * * ? ")
+	public void realTimeTask() {
+    	alarmService.realTimeTask();
 	}
 }
 

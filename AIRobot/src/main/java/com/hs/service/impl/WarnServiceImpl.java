@@ -84,7 +84,7 @@ public class WarnServiceImpl implements WarnService {
 			PageInfo<TblAlarmInfo> page = new PageInfo<TblAlarmInfo>(list);
 			List<TblAlarmInfo> alarmInfos = page.getList();
 			for (TblAlarmInfo tblAlarmInfo : alarmInfos) {
-				tblAlarmInfo.setTakePic1(tblAlarmInfo.getTakePic1().replace("D:\\File_Images\\", interfaceConfig.getImgServer()));
+				tblAlarmInfo.setTakePic1(tblAlarmInfo.getTakePic1().replace("D:\\File_Images\\", interfaceConfig.getCalcImgServer()));
 			}
 			resultMap.put("data", alarmInfos);
 			resultMap.put("total", page.getTotal());
