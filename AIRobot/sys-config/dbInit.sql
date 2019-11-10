@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2019-10-16 22:11:34
+Date: 2019-11-10 11:48:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,7 +34,7 @@ CREATE TABLE `tbl_address` (
   `status` int(2) DEFAULT '0' COMMENT '状态（0未删除,1删除）',
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tbl_admin_key
@@ -59,7 +59,7 @@ CREATE TABLE `tbl_alarm_info` (
   `isDelete` int(1) DEFAULT '0' COMMENT '是否处理',
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23557 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=73429 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tbl_alarm_type
@@ -71,7 +71,7 @@ CREATE TABLE `tbl_alarm_type` (
   `alarmName` varchar(1024) DEFAULT NULL,
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tbl_config
@@ -82,7 +82,21 @@ CREATE TABLE `tbl_config` (
   `config` varchar(512) DEFAULT NULL,
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for tbl_last_taskid
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_last_taskid`;
+CREATE TABLE `tbl_last_taskid` (
+  `id` bigint(12) NOT NULL AUTO_INCREMENT,
+  `lastId` bigint(10) NOT NULL,
+  `dateStr` varchar(50) DEFAULT NULL,
+  `serveAddress` varchar(1024) DEFAULT NULL,
+  `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `dateStr` (`dateStr`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tbl_login_log
@@ -95,7 +109,18 @@ CREATE TABLE `tbl_login_log` (
   `ip` varchar(255) DEFAULT NULL COMMENT '访问ip地址',
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for tbl_task_date
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_task_date`;
+CREATE TABLE `tbl_task_date` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` varchar(255) DEFAULT NULL,
+  `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='定时任务的时间';
 
 -- ----------------------------
 -- Table structure for tbl_task_errorlog
@@ -107,7 +132,7 @@ CREATE TABLE `tbl_task_errorlog` (
   `updateTime` datetime DEFAULT NULL,
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tbl_template
@@ -126,7 +151,7 @@ CREATE TABLE `tbl_template` (
   `status` int(2) DEFAULT '0' COMMENT '状态（0未删除,1删除）',
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=193 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=213 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tbl_user
@@ -145,4 +170,4 @@ CREATE TABLE `tbl_user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `userName` (`userName`) USING BTREE,
   UNIQUE KEY `phone` (`phone`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
