@@ -21,7 +21,7 @@ public class AlarmTimmer {
     	alarmService.parseData();
 	}
     
-    //@Scheduled(cron= "0/20 * * * * ? ")
+    @Scheduled(cron= "0/20 * * * * ? ")
 	public void realTimeTask() {
     	alarmService.realTimeTask();
 	}
