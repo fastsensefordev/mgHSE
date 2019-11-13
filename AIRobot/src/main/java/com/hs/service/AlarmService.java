@@ -169,7 +169,7 @@ public class AlarmService {
 		}
 
 	}
-
+	
 	public ResultResponse parseDataSomeday(String date) {
 		String[] days = date.split("-");
 		try {
@@ -244,7 +244,6 @@ public class AlarmService {
 				//循环分页查询
 				while (CollectionUtils.isNotEmpty(alarmResultList)) {
 					idStart = alarmResultList.get(alarmResultList.size() - 1).getID();
-					alarmInfoMapper.saveLastTaskId(serveAddress, idStart, dateStr);//保存本次的任务id
 					result = WebServiceUtil.getRecordList(serveAddress, year, month, day,
 							"ID >" + idStart + " order by ID ASC limit 10");
 					if (StringUtils.isNoneBlank(result)) {
@@ -255,6 +254,7 @@ public class AlarmService {
 					} else {
 						alarmResultList.clear();//清空数据
 					}
+					alarmInfoMapper.saveLastTaskId(serveAddress, idStart, dateStr);//保存本次的任务id
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

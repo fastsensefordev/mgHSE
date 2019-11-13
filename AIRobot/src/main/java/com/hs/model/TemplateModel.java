@@ -10,14 +10,41 @@ package com.hs.model;
 public class TemplateModel {
 
 	private Integer id;
+	/**
+	 * 模板名称
+	 */
 	private String templateName;
+	/**
+	 * 模板链接
+	 */
 	private String href;
+	/**
+	 * 框架中心图片地址
+	 */
 	private String imgUrl;
+	/**
+	 * 报警的算法id
+	 */
 	private String alarmId;
+	/**
+	 * 创建时间
+	 */
 	private String createTime;
+	/**
+	 * 关联tbl_user表主键id
+	 */
 	private Integer userId;
+	/**
+	 * 创建人
+	 */
 	private String createUser;
+	/**
+	 * 父节点id
+	 */
 	private Integer pid;
+	/**
+	 * 状态（0未删除,1删除）
+	 */
 	private Integer status;
 
 	public Integer getId() {

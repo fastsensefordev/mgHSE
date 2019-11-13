@@ -3,7 +3,13 @@ package com.hs.model;
 public class TaskErrorLog {
 	
 	private Integer id;
+	/**
+	 * 错误信息
+	 */
 	private String info;
+	/**
+	 * 更新时间
+	 */
 	private String updateTime;
 	
 	public Integer getId() {

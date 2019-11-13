@@ -10,18 +10,57 @@ package com.hs.model;
 public class AddressModel {
 
 	private Integer id;
+	/**
+	 * 类型（0 :通用算法服务器 、1 :人脸识别算法服务器 、2 :其他）
+	 */
 	private Integer ipType;
+	/**
+	 * 类型字符串展现
+	 */
 	private String ipTypeStr;
+	/**
+	 * IP地址
+	 */
 	private String ip;
+	/**
+	 * 用户ID
+	 */
 	private Integer userId;
+	/**
+	 * 创建者
+	 */
 	private String createUser;
+	/**
+	 * 创建时间
+	 */
 	private String createTime;
+	/**
+	 * 父Id
+	 */
 	private Integer pid;
+	/**
+	 * 状态（0未删除,1删除）
+	 */
 	private Integer status;
+	/**
+	 * 摄像头id
+	 */
 	private String cameraId;
+	/**
+	 * 摄像头位置
+	 */
 	private String location;
+	/**
+	 * 层级级别 1 2 3
+	 */
 	private Integer level;
+	/**
+	 * 类别：服务器、区域、摄像头
+	 */
 	private String levelStr;
+	/**
+	 * 区域
+	 */
 	private String area;
 
 	public Integer getId() {

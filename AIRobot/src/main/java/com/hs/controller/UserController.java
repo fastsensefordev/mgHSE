@@ -173,12 +173,12 @@ public class UserController {
 		
 	}
 	
-	@ApiOperation(value="getImgCenter")
-	@RequestMapping("getImgCenter")
-	public ResultResponse getImgCenter() {
-		ResultResponse resopnse = userService.getImgCenter();
-		return resopnse;
-		
-	}
+//	@ApiOperation(value="getImgCenter")
+//	@RequestMapping("getImgCenter")
+//	public ResultResponse getImgCenter() {
+//		ResultResponse resopnse = userService.getImgCenter();
+//		return resopnse;
+//		
+//	}
 }
 

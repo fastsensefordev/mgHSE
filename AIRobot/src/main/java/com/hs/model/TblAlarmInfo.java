@@ -3,12 +3,33 @@ package com.hs.model;
 public class TblAlarmInfo {
 	
 	private Long id;
-	private Long sourceId;//原始id
+	/**
+	 * 原始id
+	 */
+	private Long sourceId;
+	/**
+	 * 报警类型id
+	 */
 	private Integer alarmId;
+	/**
+	 * 报警类型
+	 */
 	private String alarmName;
+	/**
+	 * 报警图片
+	 */
 	private String takePic1;
+	/**
+	 * 报警时间
+	 */
 	private String alarmTime;
+	/**
+	 * 服务地址
+	 */
 	private String server;
+	/**
+	 * 是否处理
+	 */
 	private Integer isDelete;
 	public Long getId() {
 		return id;

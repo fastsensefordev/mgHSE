@@ -9,7 +9,10 @@ package com.hs.model;
  */
 public class User {
 
-	private Integer id;// 主键
+	private Integer id;
+	/**
+	 * 电话号码
+	 */
 	private String phone;
 	private String userName;// 用户名
 	private String password;// 密码
@@ -18,6 +21,7 @@ public class User {
 	private String createTime;// 创建时间
 	private String lastLoginTime;// 最后更新时间
 	private Integer status;//是否删除（0 未删除 1已删除）
+	
 	public Integer getId() {
 		return id;
 	}
