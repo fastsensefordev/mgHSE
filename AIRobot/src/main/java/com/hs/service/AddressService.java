@@ -1,5 +1,6 @@
 package com.hs.service;
 
+import com.hs.model.AudioModel;
 import com.hs.request.SaveAddressRequest;
 import com.hs.request.SaveAreaRequest;
 import com.hs.request.SaveCameraRequest;
@@ -60,6 +61,25 @@ public interface AddressService {
 	 * @return ResultResponse
 	 */
 	public ResultResponse updateAddress(UpdateAddressRequest request);
+	
+	/**
+	 * @desc: 获取地址管理
+	 * @author: dt
+	 * @createTime: 2019年11月12日 下午6:10:21
+	 * @history:
+	 * @return ResultResponse
+	 */
+	public ResultResponse getAudioList();
+	
+	/**
+	 * @desc: 编辑报警声音
+	 * @author: dt
+	 * @param model 
+	 * @createTime: 2019年11月13日 下午3:13:22
+	 * @history:
+	 * @return ResultResponse
+	 */
+	public ResultResponse updateMusic(AudioModel audio);
 
 }
 

@@ -39,9 +39,24 @@
 						</dd>
 					</dl>
 				</li>
-				<li class="layui-nav-item">
+				
+				<li class="layui-nav-item layui-nav-itemed">
+					<a class="nai-item icon-address" href="javascript:;">配置管理</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a href="addressManage" th:classappend="${currMenu eq 'addressManage'} ? 'active' : ''">服务器管理</a>
+						</dd>
+						<dd>
+							<a href="audioManage" th:classappend="${currMenu eq 'audioManage'} ? 'active' : ''">音箱管理</a>
+						</dd>
+					</dl>
+				</li>
+				
+			<!-- 	<li class="layui-nav-item">
 					<a class="nai-item icon-address" href="addressManage" th:classappend="${currMenu eq 'addressManage'} ? 'active' : ''">服务器管理</a>
 				</li>
+				 -->
+				
 				<li class="layui-nav-item">
 					<a class="nai-item icon-warn" href="warnManage" th:classappend="${currMenu eq 'warnManage'} ? 'active' : ''">报警管理</a>
 				</li>

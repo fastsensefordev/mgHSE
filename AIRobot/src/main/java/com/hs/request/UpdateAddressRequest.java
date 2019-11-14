@@ -7,6 +7,8 @@ public class UpdateAddressRequest {
 	private String cameraId;
 	private String location;
 	private Integer id;
+	private String audioId;//音响ID
+	private String audioLocation;//音响位置
 
 	public String getIp() {
 		return ip;
@@ -48,4 +50,20 @@ public class UpdateAddressRequest {
 		this.id = id;
 	}
 
+	public String getAudioId() {
+		return audioId;
+	}
+
+	public void setAudioId(String audioId) {
+		this.audioId = audioId;
+	}
+
+	public String getAudioLocation() {
+		return audioLocation;
+	}
+
+	public void setAudioLocation(String audioLocation) {
+		this.audioLocation = audioLocation;
+	}
+	
 }

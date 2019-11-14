@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hs.model.AudioModel;
 import com.hs.request.GetUserListRequest;
 import com.hs.request.SaveAddressRequest;
 import com.hs.request.SaveAreaRequest;
@@ -119,12 +120,47 @@ public class AddressController {
 		return resopnse;
 	}
 	
-	
 	@ApiOperation(value="更新服务器地址", notes="更新服务器地址")
 	@RequestMapping("updateAddress")
 	public ResultResponse updateAddress(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
 			@RequestBody UpdateAddressRequest request) {
 		ResultResponse resopnse = addressService.updateAddress(request);
+		return resopnse;
+	}
+	
+	/**
+	 * @desc: 获取报警声音
+	 * @author: dt
+	 * @createTime: 2019年11月12日 下午3:02:12
+	 * @history:
+	 * @param httpServletRequest
+	 * @param httpServletResponse
+	 * @param model
+	 * @return ResultResponse
+	 */
+	@ApiOperation(value="获取报警声音", notes="获取报警声音")
+	@GetMapping("getAudioList")
+	public ResultResponse getAudioList(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
+			AudioModel model) {
+		ResultResponse resopnse = addressService.getAudioList();
+		return resopnse;
+	}
+	
+	/**
+	 * @desc: 编辑报警声音
+	 * @author: dt
+	 * @createTime: 2019年11月12日 下午3:02:12
+	 * @history:
+	 * @param httpServletRequest
+	 * @param httpServletResponse
+	 * @param model
+	 * @return ResultResponse
+	 */
+	@ApiOperation(value="编辑报警声音", notes="编辑报警声音")
+	@RequestMapping("updateMusic")
+	public ResultResponse updateMusic(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
+			@RequestBody AudioModel audio) {
+		ResultResponse resopnse = addressService.updateMusic(audio);
 		return resopnse;
 	}
 }

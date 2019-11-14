@@ -4,10 +4,10 @@
 
 	<!-- 批量新增提醒 -->
 	<insert id="batchSaveAlarmInfo" parameterType="java.util.List">
-		INSERT INTO `tbl_alarm_info` (`alarmId`,`sourceId`, `alarmName`, `server`,`takePic1`,`alarmTime`) 
+		INSERT INTO `tbl_alarm_info` (`alarmId`,`sourceId`, `alarmName`, `server`,`takePic1`,`alarmTime`,ivsHostId) 
 		VALUES 
 		<foreach collection="list" item="item" separator=",">
-      		(#{item.alarmId},#{item.sourceId},#{item.alarmName},#{item.server},#{item.takePic1},#{item.alarmTime})
+      		(#{item.alarmId},#{item.sourceId},#{item.alarmName},#{item.server},#{item.takePic1},#{item.alarmTime},#{item.ivsHostId})
       	</foreach>
 	</insert>
 	
@@ -38,7 +38,7 @@
 	</delete>
 	
 	<select id="getWarnList" resultType="com.hs.model.TblAlarmInfo">
-		select id,alarmId,alarmName,server,alarmTime,isDelete,takePic1
+		select id,alarmId,alarmName,server,alarmTime,isDelete,takePic1,ivsHostId
 		from tbl_alarm_info
 		where isDelete = 0
 		<if test="alarmList != null and alarmList.size() >0 ">
@@ -51,7 +51,7 @@
 	</select>
 	
 	<select id="getAllWarnList" resultType="com.hs.model.AlarmExcelModel">
-		select alarmName,server,alarmTime,takePic1
+		select alarmName,server,alarmTime,takePic1,ivsHostId
 		from tbl_alarm_info
 		where isDelete = 0
 		<if test="alarmList != null and alarmList.size() >0 ">

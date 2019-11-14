@@ -1,39 +1,89 @@
 package com.hs.service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.example.opssdk.jni.CLibrary;
+import com.example.opssdk.jni.OpsApi;
 import com.hs.mapper.AddressMapper;
 import com.hs.mapper.AlarmInfoMapper;
 import com.hs.model.AlarmInfo;
 import com.hs.model.AlarmType;
+import com.hs.model.AudioModel;
 import com.hs.model.TaskErrorLog;
 import com.hs.model.TblAlarmInfo;
 import com.hs.response.ResultResponse;
 import com.hs.response.ResultUtil;
 import com.hs.util.DateCalcUtils;
+import com.hs.util.SpringUtil;
 import com.hs.util.WebServiceUtil;
 
 @Service
+@DependsOn("springUtil")
 public class AlarmService {
 	private final Logger logger = LoggerFactory.getLogger(AlarmService.class);
+	public static Map<String,AudioModel> ipVoiceMap;
+	public static Map<String,AudioModel> alarmMusicMap;
 	@Autowired
 	private AlarmInfoMapper alarmInfoMapper;
 	@Autowired
 	private AddressMapper addressMapper;
+	@Autowired
+	private static AddressMapper addressIpMapper;
 
+    static {
+    	addressIpMapper=SpringUtil.getBean(AddressMapper.class);
+    	ipVoiceMap();
+    	alarmMusicMap();
+    	initVoice();
+    }
+    /**
+     * 初始化音箱配置信息
+     */
+	public static void ipVoiceMap(){
+		if(MapUtils.isEmpty(ipVoiceMap)){
+			ipVoiceMap=addressIpMapper.getIpVoiceMap();
+		}
+	}
+	/**
+	 * 初始化报警音乐配置信息
+	 */
+	public static void alarmMusicMap(){
+		if(MapUtils.isEmpty(alarmMusicMap)){
+			alarmMusicMap=addressIpMapper.getAlarmMusicMap();
+		}
+	}
+
+	/**
+	 * 初始化音箱
+	 */
+	public static void initVoice(){
+		if (!CLibrary.INSTANCE._SDK_Install_InitDll())
+         {
+             throw new RuntimeException("初始化sdk失败");
+         }
+         if (!CLibrary.INSTANCE._SDK_Install_InitNetworkManager(12680,0))
+         {
+             throw new RuntimeException("初始化网络失败");
+         }
+	}
 	public void parseData() {
 		LocalDate nowDate = LocalDate.now();
 		LocalDate localDate = nowDate.minusDays(1);//前一天数据
@@ -123,6 +173,7 @@ public class AlarmService {
 			alarmInfo.setAlarmTime(model.getAlarmTime());
 			alarmInfo.setTakePic1(model.getTakePic1());
 			alarmInfo.setServer(server);
+			alarmInfo.setIvsHostId(model.getIvsHostId());
 			alarmList.add(alarmInfo);
 		}
 		alarmInfoMapper.batchSaveAlarmInfo(alarmList);
@@ -218,7 +269,7 @@ public class AlarmService {
 
 	public void realTimeTask() {
 		LocalDate nowDate = LocalDate.now();
-		LocalDate localDate = nowDate.minusDays(1);//前一天数据
+		LocalDate localDate = nowDate.minusDays(0);//前一天数据
 		String dateStr = localDate.toString();
 		String dateArrs[] = dateStr.split("-");
 		String year = dateArrs[0];
@@ -240,6 +291,7 @@ public class AlarmService {
 					alarmResultList = JSON.parseObject(result, new TypeReference<List<AlarmInfo>>() {
 					});
 					insert2Data(serveAddress, alarmResultList);//入库处理
+					broadcastVoice(serveAddress,alarmResultList);
 				}
 				//循环分页查询
 				while (CollectionUtils.isNotEmpty(alarmResultList)) {
@@ -251,7 +303,9 @@ public class AlarmService {
 						alarmResultList.clear();//清空数据
 						alarmResultList = JSON.parseObject(result, new TypeReference<List<AlarmInfo>>() {
 						});
+						//todo
 						insert2Data(serveAddress, alarmResultList);//入库处理
+						broadcastVoice(serveAddress,alarmResultList);
 					} else {
 						alarmResultList.clear();//清空数据
 					}
@@ -261,6 +315,32 @@ public class AlarmService {
 				alarmInfoMapper.saveLastTaskId(serveAddress,idStart,dateStr);
 			}
 		} 
+	}
+
+	private void broadcastVoice(String serveAddress, List<AlarmInfo> alarmResultList) throws Exception {
+		String key=null;
+		String audioId=null;
+		AudioModel model=null;
+		String musicPath=null;
+		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		long timeNow= new Date().getTime(); 
+		long timeAlarm=0L;
+		logger.info("【本次获取报警数目】"+alarmResultList.size());
+		for(AlarmInfo info:alarmResultList){
+			key=serveAddress+"+"+info.getIvsHostId();
+			model=ipVoiceMap.get(key);
+			audioId=model.getAudioId();
+			musicPath=(null!=alarmMusicMap.get(info.getIvsEventType()))?alarmMusicMap.get(info.getIvsEventType()).getMusicPath():null;
+			timeAlarm=inputFormat.parse(info.getAlarmTime()).getTime();
+			System.out.println(timeAlarm-timeNow);
+			if(null!=musicPath&&null!=audioId&&timeNow-timeAlarm<12000){
+				OpsApi.init(audioId,musicPath);
+				CLibrary.INSTANCE._SDK_Install_StartTask(OpsApi.dwID);
+				logger.info("【任务播放成功】");
+				Thread.sleep(5000);
+			}
+		}
+		
 	}
 
 }

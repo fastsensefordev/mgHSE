@@ -25,6 +25,11 @@ public class AlarmInfo {
 	 */
 	private String IvsEventType;
 	
+	/**
+	 * 通道号
+	 */
+	private String IvsHostId;
+	
 	public Long getID() {
 		return ID;
 	}
@@ -63,6 +68,12 @@ public class AlarmInfo {
 	public void setIvsEventType(String ivsEventType) {
 		IvsEventType = ivsEventType;
 	}
+	public String getIvsHostId() {
+		return IvsHostId;
+	}
+	public void setIvsHostId(String ivsHostId) {
+		IvsHostId = ivsHostId;
+	}
 	
-
+	
 }

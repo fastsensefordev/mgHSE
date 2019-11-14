@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.hs.mapper.AddressMapper;
 import com.hs.model.AddressModel;
+import com.hs.model.AudioModel;
 import com.hs.model.User;
 import com.hs.request.SaveAddressRequest;
 import com.hs.request.SaveAreaRequest;
@@ -19,6 +20,7 @@ import com.hs.request.UpdateAddressRequest;
 import com.hs.response.ResultResponse;
 import com.hs.response.ResultUtil;
 import com.hs.service.AddressService;
+import com.hs.service.AlarmService;
 import com.hs.service.UserService;
 import com.hs.util.Constants;
 import com.hs.util.SessionUtils;
@@ -67,6 +69,7 @@ public class AddressServiceImpl implements AddressService {
 			addressModel.setStatus(Constants.ADDRESS_STATUS_DEFAULT);
 			addressModel.setPid(Constants.INT_0);
 			addressMapper.saveAddress(addressModel);
+			AlarmService.ipVoiceMap = addressMapper.getIpVoiceMap();//变更成功后更新音箱配置文件
 			return ResultUtil.success();
 		} catch (Exception e) {
 			logger.error("AddressServiceImpl.saveAddress Error:", e);
@@ -87,11 +90,14 @@ public class AddressServiceImpl implements AddressService {
 			addressModel.setUserId(existUser.getId());
 			addressModel.setCameraId(request.getCameraId());
 			addressModel.setLocation(request.getLocation());
+			addressModel.setAudioId(request.getAudioId());
+			addressModel.setAudioLocation(request.getAudioLocation());
 			addressModel.setLevel(Constants.INT_3);
 			addressModel.setPid(request.getPid());
 			addressModel.setStatus(Constants.TEMPLATE_STATUS_DEFAULT);
 			addressModel.setIpType(Constants.INT_0);
 			addressMapper.saveAddress(addressModel);
+			AlarmService.ipVoiceMap = addressMapper.getIpVoiceMap();//变更成功后更新音箱配置文件
 			return ResultUtil.success();
 		} catch (Exception e) {
 			logger.error("AddressServiceImpl.saveCamera Error:", e);
@@ -130,6 +136,7 @@ public class AddressServiceImpl implements AddressService {
 	public ResultResponse deleteAddress(Integer id) {
 		try {
 			addressMapper.deleteAddress(id);
+			AlarmService.ipVoiceMap = addressMapper.getIpVoiceMap();//变更成功后更新音箱配置文件
 			return ResultUtil.success();
 		} catch (Exception e) {
 			logger.error("AddressServiceImpl.deleteAddress Error:", e);
@@ -144,6 +151,7 @@ public class AddressServiceImpl implements AddressService {
 	public ResultResponse updateAddress(UpdateAddressRequest request) {
 		try {
 			addressMapper.updateAddress(request);
+			AlarmService.ipVoiceMap = addressMapper.getIpVoiceMap();//变更成功后更新音箱配置文件
 			return ResultUtil.success();
 		} catch (Exception e) {
 			logger.error("AddressServiceImpl.updateAddress Error:", e);
@@ -151,4 +159,37 @@ public class AddressServiceImpl implements AddressService {
 		}
 	}
 
+	/**
+	 * @desc 获取报警声音列表
+	 */
+	@Override
+	public ResultResponse getAudioList() {
+		try {
+			List<AudioModel> models = addressMapper.getAudioList();
+			Map<String, Object> data = new LinkedHashMap<String, Object>();
+			data.put("data", models);
+			return ResultUtil.success(data);
+		} catch (Exception e) {
+			logger.error("AddressServiceImpl.getAudioList Error:", e);
+			return ResultUtil.error("查询失败");
+		}
+	}
+	
+	/**
+	 * @desc 编辑报警声音
+	 */
+	@Override
+	public ResultResponse updateMusic(AudioModel audio) {
+		try {
+			addressMapper.updateMusic(audio);
+			AlarmService.alarmMusicMap=addressMapper.getAlarmMusicMap();//更新后重新获取路径
+			return ResultUtil.success();
+		} catch (Exception e) {
+			logger.error("AddressServiceImpl.updateAddress Error:", e);
+			return ResultUtil.error("更新失败");
+		}
+	}
+
+	
+	
 }

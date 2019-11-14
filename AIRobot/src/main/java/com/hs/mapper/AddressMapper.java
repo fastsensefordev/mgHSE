@@ -1,10 +1,13 @@
 package com.hs.mapper;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 
 import com.hs.model.AddressModel;
+import com.hs.model.AudioModel;
 import com.hs.request.UpdateAddressRequest;
 
 public interface AddressMapper {
@@ -47,6 +50,37 @@ public interface AddressMapper {
 	 * @return List<AddressModel>
 	 */
 	public List<String> getCalcAddressList();
+
+	/**
+	 * 获取报警声音列表
+	 * @desc: AIRobot
+	 * @author: dt
+	 * @createTime: 2019年11月12日 下午6:10:50
+	 * @history:
+	 * @return List<AudioModel>
+	 */
+	public List<AudioModel> getAudioList();
+
+	/**
+	 * 更新报警声音
+	 * @param model
+	 */
+	public void updateMusic(AudioModel model);
+	
+	
+	/**
+	 * 获取报警声音配置信息
+	 * @return
+	 */
+	@MapKey("serverAndHost")
+	public Map<String, AudioModel> getIpVoiceMap();
+
+	/**
+	 * 获取报警声音文件路径
+	 * @return
+	 */
+	@MapKey("alarmEn")
+	public Map<String, AudioModel> getAlarmMusicMap();
 
 }
 

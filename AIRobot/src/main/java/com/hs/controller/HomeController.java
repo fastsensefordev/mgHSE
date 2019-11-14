@@ -73,6 +73,21 @@ public class HomeController {
 		modelAndView.addObject("currMenu", "addressManage");
 		return modelAndView;
 	}
+	
+	/**
+	 * @desc: 音箱管理
+	 * @author: dt
+	 * @createTime: 2019年11月12日 下午3:05:09
+	 * @history:
+	 * @return ModelAndView
+	 */
+	@RequestMapping({ "/audioManage" })
+	public ModelAndView audioManage() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("audioManage");
+		modelAndView.addObject("currMenu", "audioManage");
+		return modelAndView;
+	}
 
 	/**
 	 * @desc: 报警管理

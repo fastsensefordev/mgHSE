@@ -4,8 +4,8 @@
 
 	<!-- 新增服务器地址 -->
 	<insert id="saveAddress" parameterType="com.hs.model.AddressModel" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO `tbl_address` (`ipType`, `ip`,`level`,`area`, `cameraId`,`location`, `userId`, `createUser`,`createTime`,`pid`, `status`) 
-		VALUES (#{ipType}, #{ip}, #{level}, #{area},#{cameraId}, #{location}, #{userId}, #{createUser},now(),#{pid}, #{status})
+		INSERT INTO `tbl_address` (`ipType`, `ip`,`level`,`area`, `cameraId`,`location`, `userId`, `createUser`,`createTime`,`pid`, `status`,audioId,audioLocation) 
+		VALUES (#{ipType}, #{ip}, #{level}, #{area},#{cameraId}, #{location}, #{userId}, #{createUser},now(),#{pid}, #{status},#{audioId}, #{audioLocation})
 	</insert>
 	<!-- 获取算法服务器地址 -->
 	<select id="getCalcAddressList" resultType="String">
@@ -29,6 +29,8 @@
 				else area end as area,
 			case when cameraId is null then "-" else cameraId end as cameraId,
 			case when location is null then "-" else location end as location,
+			case when audioId is null then "-" else audioId end as audioId,
+			case when audioLocation is null then "-" else audioLocation end as audioLocation,
 			`userId`, 
 			`createUser`,
 			DATE_FORMAT(`createTime`,"%Y-%m-%d %H:%i:%s") as createTime,
@@ -50,9 +52,37 @@
             <if test="ip != null">ip = #{ip},</if>
             <if test="area != null">area = #{area},</if>
             <if test="cameraId != null">cameraId = #{cameraId},</if>
-            <if test="location != null">location = #{location}</if>
+            <if test="location != null">location = #{location},</if>
+            <if test="audioId != null">audioId = #{audioId},</if>
+            <if test="audioLocation != null">audioLocation = #{audioLocation}</if>
         </set>
         where id = #{id}
 	</update>
 	
+	<!-- 获取报警声音列表 -->
+	<select id="getAudioList" resultType="com.hs.model.AudioModel">
+		SELECT DISTINCT audio.id,audio.musicName,audio.musicPath,alarm.`alarmNameEn` AS alarmEn,alarm.`alarmName` AS alarmName FROM 
+		`tbl_alarm_type` alarm LEFT JOIN `tbl_audio` audio ON audio.`alarmEn`=alarm.`alarmNameEn`
+	</select>
+	<!-- 更新报警声音 -->
+	<insert id="updateMusic" useGeneratedKeys="true" keyProperty="alarmEn" keyColumn="id">
+		INSERT INTO `tbl_audio` (musicName,musicPath,alarmEn,alarmName) 
+		values (#{musicName}, #{musicPath},#{alarmEn},#{alarmName})
+		ON DUPLICATE KEY UPDATE
+		musicName =#{musicName} ,musicPath=#{musicPath} ,alarmName=#{alarmName}
+	</insert>
+	
+	<!-- 获取报警配置文件 -->
+	<select id="getIpVoiceMap" resultType="com.hs.model.AudioModel">
+		SELECT lev3.`audioId`,CONCAT(lev1.`ip`,"+",lev3.`cameraId`) AS serverAndHost
+		FROM `tbl_address` lev3 RIGHT JOIN `tbl_address` lev2 ON lev3.`pid`=lev2.`id`  
+		RIGHT JOIN `tbl_address` lev1 ON lev2.`pid`=lev1.`id`
+		WHERE lev3.`level`=3 AND lev3.`audioId` IS NOT NULL
+	</select>
+	
+	<!-- 获取报警声音文件路径 -->
+	<select id="getAlarmMusicMap" resultType="com.hs.model.AudioModel">
+		SELECT dio.`alarmEn`,dio.`musicPath`
+		FROM `tbl_audio` dio
+	</select>
 </mapper>

@@ -10,6 +10,10 @@ public class TblAlarmInfo {
 	private String alarmTime;
 	private String server;
 	private Integer isDelete;
+	/**
+	 * 通道号
+	 */
+	private String ivsHostId;
 	public Long getId() {
 		return id;
 	}
@@ -58,6 +62,13 @@ public class TblAlarmInfo {
 	public void setIsDelete(Integer isDelete) {
 		this.isDelete = isDelete;
 	}
+	public String getIvsHostId() {
+		return ivsHostId;
+	}
+	public void setIvsHostId(String ivsHostId) {
+		this.ivsHostId = ivsHostId;
+	}
+	
 	
 	
 }

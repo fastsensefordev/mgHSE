@@ -27,6 +27,8 @@ CREATE TABLE `tbl_address` (
   `area` varchar(255) DEFAULT NULL COMMENT '区域',
   `cameraId` varchar(512) DEFAULT NULL COMMENT '摄像头id',
   `location` varchar(512) DEFAULT NULL COMMENT '摄像头位置',
+  `audioId` VARCHAR(512) DEFAULT NULL COMMENT '音响id',
+  `audioLocation` VARCHAR(512) DEFAULT NULL COMMENT '音响位置',
   `userId` int(12) DEFAULT NULL COMMENT '用户id',
   `createUser` varchar(255) DEFAULT NULL,
   `createTime` datetime DEFAULT NULL,
@@ -56,6 +58,7 @@ CREATE TABLE `tbl_alarm_info` (
   `server` varchar(512) DEFAULT NULL,
   `takePic1` longtext COMMENT '图片1-报警对象图片',
   `alarmTime` datetime DEFAULT NULL COMMENT '报警时间',
+  `ivsHostId` varchar(12) DEFAULT NULL COMMENT '通道号',
   `isDelete` int(1) DEFAULT '0' COMMENT '是否处理',
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -171,3 +174,19 @@ CREATE TABLE `tbl_user` (
   UNIQUE KEY `userName` (`userName`) USING BTREE,
   UNIQUE KEY `phone` (`phone`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for tbl_audio
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_audio`;
+CREATE TABLE `tbl_audio` (
+  `id` INT(12) NOT NULL AUTO_INCREMENT,
+  `musicName` VARCHAR(255) DEFAULT NULL COMMENT '音乐描述',
+  `musicPath` VARCHAR(1024) DEFAULT NULL COMMENT '音乐路径',
+  `alarmEn` VARCHAR(255) DEFAULT NULL COMMENT '报警英文名',
+  `alarmName` VARCHAR(255) DEFAULT NULL COMMENT '报警中文名',
+  `timestamp` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  COMMENT '时间戳',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `alarmEn` (`alarmEn`) USING BTREE
+) ENGINE=INNODB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;

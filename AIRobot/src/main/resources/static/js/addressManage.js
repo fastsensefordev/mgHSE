@@ -32,8 +32,10 @@ $(function(){
 		            {field: 'area', title: '区域',width:200},
 		            {field: 'cameraId', title: '摄像头ID'},
 		            {field: 'location', title: '摄像头位置'},
-		            {field: 'createUser', title: '创建者'},
-		            {field: 'createTime', title: '创建时间',width:160},
+		            {field: 'audioId', title: '音响ID'},
+		            {field: 'audioLocation', title: '音响位置'},
+//		            {field: 'createUser', title: '创建者'},
+//		            {field: 'createTime', title: '创建时间',width:160},
 		            {title: '操作',align:"right",width: 220,
 		             templet: function(d){
 		            	 let operateTemplate = "";
@@ -124,7 +126,7 @@ $(function(){
 						id: "addUserModal",
 						title:"新增摄像头",
 						type: 1,
-						area: ["440px","320px"],
+						area: ["580px","420px"],
 						resize: false,
 						move: false,
 						btn: ['确定', '取消'],
@@ -132,6 +134,8 @@ $(function(){
 						btn1: function(){
 							let cameraId =  $("#addCameraTemplate input[name='cameraId']").val();
 							let location = $("#addCameraTemplate input[name='location']").val();
+							let audioId =  $("#addCameraTemplate input[name='audioId']").val();
+							let audioLocation = $("#addCameraTemplate input[name='audioLocation']").val();
 							if (cameraId == undefined || cameraId == "" || cameraId.trim() == "") {
 								layer.msg('摄像头ID不能为空');
 								return false;
@@ -143,7 +147,9 @@ $(function(){
 							let formParam = {
 								pid: mid,
 								cameraId: cameraId,
-								location : location
+								location : location,
+								audioId: audioId,
+								audioLocation: audioLocation
 							};
 							$.ajax({  
 								url:'address/saveCamera',  
@@ -264,11 +270,15 @@ $(function(){
 	    			let location = $(this).parents("tr").find("td[data-field='location'] .layui-table-cell").text();
 	    			$("#editCameraTemplate input[name='cameraId']").val(cameraId);
 					$("#editCameraTemplate input[name='location']").val(location);
+					let audioId = $(this).parents("tr").find("td[data-field='audioId'] .layui-table-cell").text();
+	    			let audioLocation = $(this).parents("tr").find("td[data-field='audioLocation'] .layui-table-cell").text();
+	    			$("#editCameraTemplate input[name='audioId']").val(audioId);
+					$("#editCameraTemplate input[name='audioLocation']").val(audioLocation);
 	    			let editCameraIndex = layer.open({
 						id: "editCameraTemplateModal",
 						title:"编辑摄像头",
 						type: 1,
-						area: ["440px","320px"],
+						area: ["580px","420px"],
 						resize: false,
 						move: false,
 						btn: ['确定', '取消'],
@@ -276,6 +286,8 @@ $(function(){
 						btn1: function(){
 							let cameraId =  $("#editCameraTemplate input[name='cameraId']").val();
 							let location = $("#editCameraTemplate input[name='location']").val();
+							let audioId =  $("#editCameraTemplate input[name='audioId']").val();
+							let audioLocation = $("#editCameraTemplate input[name='audioLocation']").val();
 							if (cameraId == undefined || cameraId == "" || cameraId.trim() == "") {
 								layer.msg('摄像头ID不能为空');
 								return false;
@@ -287,7 +299,9 @@ $(function(){
 							let formParam = {
 								id: mid,
 								cameraId: cameraId,
-								location: location
+								location: location,
+								audioId: audioId,
+								audioLocation: audioLocation
 							};
 							$.ajax({  
 								url:'address/updateAddress',  

@@ -23,6 +23,8 @@ public class AddressModel {
 	private Integer level;
 	private String levelStr;
 	private String area;
+	private String audioId;//音响ID
+	private String audioLocation;//音响位置
 
 	public Integer getId() {
 		return id;
@@ -135,13 +137,31 @@ public class AddressModel {
 	public void setArea(String area) {
 		this.area = area;
 	}
+	
+	
+
+	public String getAudioId() {
+		return audioId;
+	}
+
+	public void setAudioId(String audioId) {
+		this.audioId = audioId;
+	}
+
+	public String getAudioLocation() {
+		return audioLocation;
+	}
+
+	public void setAudioLocation(String audioLocation) {
+		this.audioLocation = audioLocation;
+	}
 
 	@Override
 	public String toString() {
 		return "AddressModel [id=" + id + ", ipType=" + ipType + ", ipTypeStr=" + ipTypeStr + ", ip=" + ip + ", userId="
 				+ userId + ", createUser=" + createUser + ", createTime=" + createTime + ", pid=" + pid + ", status="
 				+ status + ", cameraId=" + cameraId + ", location=" + location + ", level=" + level + ", levelStr="
-				+ levelStr + ", area=" + area + "]";
+				+ levelStr + ", area=" + area + ", audioId=" + audioId + ", audioLocation=" + audioLocation + "]";
 	}
 
 }
