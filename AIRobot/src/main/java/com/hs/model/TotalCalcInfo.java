@@ -1,9 +1,17 @@
 package com.hs.model;
 
 public class TotalCalcInfo {
-	
+	/**
+	 * 报警名称
+	 */
 	private String alarmName;
+	/**
+	 * 报警算法id
+	 */
 	private String alarmId;
+	/**
+	 * 统计值
+	 */
 	private Integer count;
 
 	public String getAlarmId() {

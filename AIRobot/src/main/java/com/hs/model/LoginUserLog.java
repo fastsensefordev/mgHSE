@@ -10,8 +10,17 @@ package com.hs.model;
 public class LoginUserLog {
 	
 	private Integer id;
+	/**
+	 * UID
+	 */
 	private Integer uId;
+	/**
+	 * 登录时间
+	 */
 	private String loginTime;
+	/**
+	 * 访问ip地址
+	 */
 	private String ip;
 
 	public Integer getId() {
