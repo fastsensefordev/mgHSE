@@ -1,5 +1,7 @@
 package com.hs.service;
 
+import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -150,9 +152,12 @@ public class AlarmService {
 	 * @history:
 	 * @param server
 	 * @param alarmResultList void
+	 * @throws ParseException 
 	 */
-	private void insert2Data(String server, List<AlarmInfo> alarmResultList) {
+	private void insert2Data(String server, List<AlarmInfo> alarmResultList) throws ParseException {
 		TblAlarmInfo alarmInfo = null;
+		String reg = "(\\d{4})(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})";
+		String tempTime=null;
 		List<TblAlarmInfo> alarmList = new ArrayList<>();//待入库报警集合
 		for (AlarmInfo model : alarmResultList) {
 			alarmInfo = new TblAlarmInfo();
@@ -170,7 +175,11 @@ public class AlarmService {
 			}
 			alarmInfo.setSourceId(model.getID());
 			alarmInfo.setAlarmName(alarmName);
-			alarmInfo.setAlarmTime(model.getAlarmTime());
+//			alarmInfo.setAlarmTime(model.getAlarmTime());
+			tempTime=model.getTakePic1().split("_")[2];
+			tempTime=tempTime.substring(0,tempTime.length()-4);
+			tempTime=tempTime.replaceAll(reg, "$1-$2-$3 $4:$5:$6");
+			alarmInfo.setAlarmTime(tempTime);
 			alarmInfo.setTakePic1(model.getTakePic1());
 			alarmInfo.setServer(server);
 			alarmInfo.setIvsHostId(model.getIvsHostId());
@@ -322,7 +331,7 @@ public class AlarmService {
 		String audioId=null;
 		AudioModel model=null;
 		String musicPath=null;
-		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyyMMddhhmmss");
 		long timeNow= new Date().getTime(); 
 		long timeAlarm=0L;
 		logger.info("【本次获取报警数目】"+alarmResultList.size());
@@ -331,9 +340,15 @@ public class AlarmService {
 			model=ipVoiceMap.get(key);
 			audioId=model.getAudioId();
 			musicPath=(null!=alarmMusicMap.get(info.getIvsEventType()))?alarmMusicMap.get(info.getIvsEventType()).getMusicPath():null;
-			timeAlarm=inputFormat.parse(info.getAlarmTime()).getTime();
+//			timeAlarm=inputFormat.parse(info.getAlarmTime()).getTime();
+			timeAlarm=inputFormat.parse(info.getTakePic1().split("_")[2].substring(0,info.getTakePic1().split("_")[2].length()-4)).getTime();
+			System.out.println("当前时间"+new Date());
+			System.out.println("报警时间"+info.getAlarmTime());//报警时间有误差
+			System.out.println("图片时间"+info.getTakePic1().split("_")[2].substring(0,info.getTakePic1().split("_")[2].length()-4));
 			System.out.println(timeAlarm-timeNow);
-			if(null!=musicPath&&null!=audioId&&timeNow-timeAlarm<12000){
+			if(null!=musicPath&&null!=audioId
+					&&(timeNow-timeAlarm)<12000
+					){//两秒之后的信息不再报警
 				OpsApi.init(audioId,musicPath);
 				CLibrary.INSTANCE._SDK_Install_StartTask(OpsApi.dwID);
 				logger.info("【任务播放成功】");
