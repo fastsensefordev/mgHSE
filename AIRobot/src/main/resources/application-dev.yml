@@ -42,8 +42,12 @@ spring:
         encoding: UTF-8
         content-type: text/html
         cache: false
-
 interface:
    imgServer: http://192.168.124.99:8080/image/
    calcImgServer: http://192.168.124.99:8080/image/
    serverName: /vaswebservice/?singlewsdl
+   
+activemq:
+   user: admin
+   password: admin
+   brokerUrl: tcp://localhost:61616

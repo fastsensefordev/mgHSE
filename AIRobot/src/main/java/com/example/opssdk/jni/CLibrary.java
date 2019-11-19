@@ -1,7 +1,5 @@
 package com.example.opssdk.jni;
 
-import java.net.URL;
-
 import org.springframework.stereotype.Component;
 
 import com.sun.jna.Library;
@@ -16,7 +14,7 @@ import com.sun.jna.Native;
 public interface CLibrary extends Library
 {
     // DLL文件默认路径为项目根目录，若DLL文件存放在项目外，请使用绝对路径。（此处：(Platform.isWindows()?"msvcrt":"c")指本地动态库msvcrt.dll）
-	// CLibrary INSTANCE = (CLibrary) Native.loadLibrary("D:\\demo\\Dll-x64\\InLine_SDK_All_API.dll", CLibrary.class);
+//	 CLibrary INSTANCE = (CLibrary) Native.loadLibrary("D:\\demo\\Dll-x64\\InLine_SDK_All_API.dll", CLibrary.class);
 	CLibrary INSTANCE = (CLibrary) Native.loadLibrary(System.getProperty("java.library.path")+"\\Dll-x64\\InLine_SDK_All_API.dll", CLibrary.class);//dll文件不能使用相对路径
 
     /**

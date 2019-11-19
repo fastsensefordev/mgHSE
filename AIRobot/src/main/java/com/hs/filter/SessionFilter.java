@@ -37,7 +37,7 @@ public class SessionFilter implements Filter {
         if (uri.startsWith("/robot/static") || uri.startsWith("/static") || uri.contains("login") 
         		|| uri.contains("retrievePassword") || uri.contains("dashboard")
         		|| uri.contains("/getTemplateById") || uri.contains("/getAlarmList") 
-        		|| uri.contains("/getEchartsByAid") || uri.contains("/getTotalChart")) {
+        		|| uri.contains("/getEchartsByAid") || uri.contains("/getTotalChart")|| uri.contains("amq")) {
         	filterChain.doFilter(request, response);
         	return;
         }

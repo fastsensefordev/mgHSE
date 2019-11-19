@@ -1,4 +1,25 @@
 $(function(){
+	//消息系统前端代码
+	//mq初始化
+	var amq = org.activemq.Amq;
+	var myDestination='topic://dashboard';
+	amq.init({
+	uri: 'amq', //AjaxServlet所配置对应的URL
+	logging: true,//激活日志记录
+	timeout: 20,//保持连接时长，单位为秒
+	clientId:(new Date()).getTime().toString() //防止多个浏览器窗口标签共享同一个JSESSIONID
+	});
+	var myHandler =
+	{
+	  rcvMessage: function(message)
+	  {
+		 let info=message.data.split("+");
+	     console.log(info[0]+"号摄像头位,"+info[1]+"报警,时间"+info[2]);
+	  }
+	};
+
+	amq.addListener("dashboard",myDestination,myHandler.rcvMessage);
+	
 	layui.use('layer',function () {
 		let id = commonFuntion.getUrlParam("id");
 		let templateName = "";

@@ -12,6 +12,16 @@ public class InterfaceConfig {
 	private String serverName;
 	@Value("${interface.calcImgServer}")
 	private String calcImgServer;
+	@Value("${activemq.brokerUrl}")
+	private String amqUrl;
+	
+	public String getAmqUrl() {
+		return amqUrl;
+	}
+
+	public void setAmqUrl(String amqUrl) {
+		this.amqUrl = amqUrl;
+	}
 
 	public String getImgServer() {
 		return imgServer;

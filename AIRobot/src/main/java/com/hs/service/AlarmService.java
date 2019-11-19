@@ -1,16 +1,15 @@
 package com.hs.service;
 
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -34,8 +33,18 @@ import com.hs.model.TblAlarmInfo;
 import com.hs.response.ResultResponse;
 import com.hs.response.ResultUtil;
 import com.hs.util.DateCalcUtils;
+import com.hs.util.InterfaceConfig;
 import com.hs.util.SpringUtil;
 import com.hs.util.WebServiceUtil;
+
+import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+
 
 @Service
 @DependsOn("springUtil")
@@ -49,7 +58,8 @@ public class AlarmService {
 	private AddressMapper addressMapper;
 	@Autowired
 	private static AddressMapper addressIpMapper;
-
+	@Autowired
+	private InterfaceConfig interfaceConfig;
     static {
     	addressIpMapper=SpringUtil.getBean(AddressMapper.class);
     	ipVoiceMap();
@@ -300,6 +310,7 @@ public class AlarmService {
 					alarmResultList = JSON.parseObject(result, new TypeReference<List<AlarmInfo>>() {
 					});
 					insert2Data(serveAddress, alarmResultList);//入库处理
+					dashboardConsumer(alarmResultList);
 					broadcastVoice(serveAddress,alarmResultList);
 				}
 				//循环分页查询
@@ -311,8 +322,8 @@ public class AlarmService {
 						alarmResultList.clear();//清空数据
 						alarmResultList = JSON.parseObject(result, new TypeReference<List<AlarmInfo>>() {
 						});
-						//todo
 						insert2Data(serveAddress, alarmResultList);//入库处理
+						dashboardConsumer(alarmResultList);
 						broadcastVoice(serveAddress,alarmResultList);
 					} else {
 						alarmResultList.clear();//清空数据
@@ -325,6 +336,42 @@ public class AlarmService {
 			}
 		} 
 	}
+	
+	//消息系统后端代码
+	private void dashboardConsumer(List<AlarmInfo> alarmResultList) throws JMSException {
+		//1、创建工厂连接对象，需要制定ip和端口号
+		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(interfaceConfig.getAmqUrl());
+        //2、使用连接工厂创建一个连接对象
+        Connection connection = connectionFactory.createConnection();
+        //3、开启连接
+        connection.start();
+        //4、使用连接对象创建会话（session）对象
+        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        //5、使用会话对象创建目标对象，包含queue和topic（一对一和一对多）
+        Destination dest = session.createTopic("dashboard");
+        //6、使用会话对象创建生产者对象
+        MessageProducer producer = session.createProducer(dest);
+        String reg = "(\\d{4})(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})";
+        String timeAlarm=null;
+        for(AlarmInfo info:alarmResultList){
+        	timeAlarm=info.getTakePic1().split("_")[2];
+        	timeAlarm=timeAlarm.substring(0,timeAlarm.length()-4);
+        	timeAlarm=timeAlarm.replaceAll(reg, "$1-$2-$3 $4:$5:$6");
+        	String msg=info.getIvsHostId()+"+"+info.getAlarmName()+"+"+timeAlarm;
+//        	String msg=info.getIvsHostId()+"号摄像头位置"+info.getAlarmName()+"报警,时间："+timeAlarm;
+        	//7、使用会话对象创建一个消息对象
+        	TextMessage textMessage = session.createTextMessage(msg);
+	        //8、发送消息
+	        producer.send(textMessage);
+        }
+        //9、关闭资源
+        producer.close();
+        session.close();
+        connection.close();
+	}
+	
+
+	
 
 	private void broadcastVoice(String serveAddress, List<AlarmInfo> alarmResultList) throws Exception {
 		String key=null;
@@ -332,19 +379,20 @@ public class AlarmService {
 		AudioModel model=null;
 		String musicPath=null;
 		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyyMMddhhmmss");
-		long timeNow= new Date().getTime(); 
+		long timeNow= 0L; 
 		long timeAlarm=0L;
 		logger.info("【本次获取报警数目】"+alarmResultList.size());
 		for(AlarmInfo info:alarmResultList){
+			timeNow= new Date().getTime(); 
 			key=serveAddress+"+"+info.getIvsHostId();
 			model=ipVoiceMap.get(key);
 			audioId=model.getAudioId();
 			musicPath=(null!=alarmMusicMap.get(info.getIvsEventType()))?alarmMusicMap.get(info.getIvsEventType()).getMusicPath():null;
 //			timeAlarm=inputFormat.parse(info.getAlarmTime()).getTime();
 			timeAlarm=inputFormat.parse(info.getTakePic1().split("_")[2].substring(0,info.getTakePic1().split("_")[2].length()-4)).getTime();
-			System.out.println("当前时间"+new Date());
-			System.out.println("报警时间"+info.getAlarmTime());//报警时间有误差
-			System.out.println("图片时间"+info.getTakePic1().split("_")[2].substring(0,info.getTakePic1().split("_")[2].length()-4));
+			logger.info("当前时间"+new Date());
+			logger.info("报警时间"+info.getAlarmTime());//报警时间有误差
+			logger.info("图片时间"+info.getTakePic1().split("_")[2].substring(0,info.getTakePic1().split("_")[2].length()-4));
 			System.out.println(timeAlarm-timeNow);
 			if(null!=musicPath&&null!=audioId
 					&&(timeNow-timeAlarm)<12000
@@ -355,7 +403,6 @@ public class AlarmService {
 				Thread.sleep(5000);
 			}
 		}
-		
 	}
 
 }
