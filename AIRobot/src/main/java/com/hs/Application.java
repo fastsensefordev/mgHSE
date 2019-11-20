@@ -27,7 +27,7 @@ import com.hs.util.InterfaceConfig;
 @ComponentScan
 @MapperScan("com.hs.mapper")
 @EnableScheduling
-//@ServletComponentScan//注册servlet有误，js无法访问，写在application里可以？？？
+//@ServletComponentScan
 public class Application {
 	@Autowired
 	private InterfaceConfig interfaceConfig;
@@ -37,6 +37,7 @@ public class Application {
         registrationBean.setServlet(new AjaxServlet());
         registrationBean.setLoadOnStartup(1);
         registrationBean.setEnabled(true);
+        registrationBean.setAsyncSupported(true);
         List<String> urlMappings=new ArrayList<String>();
         urlMappings.add("/amq/*");
         registrationBean.setUrlMappings(urlMappings);

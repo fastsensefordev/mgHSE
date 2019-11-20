@@ -51,6 +51,7 @@ import javax.jms.TextMessage;
 public class AlarmService {
 	private final Logger logger = LoggerFactory.getLogger(AlarmService.class);
 	public static Map<String,AudioModel> ipVoiceMap;
+	public static Map<String,AudioModel> cameraLocationMap;
 	public static Map<String,AudioModel> alarmMusicMap;
 	@Autowired
 	private AlarmInfoMapper alarmInfoMapper;
@@ -64,6 +65,7 @@ public class AlarmService {
     	addressIpMapper=SpringUtil.getBean(AddressMapper.class);
     	ipVoiceMap();
     	alarmMusicMap();
+    	cameraLocationMap();
     	initVoice();
     }
     /**
@@ -80,6 +82,15 @@ public class AlarmService {
 	public static void alarmMusicMap(){
 		if(MapUtils.isEmpty(alarmMusicMap)){
 			alarmMusicMap=addressIpMapper.getAlarmMusicMap();
+		}
+	}
+	
+	/**
+	 * 初始化摄像头位置配置信息
+	 */
+	public static void cameraLocationMap(){
+		if(MapUtils.isEmpty(cameraLocationMap)){
+			cameraLocationMap=addressIpMapper.getCameraLocationMap();
 		}
 	}
 
@@ -310,7 +321,7 @@ public class AlarmService {
 					alarmResultList = JSON.parseObject(result, new TypeReference<List<AlarmInfo>>() {
 					});
 					insert2Data(serveAddress, alarmResultList);//入库处理
-					dashboardConsumer(alarmResultList);
+					dashboardConsumer(serveAddress, alarmResultList);
 					broadcastVoice(serveAddress,alarmResultList);
 				}
 				//循环分页查询
@@ -323,7 +334,7 @@ public class AlarmService {
 						alarmResultList = JSON.parseObject(result, new TypeReference<List<AlarmInfo>>() {
 						});
 						insert2Data(serveAddress, alarmResultList);//入库处理
-						dashboardConsumer(alarmResultList);
+						dashboardConsumer(serveAddress, alarmResultList);
 						broadcastVoice(serveAddress,alarmResultList);
 					} else {
 						alarmResultList.clear();//清空数据
@@ -338,7 +349,7 @@ public class AlarmService {
 	}
 	
 	//消息系统后端代码
-	private void dashboardConsumer(List<AlarmInfo> alarmResultList) throws JMSException {
+	private void dashboardConsumer(String serveAddress, List<AlarmInfo> alarmResultList) throws JMSException, ParseException {
 		//1、创建工厂连接对象，需要制定ip和端口号
 		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(interfaceConfig.getAmqUrl());
         //2、使用连接工厂创建一个连接对象
@@ -351,18 +362,30 @@ public class AlarmService {
         Destination dest = session.createTopic("dashboard");
         //6、使用会话对象创建生产者对象
         MessageProducer producer = session.createProducer(dest);
-        String reg = "(\\d{4})(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})";
-        String timeAlarm=null;
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+        String timeTemp=null;
+        long timeNow= 0L; 
+        long timeAlarm=0L;
+        String key=null;
+        AudioModel model=null;
+        String location="";
         for(AlarmInfo info:alarmResultList){
-        	timeAlarm=info.getTakePic1().split("_")[2];
-        	timeAlarm=timeAlarm.substring(0,timeAlarm.length()-4);
-        	timeAlarm=timeAlarm.replaceAll(reg, "$1-$2-$3 $4:$5:$6");
-        	String msg=info.getIvsHostId()+"+"+info.getAlarmName()+"+"+timeAlarm;
-//        	String msg=info.getIvsHostId()+"号摄像头位置"+info.getAlarmName()+"报警,时间："+timeAlarm;
-        	//7、使用会话对象创建一个消息对象
-        	TextMessage textMessage = session.createTextMessage(msg);
-	        //8、发送消息
-	        producer.send(textMessage);
+        	if(MapUtils.isNotEmpty(cameraLocationMap)){
+        		key=serveAddress+"+"+info.getIvsHostId();
+        		model=cameraLocationMap.get(key);
+        		location=model.getLocation()==null?"":model.getLocation();
+        	}
+        	timeNow= new Date().getTime(); 
+        	timeTemp=info.getTakePic1().split("_")[2];
+        	timeTemp=timeTemp.substring(0,timeTemp.length()-4);
+        	timeAlarm=inputFormat.parse(timeTemp).getTime();
+        	if((timeNow-timeAlarm)<12000){//两秒前的数据
+            	String msg=info.getAlarmName()+"报警,位置："+location;
+            	//7、使用会话对象创建一个消息对象
+            	TextMessage textMessage = session.createTextMessage(msg);
+    	        //8、发送消息
+    	        producer.send(textMessage);
+        	}
         }
         //9、关闭资源
         producer.close();

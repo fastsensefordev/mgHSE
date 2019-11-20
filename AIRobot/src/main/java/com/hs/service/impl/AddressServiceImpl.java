@@ -70,6 +70,7 @@ public class AddressServiceImpl implements AddressService {
 			addressModel.setPid(Constants.INT_0);
 			addressMapper.saveAddress(addressModel);
 			AlarmService.ipVoiceMap = addressMapper.getIpVoiceMap();//变更成功后更新音箱配置文件
+			AlarmService.cameraLocationMap = addressMapper.getCameraLocationMap();//变更成功后更新摄像头位置配置文件
 			return ResultUtil.success();
 		} catch (Exception e) {
 			logger.error("AddressServiceImpl.saveAddress Error:", e);
@@ -98,6 +99,7 @@ public class AddressServiceImpl implements AddressService {
 			addressModel.setIpType(Constants.INT_0);
 			addressMapper.saveAddress(addressModel);
 			AlarmService.ipVoiceMap = addressMapper.getIpVoiceMap();//变更成功后更新音箱配置文件
+			AlarmService.cameraLocationMap = addressMapper.getCameraLocationMap();//变更成功后更新摄像头位置配置文件
 			return ResultUtil.success();
 		} catch (Exception e) {
 			logger.error("AddressServiceImpl.saveCamera Error:", e);
@@ -122,6 +124,8 @@ public class AddressServiceImpl implements AddressService {
 			addressModel.setStatus(Constants.TEMPLATE_STATUS_DEFAULT);
 			addressModel.setIpType(Constants.INT_0);
 			addressMapper.saveAddress(addressModel);
+			AlarmService.ipVoiceMap = addressMapper.getIpVoiceMap();//变更成功后更新音箱配置文件
+			AlarmService.cameraLocationMap = addressMapper.getCameraLocationMap();//变更成功后更新摄像头位置配置文件
 			return ResultUtil.success();
 		} catch (Exception e) {
 			logger.error("AddressServiceImpl.saveArea Error:", e);
@@ -137,6 +141,7 @@ public class AddressServiceImpl implements AddressService {
 		try {
 			addressMapper.deleteAddress(id);
 			AlarmService.ipVoiceMap = addressMapper.getIpVoiceMap();//变更成功后更新音箱配置文件
+			AlarmService.cameraLocationMap = addressMapper.getCameraLocationMap();//变更成功后更新摄像头位置配置文件
 			return ResultUtil.success();
 		} catch (Exception e) {
 			logger.error("AddressServiceImpl.deleteAddress Error:", e);
@@ -152,6 +157,7 @@ public class AddressServiceImpl implements AddressService {
 		try {
 			addressMapper.updateAddress(request);
 			AlarmService.ipVoiceMap = addressMapper.getIpVoiceMap();//变更成功后更新音箱配置文件
+			AlarmService.cameraLocationMap = addressMapper.getCameraLocationMap();//变更成功后更新摄像头位置配置文件
 			return ResultUtil.success();
 		} catch (Exception e) {
 			logger.error("AddressServiceImpl.updateAddress Error:", e);

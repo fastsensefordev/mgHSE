@@ -82,6 +82,13 @@ public interface AddressMapper {
 	@MapKey("alarmEn")
 	public Map<String, AudioModel> getAlarmMusicMap();
 
+	/**
+	 * 获取摄像头位置信息
+	 * @return
+	 */
+	@MapKey("serverAndHost")
+	public Map<String, AudioModel> getCameraLocationMap();
+
 }
 
 	

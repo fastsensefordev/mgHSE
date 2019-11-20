@@ -37,7 +37,7 @@ spring:
           connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000  
     thymeleaf:
         prefix: classpath:/templates/
-        suffix: .html
+        suffix: .htmls
         mode: HTML5
         encoding: UTF-8
         content-type: text/html
@@ -47,3 +47,7 @@ interface:
    imgServer: http://172.28.186.94:8080/image/
    calcImgServer: http://172.28.186.94:8080/image/
    serverName: /vaswebservice/?singlewsdl
+activemq:
+   user: admin
+   password: admin
+   brokerUrl: tcp://localhost:61616

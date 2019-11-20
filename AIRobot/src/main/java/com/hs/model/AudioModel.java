@@ -17,7 +17,16 @@ public class AudioModel {
 	//扩展
 	private String serverAndHost;
 	private String audioId;
+	private String location;
 	
+	
+	
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
 	public Integer getId() {
 		return id;
 	}

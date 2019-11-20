@@ -13,8 +13,8 @@ $(function(){
 	{
 	  rcvMessage: function(message)
 	  {
-		 let info=message.data.split("+");
-	     console.log(info[0]+"号摄像头位,"+info[1]+"报警,时间"+info[2]);
+//		 layer.msg(message.data);
+	     console.log(message.data);
 	  }
 	};
 
