@@ -20,6 +20,8 @@ public interface WarnService {
 	public ResultResponse getAlarmList();
 
 	public ResultResponse getEchartsByAid(String alarmId);
+	
+	public ResultResponse getTotalByAid(String alarmId);
 
 	public ResultResponse getTotalChart(GetTotalChartRequest request);
 

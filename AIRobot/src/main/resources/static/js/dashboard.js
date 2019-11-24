@@ -1,13 +1,14 @@
-$(function(){
+layui.use(['layer'], function(){
+	 var layer = layui.layer;
 	//消息系统前端代码
 	//mq初始化
 	var amq = org.activemq.Amq;
 	var myDestination='topic://dashboard';
 	amq.init({
-	uri: 'amq', //AjaxServlet所配置对应的URL
-	logging: true,//激活日志记录
-	timeout: 20,//保持连接时长，单位为秒
-	clientId:(new Date()).getTime().toString() //防止多个浏览器窗口标签共享同一个JSESSIONID
+		uri: 'amq', //AjaxServlet所配置对应的URL
+		logging: true,//激活日志记录
+		timeout: 20,//保持连接时长，单位为秒
+		clientId:(new Date()).getTime().toString() //防止多个浏览器窗口标签共享同一个JSESSIONID
 	});
 	var myHandler =
 	{
@@ -15,9 +16,11 @@ $(function(){
 	  {
 //		 layer.msg(message.data);
 	     console.log(message.data);
+	     layer.msg(message.data, {time: 3000});
 	  }
 	};
-
+	
+	layer.msg("一号展厅未戴安全帽报警", {time: 3000});
 	amq.addListener("dashboard",myDestination,myHandler.rcvMessage);
 	
 	layui.use('layer',function () {

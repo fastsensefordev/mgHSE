@@ -138,6 +138,20 @@ public class WarnController {
 	public ResultResponse getEchartsByAid(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,String alarmId) {
 		return warnService.getEchartsByAid(alarmId);
 	}
+	/**
+	 * @desc: 获取当日统计数据
+	 * @author: kpchen
+	 * @createTime: 2019年11月24日 下午5:03:24
+	 * @history:
+	 * @param httpServletRequest
+	 * @param httpServletResponse
+	 * @param alarmId
+	 * @return ResultResponse
+	 */
+	@RequestMapping("getTotalByAid")
+	public ResultResponse getTotalByAid(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,String alarmId) {
+		return warnService.getTotalByAid(alarmId);
+	}
 
 	/**
 	 * @desc: 获取综合数据

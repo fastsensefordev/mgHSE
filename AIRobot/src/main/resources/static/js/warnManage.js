@@ -249,7 +249,7 @@ layui.use(['layer', 'form','table','laydate'], function(){
 	}
 	 
 	showImage = function(){
-        $('[data-magnify]').Magnify({
+        $("body").find('[data-magnify]').Magnify({
             Toolbar: [
                 'prev',
                 'next',

@@ -55,6 +55,30 @@
 			}  
 		});
 		
+		$.ajax({  
+			url:'warn/getTotalByAid',  
+			type:'post',      
+			data: {
+				alarmId: alarmId
+			}, 
+			async:false,
+			dataType:'json',
+			success:function(data){  
+				if (data.code == 200) {
+					let totalNum = data.data.countNum;
+					let alarmName = $("#illegalChartTopical").text().trim();
+					
+					$("#illegalNumItem .alarm-name").html(alarmName);
+					$("#illegalNumItem .total-num-span").html(totalNum);
+					
+					let chartsNum = parseInt($("#safeNumItem .total-num-span").text()) 
+					+ parseInt($("#illegalNumItem .total-num-span").text()) 
+					+ parseInt($("#dangerNumItem .total-num-span").text());
+					$("#chartsTotalNum").html(chartsNum);
+				}
+			}  
+		});
+		
 		let axisLabelFontSize = commonFuntion.getChartConfig().axisLabelFontSize;
 		let barWidth = commonFuntion.getChartConfig().barWidth;
 		let bgBarWidth = commonFuntion.getChartConfig().bgBarWidth;

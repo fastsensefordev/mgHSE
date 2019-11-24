@@ -256,6 +256,21 @@ public class WarnServiceImpl implements WarnService {
 			return ResultUtil.error("查询失败", resultMap);
 		}
 	}
+	
+	@Override
+	public ResultResponse getTotalByAid(String alarmId) {
+		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+		List<TotalInfo> resultList = new ArrayList<TotalInfo>();
+		try {
+			int countNum = alarmInfoMapper.getTotalByAid(alarmId);
+			resultMap.put("countNum", countNum);
+			return ResultUtil.success(resultMap);
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("data", resultList);
+			return ResultUtil.error("查询失败", resultMap);
+		}
+	}
 	@Override
 	public ResultResponse getTotalChart(GetTotalChartRequest request) {
 		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();

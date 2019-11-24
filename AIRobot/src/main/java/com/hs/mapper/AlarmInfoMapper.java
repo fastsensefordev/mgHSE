@@ -46,6 +46,8 @@ public interface AlarmInfoMapper {
 	public List<TblAlarmInfo> getAlarmList();
 
 	public List<TotalInfo> getEchartsByAid(@Param("alarmId") String alarmId);
+	
+	public int getTotalByAid(@Param("alarmId") String alarmId);
 
 	public List<TotalCalcInfo> getTotalChart(@Param("alarmIdList") List<String> idList);
 

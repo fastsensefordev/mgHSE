@@ -92,6 +92,18 @@
 		]]>
 	</select>
 	
+	<select id="getTotalByAid" resultType="int">
+		<![CDATA[
+		 SELECT
+			count(1) count
+		FROM
+			`tbl_alarm_info`
+		WHERE
+			alarmId = #{alarmId}
+		AND DATE_FORMAT(alarmTime, "%Y-%m-%d") = curdate();
+		]]>
+	</select>
+	
 	<select id="getTotalChart" resultType="com.hs.model.TotalCalcInfo">
 		SELECT
 			count(1) count,
