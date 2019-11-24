@@ -1,11 +1,19 @@
 package com.hs.service.impl;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -73,11 +81,17 @@ public class WarnServiceImpl implements WarnService {
 		List<TblAlarmInfo> list = new ArrayList<TblAlarmInfo>();
 		try {
 			String alarmName = request.getAlarmName();
+			String date = request.getDate();
 			//查询条件不为空的时候 设置alarm
 			if (StringUtils.isNoneBlank(alarmName)) {
 				String[] alarmStrs = alarmName.split(",");
 				List<String> alarmList = Arrays.asList(alarmStrs);
 				request.setAlarmList(alarmList);
+			}
+			if (StringUtils.isNoneBlank(date)) {
+				String[] dateArr = date.split(" - ");
+				request.setStart(dateArr[0]);
+				request.setEnd(dateArr[1]);
 			}
 			PageHelper.startPage(request.getPage(), request.getLimit());
 			list = alarmInfoMapper.getWarnList(request);
@@ -98,22 +112,72 @@ public class WarnServiceImpl implements WarnService {
 	}
 	
 	@Override
-	public List<AlarmExcelModel> getAllWarnList(GetWarnListRequest request) {
+	public List<AlarmExcelModel> getAllWarnList(GetWarnListRequest request, String realPath) {
 		List<AlarmExcelModel> list = new ArrayList<AlarmExcelModel>();
 		try {
 			String alarmName = request.getAlarmName();
+			String date = request.getDate();
 			//查询条件不为空的时候 设置alarm
 			if (StringUtils.isNoneBlank(alarmName)) {
 				String[] alarmStrs = alarmName.split(",");
 				List<String> alarmList = Arrays.asList(alarmStrs);
 				request.setAlarmList(alarmList);
 			}
+			if (StringUtils.isNoneBlank(date)) {
+				String[] dateArr = date.split(" - ");
+				request.setStart(dateArr[0]);
+				request.setEnd(dateArr[1]);
+			}
 			list = alarmInfoMapper.getAllWarnList(request);
+			list.parallelStream().forEach(alarmInfo -> {
+				try {
+					UUID uuid = UUID.randomUUID();
+					String picImgUrl = alarmInfo.getTakePic1();
+					String fileName = picImgUrl.substring(picImgUrl.lastIndexOf("\\")+1, picImgUrl.length());
+					String ukfileName = URLEncoder.encode(fileName,"utf-8");
+					String urlString = picImgUrl.replace("D:\\File_Images\\", "http://172.27.199.157:8080/image/");
+					urlString = urlString.replaceAll("\\\\", "/");
+					urlString = urlString.substring(0, urlString.lastIndexOf("/") + 1);
+					String realImageUrl = urlString + ukfileName;
+					download(realImageUrl, fileName, realPath + uuid);
+					alarmInfo.setTakePic1(realPath + uuid + File.separator + fileName);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return list;
 	}
+	
+	public static void download(String urlString, String filename,String savePath) throws Exception {  
+		// 构造URL  
+		URL url = new URL(urlString);  
+		// 打开连接  
+		URLConnection con = url.openConnection();  
+		//设置请求超时为5s  
+		con.setConnectTimeout(5*1000);  
+		// 输入流  
+		InputStream is = con.getInputStream();  
+		// 1K的数据缓冲  
+		byte[] bs = new byte[1024];  
+		// 读取到的数据长度  
+		int len;  
+		// 输出的文件流  
+		File sf = new File(savePath);  
+		if(!sf.exists()){  
+			sf.mkdirs();  
+		}  
+		OutputStream os = new FileOutputStream(sf.getPath()+"\\"+filename);  
+		// 开始读取  
+		while ((len = is.read(bs)) != -1) {  
+			os.write(bs, 0, len);  
+		}  
+		// 完毕，关闭所有链接  
+		os.close();  
+		is.close();  
+	}  
 	/**
 	 * @desc 获取报警名称列表
 	 */

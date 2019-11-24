@@ -42,10 +42,13 @@
 		from tbl_alarm_info
 		where isDelete = 0
 		<if test="alarmList != null and alarmList.size() >0 ">
-		and alarmName in
+			and alarmName in
 			<foreach collection="alarmList" item="item" separator="," open="(" close=")" >
       			(#{item})
       		</foreach>
+		</if>
+		<if test="start != null and end != null">
+			and DATE_FORMAT(alarmTime, "%Y-%m-%d") BETWEEN #{start} and #{end}
 		</if>
 		order by alarmTime desc
 	</select>
@@ -60,7 +63,10 @@
       			(#{item})
       		</foreach>
 		</if>
-		and date_sub(curdate(), interval 7 day) <![CDATA[<=]]> DATE_FORMAT(alarmTime, "%Y-%m-%d")
+		<if test="start != null and end != null">
+			and DATE_FORMAT(alarmTime, "%Y-%m-%d") BETWEEN #{start} and #{end}
+		</if>
+		<!-- and date_sub(curdate(), interval 7 day) <![CDATA[<=]]> DATE_FORMAT(alarmTime, "%Y-%m-%d") -->
 	</select>
 	
 	

@@ -25,8 +25,19 @@
 						<button type="button" class="layui-btn" lay-event="exportElarm"><i class="layui-icon layui-icon-export"></i> 导出数据</button>
 						<button type="button" class="layui-btn error-btn" lay-event="dealwithData" id="dealwithData"><i class="layui-icon">&#xe652;</i> 数据重跑</button>
   					</div>
-					<div class="warn-error"></div>
 				</script>
+				<div class="warn-error"></div>
+				<div class="alarm-type-content">
+					<div id="alarmTypeSelect"></div>
+				</div>
+				<div class="date-content">
+					<div class="layui-inline">
+				      <label class="layui-form-label">日期</label>
+				      <div class="layui-input-inline">
+				        <input type="text" class="layui-input" id="date-input" placeholder="起始 - 结束 ">
+				      </div>
+				    </div>
+				</div>
 				<div class="content-container" id="content-container">
 					<table class="layui-hide" id="warnListTable" lay-filter="warnListTable"></table>
 				</div>
@@ -41,6 +52,7 @@
 	<script th:src="@{/static/assets/imgplugin/index.js}"></script>
 	<script th:src="@{/static/assets/imgplugin/jquery.rotate.min.js}"></script>
 	<script th:src="@{/static/assets/layui/layui.all.js}"></script>
+	<script th:src="@{/static/assets/layui/xm-select/xm-select.js}"></script>
 	<script th:src="@{/static/assets/layui/tableFilter/tableFilter.js}"></script>
 	<script th:src="@{/static/js/header.js}"></script>
 	<script th:src="@{/static/js/warnManage.js}"></script>

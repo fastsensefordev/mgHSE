@@ -10,7 +10,7 @@ public class AlarmExcelModel {
 	private String alarmName;
 	@Excel(name = "报警地址" ,orderNum = "1", width=24)
 	private String server;
-	@Excel(name = "图片" ,orderNum = "2", width=80)
+	@Excel(name = "图片" ,orderNum = "2", type = 2,imageType = 1)
 	private String takePic1;
 	@Excel(name = "报警时间" ,orderNum = "3", width=20)
 	private String alarmTime;

@@ -1,5 +1,6 @@
 package com.hs.controller;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -60,7 +61,8 @@ public class WarnController {
 	 */
 	@ApiOperation(value="报警列表", notes="报警列表")
 	@GetMapping("getWarnList")
-	public ResultResponse getWarnList(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,GetWarnListRequest request) {
+	public ResultResponse getWarnList(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
+			GetWarnListRequest request) {
 		return warnService.getWarnList(request);
 	}
 
@@ -214,7 +216,9 @@ public class WarnController {
 	@RequestMapping("downloadAlarm")
 	public void downloadAlarm(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
 			GetWarnListRequest request) throws Exception {
-		List<AlarmExcelModel> alarmExcelModels = warnService.getAllWarnList(request);
+		String realPath = httpServletRequest.getServletContext().getRealPath("/");
+		realPath = realPath + "upload" + File.separator + "excel" + File.separator;
+		List<AlarmExcelModel> alarmExcelModels = warnService.getAllWarnList(request, realPath);
 		ExportParams params = new ExportParams("极视智能报警详情","报警详情");
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("date", new Date());//导出一般都要日期

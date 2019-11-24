@@ -1,14 +1,21 @@
-layui.use(['layer', 'form','table'], function(){
+layui.use(['layer', 'form','table','laydate'], function(){
 	var layer = layui.layer;
 	var warnListTable = layui.table;
 	var tableFilter = layui.tableFilter;
+	var laydate = layui.laydate;
+	var form = layui.form;
 	let loginUserRole = $("#loginUserInfo").attr("role");
 	let loginUser = $("#loginUserInfo").text().trim();
+	let dateArea = null;
 	let warnTableOptions = {
 			toolbar: '#deleteElarm',
-			defaultToolbar: ['filter'],
+			defaultToolbar: [],
 			elem: '#warnListTable',
 			url:'warn/getWarnList',
+			where: {
+				date: null,
+				alarmName: null
+			},
 			page: true,
 			response: {
 				statusCode: 200 //规定成功的状态码，默认：0
@@ -39,26 +46,78 @@ layui.use(['layer', 'form','table'], function(){
 					return operateTemp;
 				}}
 				]],
-				done: function(res, curr, count){
-					console.log("监听where:", this.where);
-					if (JSON.stringify(this.where) != "{}") {
-						tableFilterIns.reload();
-					}
-				}
+//				done: function(res, curr, count){
+//					console.log("监听where:", this.where);
+//					if (JSON.stringify(this.where) != "{}") {
+//						tableFilterIns.reload();
+//					}
+//				}
 	};
 	
 	warnListTable.render(warnTableOptions);
 	
+	laydate.render({
+		elem: '#date-input',
+		range: true,
+		done: function(value, date){
+		     console.log('你选择的日期是：' + value + '<br><br>获得的对象是' + JSON.stringify(date));
+		     warnTableOptions.where.date = value;
+		     dateArea = value;
+		     warnListTable.render(warnTableOptions);
+		}
+	});
+	
+	initSelect();
+	function initSelect() {
+		let selectData = [];
+		$.ajax({  
+			url:'warn/getAlarmList',  
+			type:'post',      
+			data: {}, 
+			dataType:'json',
+			async: false,
+			success:function(data){  
+				if (data.code == 200) {
+					let alarmName = data.data.list[0].alarmName;
+					let optionHtml = "";
+					for (var i = 0; i < data.data.list.length; i++) {
+						selectData.push({
+							name:data.data.list[i].alarmName ,
+							value: data.data.list[i].alarmId
+						});
+					}
+				}
+			}  
+		});
+		
+		alarmTypeSelect = xmSelect.render({
+			el: '#alarmTypeSelect', 
+			filterable: true,
+			data: selectData,
+			theme: {
+				color: '#0695EB',
+			},
+			on: function(data){
+				let arr = data.arr;
+				let selectAlarmList = [];
+				for (let con in arr) {
+					selectAlarmList.push(arr[con].name);
+				}
+				warnTableOptions.where.alarmName = selectAlarmList.join(",");
+				warnListTable.render(warnTableOptions);
+			},
+	    });
+	}
 	//3、定义一个tableFilter 挂载到 table 上
-	var tableFilterIns = tableFilter.render({
-	    'elem' : '#warnListTable',//table的选择器
-	    'mode' : 'api',//过滤模式
-	    'filters' : [{
-	    	field: "alarmName",
-	    	type: "checkbox",
-	    	url: "warn/getAlarmNameList"
-	    }]
-	})
+//	var tableFilterIns = tableFilter.render({
+//	    'elem' : '#warnListTable',//table的选择器
+//	    'mode' : 'api',//过滤模式
+//	    'filters' : [{
+//	    	field: "alarmName",
+//	    	type: "checkbox",
+//	    	url: "warn/getAlarmNameList"
+//	    }]
+//	})
 	
 	//头工具栏事件
 	warnListTable.on('toolbar(warnListTable)', function(obj){
@@ -178,7 +237,15 @@ layui.use(['layer', 'form','table'], function(){
 	 * 导出
 	 */
 	function exportAlarm() {
-		window.location.href = "warn/downloadAlarm";
+		let arr = alarmTypeSelect.getValue();
+		let selectAlarmList = [];
+		for (let con in arr) {
+			selectAlarmList.push(arr[con].name);
+		}
+		let selectAlarmName = selectAlarmList.join(",");
+		console.log(selectAlarmName);
+		console.log(dateArea);
+		window.location.href = "warn/downloadAlarm?alarmName="+selectAlarmName+"&date="+dateArea;
 	}
 	 
 	showImage = function(){

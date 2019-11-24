@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: AIRobot
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: 99386
+Built-By: Administrator
 Implementation-Vendor-Id: com.hs
-Build-Jdk: 1.8.0_111
+Build-Jdk: 1.8.0_191
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/springboot-mybatis-test
 Created-By: Maven Integration for Eclipse

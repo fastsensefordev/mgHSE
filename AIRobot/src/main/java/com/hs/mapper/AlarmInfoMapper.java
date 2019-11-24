@@ -29,6 +29,8 @@ public interface AlarmInfoMapper {
 	/**
 	 * @desc: 报警列表
 	 * @author: kpchen
+	 * @param end 
+	 * @param start 
 	 * @createTime: 2019年8月20日 下午10:37:58
 	 * @history:
 	 * @return List<TblAlarmInfo>

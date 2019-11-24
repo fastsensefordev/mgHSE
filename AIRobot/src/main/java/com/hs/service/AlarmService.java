@@ -63,10 +63,10 @@ public class AlarmService {
 	private InterfaceConfig interfaceConfig;
     static {
     	addressIpMapper=SpringUtil.getBean(AddressMapper.class);
-    	ipVoiceMap();
-    	alarmMusicMap();
-    	cameraLocationMap();
-    	initVoice();
+//    	ipVoiceMap();
+//    	alarmMusicMap();
+//    	cameraLocationMap();
+//    	initVoice();
     }
     /**
      * 初始化音箱配置信息

@@ -10,7 +10,28 @@ public class GetWarnListRequest {
 	private Integer limit = Constants.PAGE_SIZE;
 	private String alarmName;
 	private List<String> alarmList;
+	private String date;
+	private String start;
+	private String end;
 	
+	public String getStart() {
+		return start;
+	}
+	public void setStart(String start) {
+		this.start = start;
+	}
+	public String getEnd() {
+		return end;
+	}
+	public void setEnd(String end) {
+		this.end = end;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	public List<String> getAlarmList() {
 		return alarmList;
 	}

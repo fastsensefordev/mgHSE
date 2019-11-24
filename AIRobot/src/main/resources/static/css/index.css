@@ -166,6 +166,7 @@ html, body {
 .content-body {
 	float: left;
 	width: 100%;
+	position: relative;
 }
 
 .content-bar {
@@ -320,4 +321,21 @@ html, body {
 }
 .layui-table-filter.layui-inline {
 	float: right;
+}
+.date-content {
+	position: absolute;
+    right: 216px;
+    z-index: 999;
+    top: 36px;
+}
+
+.date-content .layui-form-label {
+    width: 60px;
+}
+.alarm-type-content {
+	position: absolute;
+    right: 20px;
+    z-index: 999;
+    top: 36px;
+    width: 180px;
 }

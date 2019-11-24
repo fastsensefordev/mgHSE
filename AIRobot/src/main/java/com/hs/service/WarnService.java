@@ -25,7 +25,7 @@ public interface WarnService {
 
 	public JSONObject getAlarmNameList();
 
-	public List<AlarmExcelModel> getAllWarnList(GetWarnListRequest request);
+	public List<AlarmExcelModel> getAllWarnList(GetWarnListRequest request, String realPath);
 
 }
 

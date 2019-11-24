@@ -125,7 +125,11 @@
 .warn-error {
     float: left;
     color: #FD7270;
-    width: calc(100% - 390px);
+    /* width: calc(100% - 503px); */
+    position: absolute;
+    left: 30px;
+    right: 30px;
+    top: 8px;
 }
 
 .layui-btn.error-btn {

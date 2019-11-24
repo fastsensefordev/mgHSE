@@ -17,7 +17,7 @@ spring:
           #基本属性
           url: jdbc:mysql://127.0.0.1:3306/robot?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
           username: root
-          password: qwer
+          password: 123456
           #配置初始化大小/最小/最大
           initialSize: 1
           minIdle: 1
@@ -43,8 +43,8 @@ spring:
         content-type: text/html
         cache: false
 interface:
-   imgServer: http://192.168.124.99:8080/image/
-   calcImgServer: http://192.168.124.99:8080/image/
+   imgServer: http://172.28.186.94:8080/image/
+   calcImgServer: http://172.27.199.157:8080/image/
    serverName: /vaswebservice/?singlewsdl
    
 activemq:
