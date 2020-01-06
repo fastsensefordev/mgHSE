@@ -4,17 +4,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link type="text/css" rel="stylesheet" th:href="@{/static/assets/layui/css/layui.css}"/>
+<link type="text/css" rel="stylesheet" th:href="@{/static/assets/zTree/css/metroStyle/metroStyle.css}"/>
+<link type="text/css" rel="stylesheet" th:href="@{/static/css/deptManage.css}"/>
 <title>首页</title>
 
 </head>
 <body class="layui-layout-body">
 	<div class="layui-layout layui-layout-admin">
 		<div th:include="header :: header"></div> 
-		<div class="layui-body dashboard">
+		<div class="layui-body">
+		<!-- 内容主体区域 -->
+			<div class="define-nav">
+				<span class="layui-breadcrumb" lay-separator="|">
+				  <a href="">配置管理</a>
+				  <a href="">部门管理</a>
+				</span>
+			</div>
 			<!-- 内容主题开始 -->
 			<div class="content-body">
-				<div class="content-body-detail">
-					<iframe id="dashboardContent" src="dashboard?type=edit"></iframe>
+				<div class="content-bar">
+					<div class="layui-btn-container add-address">
+    					<button type="button" class="layui-btn" id="addDept"><i class="layui-icon">&#xe608;</i> 新增组织架构</button>
+  						<button type="button" class="layui-btn" id="delDept"><i class="layui-icon">&#xe640;</i> 删除组织架构</button>
+  					</div>
+			    	<div class="search-bar-body">
+		    		    <input id="edt-search" type="text" placeholder="输入关键字"/>
+   					    <button class="layui-btn" id="btn-search">搜索</button>
+			    	</div>
+				</div>
+				<div class="content-container tree-table-content">
+					 <div id="deptContent" class="ztree"></div>
 				</div>
 			</div>
 			<!-- 内容主题结束 -->
@@ -22,9 +42,13 @@
 	</div>
 	<script th:src="@{/static/assets/jquery/jquery-3.3.1.min.js}"></script>
 	<script th:src="@{/static/assets/layui/layui.js}"></script>
+	<script th:src="@{/static/assets/zTree/js/jquery.ztree.core.js}"></script>
+	<script th:src="@{/static/assets/zTree/js/jquery.ztree.excheck.js}"></script>
+	<script th:src="@{/static/assets/zTree/js/jquery.ztree.exedit.js}"></script>
 	<script th:src="@{/static/js/commonFunction.js}"></script>
 	<script th:src="@{/static/js/header.js}"></script>
 	<script th:src="@{/static/js/index.js}"></script>
+	<script th:src="@{/static/js/deptManage.js}"></script>
 	<script>
 		//JavaScript代码区域
 		layui.use('element', function() {
@@ -32,5 +56,20 @@
 		});
 	</script>
 </body>
-
+<div class="modal-container layui-form" id="addDeptTemplate">
+	<div class="layui-form-item">
+		<label class="layui-form-label">公司名称</label>
+		<div class="layui-input-block">
+			<input type="text" name="rootName" placeholder="请输入公司名称" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+</div>
+<div class="modal-container layui-form" id="addTreeTemplate">
+	<div class="layui-form-item">
+		<label class="layui-form-label">部门名称</label>
+		<div class="layui-input-block">
+			<input type="text" name="deptName" placeholder="请输入部门名称" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+</div>
 </html>

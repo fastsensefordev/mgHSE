@@ -148,7 +148,7 @@ layui.use(['layer'], function(){
 					dataType:'json',  
 					success:function(data){  
 						if (data.code == 200 && data.data.template.imgUrl != null) {
-							if (data.data.template.imgUrl.indexOf("/robot/static/img/center_img.png") > 0) {
+							if (data.data.template.imgUrl.indexOf("/safeTask/static/img/center_img.png") > 0) {
 								$("#imgCenter").attr("src",data.data.template.imgUrl);
 							} else {
 								$("#imgCenter").attr("src", data.data.imgServer + data.data.template.imgUrl);

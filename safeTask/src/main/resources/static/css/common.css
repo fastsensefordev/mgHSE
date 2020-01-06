@@ -31,14 +31,14 @@
 }
 
 .layui-form-label {
-	width: 20%;
+	width: 22%;
 }
 
 .layui-input-block {
 	margin-left: 0;
 	min-height: 36px;
 	float: left;
-	width: calc(80% - 30px);
+	width: calc(78% - 30px);
 }
 /***新增用户模态框end**/
 .layui-nav .layui-nav-item a.icon-logoff {

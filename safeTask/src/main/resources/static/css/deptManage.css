@@ -1,0 +1,14 @@
+@charset "UTF-8";
+.tree-table-content *{
+	box-sizing:initial!important;
+}
+#deptContent{
+	width: 35%;
+    height: 600px;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px dashed #b1a9a9;
+    overflow: auto;
+    border-radius: 20px;
+}
+    

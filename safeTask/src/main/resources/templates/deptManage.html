@@ -4,8 +4,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>地址管理</title>
-
+<title>部门管理</title>
+<link type="text/css" rel="stylesheet" th:href="@{/static/assets/layui/css/layui.css}"/>
+<link type="text/css" rel="stylesheet" th:href="@{/static/assets/zTree/css/metroStyle/metroStyle.css}"/>
+<link type="text/css" rel="stylesheet" th:href="@{/static/css/deptManage.css}"/>
 </head>
 <body class="layui-layout-body">
 	<div class="layui-layout layui-layout-admin">
@@ -14,14 +16,16 @@
 			<!-- 内容主体区域 -->
 			<div class="define-nav">
 				<span class="layui-breadcrumb" lay-separator="|">
-				  <a href="">服务器管理</a>
+				  <a href="">配置管理</a>
+				  <a href="">部门管理</a>
 				</span>
 			</div>
 			
 			<div class="content-body">
 				<div class="content-bar">
 					<div class="layui-btn-container add-address">
-    					<button type="button" class="layui-btn" id="addAddress"><i class="layui-icon">&#xe608;</i> 新增服务器</button>
+    					<button type="button" class="layui-btn" id="addDept"><i class="layui-icon">&#xe608;</i> 新增组织架构</button>
+    					<button type="button" class="layui-btn" id="delDept"><i class="layui-icon">&#xe640;</i> 删除组织架构</button>
   					</div>
 			    	<div class="search-bar-body">
 		    		    <input id="edt-search" type="text" placeholder="输入关键字"/>
@@ -29,15 +33,18 @@
 			    	</div>
 				</div>
 				<div class="content-container tree-table-content">
-					<table id="table1" class="layui-table" lay-filter="table1"></table>
+					 <div id="deptContent" class="zTree"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<script th:src="@{/static/assets/jquery/jquery-3.3.1.min.js}"></script>
 	<script th:src="@{/static/assets/layui/layui.js}"></script>
+	<script th:src="@{/static/assets/zTree/js/jquery.ztree.core.js}"></script>
+	<script th:src="@{/static/assets/zTree/js/jquery.ztree.excheck.js}"></script>
+	<script th:src="@{/static/assets/zTree/js/jquery.ztree.exedit.js}"></script>
 	<script th:src="@{/static/js/header.js}"></script>
-	<script th:src="@{/static/js/addressManage.js}"></script>
+	<script th:src="@{/static/js/deptManage.js}"></script>
 	<script>
 		//JavaScript代码区域
 		layui.use('element', function() {
@@ -45,21 +52,20 @@
 		});
 	</script>
 </body>
-<div class="modal-container layui-form" id="addAddressTemplate">
+<div class="modal-container layui-form" id="addDeptTemplate">
 	<div class="layui-form-item">
-		<label class="layui-form-label">类型</label>
+		<label class="layui-form-label">公司名称</label>
 		<div class="layui-input-block">
-			<select name="addressType">
-				<option value="0" selected>通用算法服务器</option>
-				<option value="1" selected>人脸识别算法服务器</option>
-				<option value="2">其他</option>
-			</select>
+			<input type="text" name="rootName" placeholder="请输入公司名称" autocomplete="off" class="layui-input">
 		</div>
 	</div>
+</div>
+
+<div class="modal-container layui-form" id="addTreeTemplate">
 	<div class="layui-form-item">
-		<label class="layui-form-label">地址</label>
+		<label class="layui-form-label">部门名称</label>
 		<div class="layui-input-block">
-			<input type="text" name="address" placeholder="请输入服务器地址" autocomplete="off" class="layui-input">
+			<input type="text" name="deptName" placeholder="请输入部门名称" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 </div>

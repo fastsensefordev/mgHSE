@@ -70,19 +70,18 @@ public class UserController {
 			@RequestBody AddUserRequest request) {
 		User user = request.getUser();
 		String phone = user.getPhone();
-		String userName = user.getUserName();
+		String jobId = user.getJobId();
 		String password = user.getPassword();
-		Integer type = user.getUserType();
 		if (StringUtils.isBlank(phone)) {
 			return ResultUtil.error("手机号不能为空");
 		}
-		if (StringUtils.isBlank(userName)) {
-			return ResultUtil.error("账号不能为空");
+		if (StringUtils.isBlank(jobId)) {
+			return ResultUtil.error("工号不能为空");
 		}
 		if (StringUtils.isBlank(password)) {
 			return ResultUtil.error("密码不能为空");
 		}
-		if (null == type) {
+		if (null != null) {
 			return ResultUtil.error("账户类型有误，请选择后操作");
 		}
 		ResultResponse resopnse = userService.addUser(request);
@@ -125,12 +124,12 @@ public class UserController {
 			@RequestBody AddUserRequest request) {
 		User user = request.getUser();
 		String phone = user.getPhone();
-		String userName = user.getUserName();
+		String jobId = user.getJobId();
 		if (StringUtils.isBlank(phone)) {
 			return ResultUtil.error("手机号不能为空");
 		}
-		if (StringUtils.isBlank(userName)) {
-			return ResultUtil.error("账号不能为空");
+		if (StringUtils.isBlank(jobId)) {
+			return ResultUtil.error("工号不能为空");
 		}
 		ResultResponse resopnse = userService.updateUser(request);
 		return resopnse;

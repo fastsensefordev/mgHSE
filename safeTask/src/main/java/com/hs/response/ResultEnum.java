@@ -22,8 +22,7 @@ public enum ResultEnum {
     UNSUPPORTED_MEDIA_TYPE(415, "Unsupported Media Type", "服务器无法处理请求附带的媒体格式"),
     LOGIN_SUCCESS(101, "Login Success", "登录成功"),
     NOT_LOGIN(102, "NOT Login", "未登录"),
-	USER_EXIST(1002, " ", "用户已存在"),
-	USER_EXIST_1003(1003, " ", "手机号已存在"),
+	USER_EXIST(1002, " ", "工号已存在"),
 	VALUE_EMPTY(1005, " ", "值为空");
 	
 	

@@ -16,43 +16,30 @@
 		order by userType,createTime desc
 	</select>
 	<!-- 查询用户根据条件 -->
-	<select id="getUserByNameOrPhone" resultType="com.hs.model.User">
-		select 	id,
-				phone,
-				userName,
-				password,
-				userType,
-				case when userType=0 then "超级管理员"  else "管理员" end userTypeStr,
-				DATE_FORMAT(createTime,"%Y-%m-%d %H:%i:%s") createTime,
-			    DATE_FORMAT(lastLoginTime,"%Y-%m-%d %H:%i:%s") lastLoginTime
-		from tbl_user
-		where status = 0 and (userName = #{userName} or phone = #{phone}) limit 1
+	<select id="getUserByJobIdOrWxId" resultType="com.hs.model.User">
+		SELECT ff.id,ff.jobId,ff.roleId,ff.deptId,ff.faceId,ff.password,ff.name,ff.position,ff.phone,ff.address,ff.wxId,le.`roleKey`
+		FROM `mg_staff` ff
+		LEFT JOIN `mg_role` le ON ff.`roleId`=le.`id`
+		WHERE jobId = #{jobId}  or wxId=#{wxId}
+		LIMIT 1
 	</select>
 	
 	<!-- 查询用户根据条件 -->
-	<select id="getUserByName" resultType="com.hs.model.User">
-		select 	id,
-				phone,
-				userName,
-				password,
-				case when userType=0 then "超级管理员"  else "管理员" end userTypeStr,
-				DATE_FORMAT(createTime,"%Y-%m-%d %H:%i:%s") createTime,
-			    DATE_FORMAT(lastLoginTime,"%Y-%m-%d %H:%i:%s") lastLoginTime
-		from tbl_user
-		where status = 0 and userName = #{userName} and id != #{id} limit 1
+	<select id="getUserByJobId" resultType="com.hs.model.User">
+	SELECT ff.id,ff.jobId,ff.roleId,ff.deptId,ff.faceId,ff.password,ff.name,ff.position,ff.phone,ff.address,ff.wxId,le.`roleKey`
+		FROM `mg_staff` ff
+		LEFT JOIN `mg_role` le ON ff.`roleId`=le.`id`
+		WHERE jobId = #{jobId} and id != #{id}
+		LIMIT 1
 	</select>
 	
 		<!-- 查询用户根据条件 -->
 	<select id="getUserByPhone" resultType="com.hs.model.User">
-		select 	id,
-				phone,
-				userName,
-				password,
-				case when userType=0 then "超级管理员"  else "管理员" end userTypeStr,
-				DATE_FORMAT(createTime,"%Y-%m-%d %H:%i:%s") createTime,
-			    DATE_FORMAT(lastLoginTime,"%Y-%m-%d %H:%i:%s") lastLoginTime
-		from tbl_user
-		where status = 0 and phone = #{phone} and id != #{id} limit 1
+		SELECT ff.id,ff.jobId,ff.roleId,ff.deptId,ff.faceId,ff.password,ff.name,ff.position,ff.phone,ff.address,ff.wxId,le.`roleKey`
+		FROM `mg_staff` ff
+		LEFT JOIN `mg_role` le ON ff.`roleId`=le.`id`
+		WHERE phone = #{phone} and id != #{id}
+		LIMIT 1
 	</select>
 	<!-- 新增用户 -->
 	<insert id="addUser" parameterType="com.hs.model.User" useGeneratedKeys="true" keyProperty="id">
@@ -83,33 +70,17 @@
 	</delete>
 	<!-- 查询超级密码公钥 -->
 	<select id="getAdminKey" resultType="String">
-		select adminKey from tbl_admin_key limit 1
+		select adminKey from mg_admin_key limit 1
 	</select>
 	
-	<!-- 查询用户根据条件 -->
-	<select id="getUserByFifter" resultType="com.hs.model.User">
-		select 	id,
-				phone,
-				userName,
-				case when userType=0 then "超级管理员"  else "管理员" end userTypeStr,
-				DATE_FORMAT(createTime,"%Y-%m-%d %H:%i:%s") createTime,
-			    DATE_FORMAT(lastLoginTime,"%Y-%m-%d %H:%i:%s") lastLoginTime
-		from tbl_user
-		<where>
-			and status = 0
-			<if test="userName != ''">
-				and userName = #{userName}
-			</if>
-		</where>
-		limit 1
-	</select>
+	
 	<!-- 修改密码 -->
 	<update id="retrievePassword" parameterType="map">
-        update tbl_user
+        update `mg_staff` 
         <set>
             <if test="password != null">password = #{password},</if>
         </set>
-        where userName = #{userName}
+        where jobId = #{jobId}
 	</update>
 	
 	<select id="getImgCenter" resultType="String">

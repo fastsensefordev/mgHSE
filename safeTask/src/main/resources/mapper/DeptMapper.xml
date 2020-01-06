@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.mapper.DeptMapper">
+
+	<!-- 编辑部门 -->
+	<insert id="saveDept" parameterType="com.hs.model.DetpModel" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		INSERT INTO `mg_structure` (pId,deptName,creatDate,updateDate) 
+		VALUES (#{pId}, #{deptName},now(),now())
+		ON DUPLICATE KEY UPDATE
+		updateDate = now()
+		<if test="deptName != null and deptName != '' ">
+			,deptName = #{deptName}
+		</if>
+		<if test="pId != null and pId != '' ">
+			,pId = #{pId}
+		</if>
+	</insert>
+	
+	<!-- 获取部门数据 -->
+	<select id="getTreeData" parameterType="com.hs.request.DeptRequest" resultType="com.hs.model.DetpModel">
+		SELECT `id`,`pId`,`deptName`
+		FROM `mg_structure` 
+	</select>
+	
+	<!-- 删除组织架构 -->
+	<delete id="deleteDeptForChecked" parameterType="com.hs.model.DetpModel">
+		delete from mg_structure
+		where 1=1 
+		<if test="id != null and id != '' ">
+			and (id = #{id} or pId = #{id} )
+		</if>
+	</delete>
+	
+	
+	<!-- 获取当前服务器地址列表 -->
+	<select id="getAddressList" resultType="com.hs.model.AddressModel">
+		select 
+			id,
+			ipType,
+			case when ipType = 0 then "通用算法服务器"
+			     when ipType = 1 then "人脸识别算法服务器" 
+			     else "其他" end as ipTypeStr, 
+			case when ip is null then "" else ip end as ip,
+			level,
+			case when level = 1 then "服务器"
+				when level = 2 then "区域"
+				else "摄像头" end as levelStr,
+			case when area is null then "-"
+				else area end as area,
+			case when cameraId is null then "-" else cameraId end as cameraId,
+			case when location is null then "-" else location end as location,
+			case when audioId is null then "-" else audioId end as audioId,
+			case when audioLocation is null then "-" else audioLocation end as audioLocation,
+			`userId`, 
+			`createUser`,
+			DATE_FORMAT(`createTime`,"%Y-%m-%d %H:%i:%s") as createTime,
+			`pid`,
+			`status`
+			from `tbl_address`
+			where `status` = 0
+	</select>
+	
+	<update id="deleteAddress" >
+		update `tbl_address` set `status` = 1 where id = #{id}
+	</update>
+	
+	
+	<!-- 更新用户 -->
+	<update id="updateAddress" parameterType="com.hs.request.UpdateAddressRequest">
+        update tbl_address
+        <set>
+            <if test="ip != null">ip = #{ip},</if>
+            <if test="area != null">area = #{area},</if>
+            <if test="cameraId != null">cameraId = #{cameraId},</if>
+            <if test="location != null">location = #{location},</if>
+            <if test="audioId != null">audioId = #{audioId},</if>
+            <if test="audioLocation != null">audioLocation = #{audioLocation}</if>
+        </set>
+        where id = #{id}
+	</update>
+	
+	<!-- 获取报警声音列表 -->
+	<select id="getAudioList" resultType="com.hs.model.AudioModel">
+		SELECT DISTINCT audio.id,audio.musicName,audio.musicPath,alarm.`alarmNameEn` AS alarmEn,alarm.`alarmName` AS alarmName FROM 
+		`tbl_alarm_type` alarm LEFT JOIN `tbl_audio` audio ON audio.`alarmEn`=alarm.`alarmNameEn`
+	</select>
+	<!-- 更新报警声音 -->
+	<insert id="updateMusic" useGeneratedKeys="true" keyProperty="alarmEn" keyColumn="id">
+		INSERT INTO `tbl_audio` (musicName,musicPath,alarmEn,alarmName) 
+		values (#{musicName}, #{musicPath},#{alarmEn},#{alarmName})
+		ON DUPLICATE KEY UPDATE
+		musicName =#{musicName} ,musicPath=#{musicPath} ,alarmName=#{alarmName}
+	</insert>
+	
+	<!-- 获取报警配置文件 -->
+	<select id="getIpVoiceMap" resultType="com.hs.model.AudioModel">
+		SELECT lev3.`audioId`,CONCAT(lev1.`ip`,"+",lev3.`cameraId`) AS serverAndHost
+		FROM `tbl_address` lev3 RIGHT JOIN `tbl_address` lev2 ON lev3.`pid`=lev2.`id`  
+		RIGHT JOIN `tbl_address` lev1 ON lev2.`pid`=lev1.`id`
+		WHERE lev3.`level`=3 AND lev3.`audioId` IS NOT NULL
+	</select>
+	
+	<!-- 获取摄像头位置信息 -->
+	<select id="getCameraLocationMap" resultType="com.hs.model.AudioModel">
+		SELECT lev3.`location`,CONCAT(lev1.`ip`,"+",lev3.`cameraId`) AS serverAndHost
+		FROM `tbl_address` lev3 RIGHT JOIN `tbl_address` lev2 ON lev3.`pid`=lev2.`id`  
+		RIGHT JOIN `tbl_address` lev1 ON lev2.`pid`=lev1.`id`
+		WHERE lev3.`level`=3 AND lev3.`audioId` IS NOT NULL
+	</select>
+	
+	<!-- 获取报警声音文件路径 -->
+	<select id="getAlarmMusicMap" resultType="com.hs.model.AudioModel">
+		SELECT dio.`alarmEn`,dio.`musicPath`
+		FROM `tbl_audio` dio
+	</select>
+</mapper>

@@ -1,7 +1,7 @@
 server:
-    port: 8088
+    port: 8087
     servlet:
-       context-path: /robot
+       context-path: /safeTask
 spring:
     devtools: 
         restart: 
@@ -15,7 +15,7 @@ spring:
           filters: stat
           driverClassName: com.mysql.jdbc.Driver
           #基本属性
-          url: jdbc:mysql://127.0.0.1:3306/robot?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
+          url: jdbc:mysql://127.0.0.1:3306/repairHr?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
           username: root
           password: qwer
           #配置初始化大小/最小/最大

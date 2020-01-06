@@ -34,10 +34,8 @@ public class SessionFilter implements Filter {
         
         String domainName = (String) session.getAttribute(Constants.DOMAIN_NAME);
         //过滤以下接口不被拦截
-        if (uri.startsWith("/robot/static") || uri.startsWith("/static") || uri.contains("login") 
-        		|| uri.contains("retrievePassword") || uri.contains("dashboard")
-        		|| uri.contains("/getTemplateById") || uri.contains("/getAlarmList") 
-        		|| uri.contains("/getEchartsByAid") || uri.contains("/getTotalChart")|| uri.contains("amq")) {
+        if (uri.startsWith("/safeTask/static") || uri.startsWith("/static") || uri.contains("login") 
+        		|| uri.contains("retrievePassword")) {
         	filterChain.doFilter(request, response);
         	return;
         }

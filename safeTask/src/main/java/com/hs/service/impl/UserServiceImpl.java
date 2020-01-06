@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
 			User user = request.getUser();
 			String pwd = user.getPassword();
 			user.setPassword(PasswordUtils.AESEncode(pwd));// 加密
-			User existUser = userMapper.getUserByNameOrPhone(user);
+			User existUser = userMapper.getUserByJobIdOrWxId(user);
 			if (null != existUser) {
 				return ResultUtil.success(ResultEnum.USER_EXIST);
 			}
@@ -97,13 +97,9 @@ public class UserServiceImpl implements UserService {
 	public ResultResponse updateUser(AddUserRequest request) {
 		try {
 			User user = request.getUser();
-			User existUserName = userMapper.getUserByName(user);
-			if (null != existUserName) {
+			User existUserJobId = userMapper.getUserByJobId(user);
+			if (null != existUserJobId) {
 				return ResultUtil.success(ResultEnum.USER_EXIST);
-			}
-			User existUserPhone = userMapper.getUserByPhone(user);
-			if (null != existUserPhone) {
-				return ResultUtil.success(ResultEnum.USER_EXIST_1003);
 			}
 			if (StringUtils.isNoneBlank(user.getPassword())) {
 				user.setPassword(PasswordUtils.AESEncode(user.getPassword()));
@@ -124,7 +120,6 @@ public class UserServiceImpl implements UserService {
 		try {
 			User user = new User();
 			user.setId(userId);
-			user.setStatus(Constants.USER_STATUS_DELETE);
 			userMapper.deleteUser(user);
 			return ResultUtil.success();
 		} catch (Exception e) {
@@ -143,14 +138,14 @@ public class UserServiceImpl implements UserService {
 			if (!request.getAdminKey().equals(adminKey)) {
 				return ResultUtil.error(ResultEnum.UNAUTHORIZED, "超级密不正确");
 			} else {
-				Map<String, Object> paramMap = new HashMap<>();
-				paramMap.put("userName", request.getUserName());
-				User existUser = userMapper.getUserByFifter(paramMap);
+				User checkUser=new User();
+				checkUser.setJobId(request.getUserName());
+				User existUser = userMapper.getUserByJobIdOrWxId(checkUser);
 				if (null == existUser) {
 					return ResultUtil.error(ResultEnum.UNAUTHORIZED, "该用户不存在");
 				} else {
 					Map<String, Object> retrieveMap = new HashMap<>();
-					retrieveMap.put("userName", request.getUserName());
+					retrieveMap.put("jobId", request.getUserName());
 					retrieveMap.put("password", PasswordUtils.AESEncode(request.getPassword()));
 					int affectRows = userMapper.retrievePassword(retrieveMap);
 					if (affectRows == 0) {
@@ -173,9 +168,8 @@ public class UserServiceImpl implements UserService {
 		try {
 			String domainName = SessionUtils.getLoginUser();
 			User user = new User();
-			user.setUserName(domainName);
-			user.setPhone(domainName);
-			User existUser = userMapper.getUserByNameOrPhone(user);
+			user.setJobId(domainName);
+			User existUser = userMapper.getUserByJobIdOrWxId(user);
 			return existUser;
 		} catch (Exception e) {
 			logger.error("UserServiceImpl.getLoginUser Error:", e);

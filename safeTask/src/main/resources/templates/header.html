@@ -28,40 +28,22 @@
 		<div class="layui-side-scroll">
 			<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
 			<ul class="layui-nav layui-nav-tree" lay-filter="test" id="myMenu">
-				<li class="layui-nav-item layui-nav-itemed">
-					<a class="nai-item icon-view" href="javascript:;">我的可视化</a>
-					<dl class="layui-nav-child">
-						<dd>
-							<a href="index" th:classappend="${currMenu eq 'index'} ? 'active' : ''">可视化定制</a>
-						</dd>
-						<dd>
-							<a href="templateManage" th:classappend="${currMenu eq 'templateManage'} ? 'active' : ''">可视化管理</a>
-						</dd>
-					</dl>
-				</li>
-				
-				<li class="layui-nav-item layui-nav-itemed">
-					<a class="nai-item icon-address" href="javascript:;">配置管理</a>
-					<dl class="layui-nav-child">
-						<dd>
-							<a href="addressManage" th:classappend="${currMenu eq 'addressManage'} ? 'active' : ''">服务器管理</a>
-						</dd>
-						<dd>
-							<a href="audioManage" th:classappend="${currMenu eq 'audioManage'} ? 'active' : ''">音箱管理</a>
-						</dd>
-					</dl>
-				</li>
-				
-			<!-- 	<li class="layui-nav-item">
-					<a class="nai-item icon-address" href="addressManage" th:classappend="${currMenu eq 'addressManage'} ? 'active' : ''">服务器管理</a>
-				</li>
-				 -->
-				
 				<li class="layui-nav-item">
-					<a class="nai-item icon-warn" href="warnManage" th:classappend="${currMenu eq 'warnManage'} ? 'active' : ''">报警管理</a>
+					<a class="nai-item icon-address" href="addressManage" th:classappend="${currMenu eq 'addressManage'} ? 'active' : ''">作业管理</a>
 				</li>
 				<li class="layui-nav-item">
-					<a class="nai-item icon-auth" href="authManage" th:classappend="${currMenu eq 'authManage'} ? 'active' : ''">权限管理</a>
+					<a class="nai-item icon-view" href="warnManage" th:classappend="${currMenu eq 'warnManage'} ? 'active' : ''">考勤管理</a>
+				</li>
+				<li class="layui-nav-item layui-nav-itemed">
+					<a class="nai-item icon-auth" href="javascript:;">配置管理</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a href="deptManage" th:classappend="${currMenu eq 'deptManage'} ? 'active' : ''">部门管理</a>
+						</dd>
+						<dd>
+							<a href="authManage" th:classappend="${currMenu eq 'authManage'} ? 'active' : ''">人员管理</a>
+						</dd>
+					</dl>
 				</li>
 			</ul>
 		</div>
